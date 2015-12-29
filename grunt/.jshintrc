@@ -1,0 +1,16 @@
+{
+	"curly": true,
+	"eqeqeq": true,
+	"forin": true,
+	"freeze": true,
+	"futurehostile": true,
+	"latedef": true,
+	"maxdepth": 3,
+	"nocomma": true,
+	"nonbsp": true,
+	"notypeof": true,
+	"strict": "func",
+	"undef": false,
+	"unused": true
+	
+}
