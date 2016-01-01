@@ -1,13 +1,22 @@
 module.exports = function(grunt) {
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        sassdoc: {
+            default: {
+                src: 'src',
+                options: {
+                    dest: 'docs/sass/'
+                }
+            }
+        },
         jshint: {
-            all: ['javascript/*.js'],
+            myFiles: ['javascript/*.js'],
             options: {
                 jshintrc: 'grunt/.jshintrc'
             }
         },
         compass: {
-            dist: {
+            default: {
                 options: {
                     config: 'grunt/config.rb'
                 }
@@ -15,13 +24,49 @@ module.exports = function(grunt) {
         },
         ts: {
             default: {
-                outDir: 'dist/js',
-                src: 'typescript/*.ts'
+                outDir: 'javascript/ts',
+                src: 'typescript/*.ts',
+                baseDir: 'typescript'
+            }
+        },
+        uglify: {
+            default: {
+
+                files: {
+                    'dist/js/all.min.js': ['javascript/*.js', 'javascript/*/*.js']
+                }
+            }
+        },
+        minifyHtml: {
+            dist: {
+                files: {
+                    'dist/index.html': 'html/index.html'
+                }
+            }
+        },
+        image: {
+            static: {
+                options: {
+                    optipng: true,
+
+                },
+                files: {
+
+                }
+            },
+            dynamic: {
+                files: [{
+                    expand: true,
+                    cwd: 'images',
+                    filter: 'isFile',
+                    src: '**.{png,jpg,gif}',
+                    dest: 'dist/img/'
+                }]
             }
         }
     });
-//    grunt.loadNpmTasks('grunt-contrib-jshint');
-//    grunt.loadNpmTasks('grunt-contrib-compass');
+
     require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
-    grunt.registerTask('default', ['jshint', 'compass']);
+    grunt.registerTask('default', ['jshint', 'compass', 'ts', 'sassdoc']);
+    grunt.registerTask('dev', ['compass', 'ts', 'uglify']);
 };
