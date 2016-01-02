@@ -1,1 +1,2 @@
-# ignore all dist files while keeping the dir.
+# ignore all dist files while keeping the dir for builds.
+/*
