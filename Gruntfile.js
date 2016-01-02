@@ -38,6 +38,10 @@ module.exports = function(grunt) {
             }
         },
         minifyHtml: {
+            options: {
+                cdata: true
+                //quotes: true
+            },
             dist: {
                 files: {
                     'dist/index.html': 'html/index.html'
@@ -67,6 +71,6 @@ module.exports = function(grunt) {
     });
 
     require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
-    grunt.registerTask('default', ['jshint', 'compass', 'ts', 'sassdoc']);
-    grunt.registerTask('dev', ['compass', 'ts', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'sassdoc']);
+    grunt.registerTask('dev', ['compass', 'ts', 'uglify', 'minifyHtml']);
 };

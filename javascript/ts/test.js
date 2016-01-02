@@ -9,5 +9,4 @@ var Greeter = (function () {
 })();
 ;
 var greeter = new Greeter("Hello, world!");
-document.body.innerHTML = greeter.greet();
 //# sourceMappingURL=test.js.map
