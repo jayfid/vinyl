@@ -9,6 +9,7 @@ body {
     padding: $gap-base;
     margin: $gap-base;
     border: 1px solid;
+    text-align: center;
 }
 
 .cont {
@@ -16,3 +17,14 @@ body {
     max-width: 100%;
     overflow: hidden;
 }
+
+.no-overflow {
+    overflow: hidden;
+}
+
+.horiz-content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@include boxes();

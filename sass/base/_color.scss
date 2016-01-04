@@ -6,7 +6,14 @@ body {
     .color-bg-#{$color} {
         background-color: #{$hex};
     }
-    .color-#{$color} {
-        color: darken($hex, 20%);
+    @if isDark($hex) {
+        .color-#{$color} {
+            color: lighten($hex, 40%);
+        }
+    }
+    @else {
+        .color-#{$color} {
+            color: darken($hex, 40%);
+        }
     }
 }
