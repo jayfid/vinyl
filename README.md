@@ -1,8 +1,14 @@
 # Vinyl (siding)
 Vinyl is a simple css framework meant to be used as an online product foundation.  Inspired by Bootstrap and other front-end frameworks, Vinyl aims to bridge the gap between open source UX and custom component-ization of websites.
 
+## Version
+This is currently alpha, which features being added daily.  Initial stable release expected late Jan 2016.
+
+## License
+Open Source license TBD.
+
 ## Table of Contents
-[toc]
+tbd
 
 
 ## Ideology
