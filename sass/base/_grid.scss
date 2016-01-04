@@ -1,0 +1,18 @@
+body {
+    max-width: maxBreakpoint();
+    margin: auto;
+    * {
+        box-sizing: content-box;
+    }
+}
+.box {
+    padding: $gap-base;
+    margin: $gap-base;
+    border: 1px solid;
+}
+
+.cont {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+}

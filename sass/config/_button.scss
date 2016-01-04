@@ -1,1 +1,8 @@
-/*button vars*/
+/// button vars
+
+$btn-radius: 5;
+
+$btn-flavors: (
+    // "std": ("border": {color}, "bg": {color}, "text": {color})
+    "std": ("border": colorGet('black'), "bg": colorGet('white'), "text": colorGet('black'))
+);

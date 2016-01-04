@@ -1,0 +1,10 @@
+@each $flavor, $colors in $btn-flavors {
+    @include btn($flavor, map-get($colors, 'border'), map-get($colors, 'bg'), map-get($colors, 'text'));
+}
+
+.btn {
+    cursor: pointer;
+    &:disabled {
+        cursor: not-allowed;
+    }
+}

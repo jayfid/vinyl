@@ -1,0 +1,22 @@
+@mixin btn($flavor, $border, $bg, $text) {
+    .btn-#{$flavor} {
+        border-color: $border;
+        color: $text;
+        background-color: $bg;
+        &:hover {
+            border-color: darken($border, 20%);
+            color: darken($text, 20%);
+            background-color: darken($bg, 20%);
+        }
+        &:active {
+            border-color: darken($border, 40%);
+            color: darken($text, 40%);
+            background-color: darken($bg, 40%);
+        }
+        &:disabled {
+            border-color: desaturate($border, 80%);
+            color: desaturate($text, 80%);
+            background-color: desaturate($bg, 80%);
+        }
+    }
+}

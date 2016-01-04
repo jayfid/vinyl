@@ -3,12 +3,13 @@
 /// @author jayfid
 ////
 
-# development only
-html * {
-    outline: 1px red solid !important;
-}
-
 @import 'config/config';
-@import 'lib/normalize';
+@import 'mixins/mixins';
+@import 'lib/lib';
+@import 'base/base';
 
-@import 'base/typography';
+@if $debug {
+    html * {
+        outline: 1px red solid !important;
+    }
+}

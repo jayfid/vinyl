@@ -1,0 +1,12 @@
+body {
+    background-color: $color-body-bg;
+}
+
+@each $color, $hex in $palette {
+    .color-bg-#{$color} {
+        background-color: #{$hex};
+    }
+    .color-#{$color} {
+        color: darken($hex, 20%);
+    }
+}

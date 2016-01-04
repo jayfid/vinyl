@@ -1,0 +1,9 @@
+@function maxBreakpoint($breakpoints: $breakpoints) {
+    $max: 0;
+    @each $tag, $px in $breakpoints {
+        @if $px > $max {
+            $max: $px;
+        }
+    }
+    @return #{$max + 'px'};
+}

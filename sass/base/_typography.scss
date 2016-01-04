@@ -1,23 +1,29 @@
-h1 {
-    font-size: $font-size-h1;
+/*typography vars*/
+html {
+    font-size: $font-size-base;
 }
 
-h2 {
-    font-size: $font-size-h2;
+body {
+    font-family: $font-family-base;
 }
 
-h3 {
-    font-size: $font-size-h3;
+body * {
+    font-family: inherit;
 }
 
-h4 {
-    font-size: $font-size-h4;
+@each $level, $size in $headers {
+    #{$level} {
+        @include fontSize($size);
+    }
 }
 
-h5 {
-    font-size: $font-size-h5;
+h1, h2, h3, h4, h5, h6 {
+    font-weight: $font-weight-bold;
+    margin: 0 0 $gap-base 0;
+    line-height: #{$line-height-multiple + 'em'};
 }
 
-h6 {
-    font-size: $font-size-h6;
+p {
+    line-height: #{$line-height-multiple + 'em'};
+    margin: 0 0 $gap-base 0;
 }

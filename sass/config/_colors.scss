@@ -1,1 +1,23 @@
-/*color vars*/
+/// color vars
+
+$color-body-bg: #FFF;
+
+$palette: (
+    "black": #000,
+    "white": #FFF,
+    "red": #d10000,
+    "orange": #ff6622,
+    "yellow": #ffda21,
+    "green": #33DD00,
+    "blue": #1133CC,
+    "indigo": #220066,
+    "violet": #330044
+);
+
+@function colorGet($key) {
+    @if map-has-key($palette, $key) {
+        @return map-get($palette, $key)
+    }
+    @warn "Unknown `#{$key}` in $palette";
+    @return null;
+}

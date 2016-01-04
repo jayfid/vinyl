@@ -1,1 +1,14 @@
-/*grid vars*/
+/// grid vars
+
+$gap-base: 1rem;
+
+$col-count: 12;
+
+$breakpoints: (
+    "yocto": 0,
+    "atto": 360,
+    "nano": 408,
+    "milli": 768,
+    "centi": 924,
+    "deci": 1188
+);
