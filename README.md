@@ -29,6 +29,7 @@ Vinyl uses [Grunt](http://gruntjs.com/) for common tasks.  Current grunt tasks i
 - [minify-html](https://github.com/sindresorhus/grunt-minify-html): Minify HTML
 - [sassdoc](https://github.com/SassDoc/grunt-sassdoc): generate documentation from SASS source
 - [ts](https://github.com/TypeStrong/grunt-ts): Compile Typescript to javascript
+- [watch](https://github.com/gruntjs/grunt-contrib-watch): Watch for changes
 
 ## Core CSS
 Vinyl supplies modern, consistent, and useful UI elements.  All CSS is designed to be responsive, implementing Mobile First design ideas.

@@ -10,3 +10,19 @@
     }
     @warn "invalid type for variable $color";
 }
+
+@function colorGet($key) {
+    @if map-has-key($palette, $key) {
+        @return map-get($palette, $key)
+    }
+    @warn "Unknown `#{$key}` in $palette";
+    @return null;
+}
+
+@function darkColorGet($key) {
+    @if map-has-key($palette-dark, $key) {
+        @return map-get($palette-dark, $key);
+    }
+    @warn "Unknown `#{$key}` in $palette-dark";
+    @return null;
+}

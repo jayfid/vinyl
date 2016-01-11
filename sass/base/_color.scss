@@ -8,12 +8,12 @@ body {
     }
     @if isDark($hex) {
         .color-#{$color} {
-            color: lighten($hex, 40%);
+            color: lighten($hex, 30%);
         }
     }
     @else {
         .color-#{$color} {
-            color: darken($hex, 40%);
+            color: darken($hex, 30%);
         }
     }
 }

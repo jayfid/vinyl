@@ -7,6 +7,7 @@ $debug: false;
 @import 'mixins/mixins';
 @import 'lib/lib';
 @import 'base/base';
+@import 'widgets/widgets';
 
 @if $debug {
     html * {

@@ -7,9 +7,10 @@ body {
 }
 .box {
     padding: $gap-base;
-    margin: $gap-base;
-    border: 1px solid;
+    margin: $gap-base / 2;
+    border: 2px solid;
     text-align: center;
+    overflow: hidden;
 }
 
 .cont {
@@ -25,6 +26,10 @@ body {
 .horiz-content {
     display: flex;
     flex-wrap: wrap;
+    &.vcenter {
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 @include boxes();

@@ -22,22 +22,32 @@
         <section id="palette" class="no-overflow">
             <h4>Palette</h4>
             <div class="horiz-content">
-                <div class="box grid-1 color-black color-bg-black">black</div>
-                <div class="box grid-1 color-white color-bg-white">white</div>
-                <div class="box grid-1 color-red color-bg-red">red</div>
-                <div class="box grid-1 color-orange color-bg-orange">orange</div>
-                <div class="box grid-1 color-yellow color-bg-yellow">yellow</div>
-                <div class="box grid-1 color-green color-bg-green">green</div>
-                <div class="box grid-1 color-blue color-bg-blue">blue</div>
-                <div class="box grid-1 color-indigo color-bg-indigo">indigo</div>
-                <div class="box grid-1 color-violet color-bg-violet">violet</div>
+                <div class="box sqr grid-1 color-black color-bg-black">black</div>
+                <div class="box sqr grid-1 color-white color-bg-white">white</div>
+                <div class="box sqr grid-1 color-red color-bg-red">red</div>
+                <div class="box sqr grid-1 color-orange color-bg-orange">orange</div>
+                <div class="box sqr grid-1 color-yellow color-bg-yellow">yellow</div>
+                <div class="box sqr grid-1 color-green color-bg-green">green</div>
+                <div class="box sqr grid-1 color-blue color-bg-blue">blue</div>
+                <div class="box sqr grid-1 color-indigo color-bg-indigo">indigo</div>
+                <div class="box sqr grid-1 color-violet color-bg-violet">violet</div>
             </div>
         </section>
         <section id="messages">
             <h4>Messages</h4>
             <div class="msgs">
-                <div class="msg notice"><p>This is a message. It has <strong>strong</strong> and <a href="#">link</a></p></div>
-
+                <div class="msg notice">
+                    <p>This is a message. It has <strong>strong</strong> and <a href="#">link</a>.</p>
+                </div>
+                <div class="msg error">
+                    <p>This is a message. It has <strong>strong</strong> and <a href="#">link</a>.</p>
+                </div>
+                <div class="msg info">
+                    <p>This is a message. It has <strong>strong</strong> and <a href="#">link</a>.</p>
+                </div>
+                <div class="msg success">
+                    <p>This is a message. It has <strong>strong</strong> and <a href="#">link</a>.</p>
+                </div>
             </div>
         </section>
         <section id="headings">
@@ -60,11 +70,26 @@
                     <legend>Disabled Fieldset</legend>
                     <input type="text" name="fset-text-2" />
                 </fieldset>
+                <div>
+                    <div>
+                        <input type="text" id="textinput-default" />
+                    </div>
+                    <div>
+                        <input type="text" id="textinput-default" disabled />
+                    </div>
+                    <div>
+                        <input type="text" id="input-button" />
+                        <button class="btn">ENTER</button>
+                    </div>
+                    <div>
+                    <select 
+                    </div>
+                </div>
             </form>
         </section>
         <section id="buttons">
-        <button class="btn btn-std">BUTTON</button>
-        <button class="btn btn-std" disabled>DISABLED BUTTON</button>
+            <button class="btn btn-std">BUTTON</button>
+            <button class="btn btn-std" disabled>DISABLED BUTTON</button>
         </section>
         <section id="articles">
             <h4>Articles</h4>

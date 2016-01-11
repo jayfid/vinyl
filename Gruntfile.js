@@ -67,6 +67,24 @@ module.exports = function(grunt) {
                     dest: 'dist/img/'
                 }]
             }
+        },
+        watch: {
+            javascript: {
+                files: ['javascript/*.js'],
+                tasks: ['uglify']
+            },
+            typescript: {
+                files: ['typescript/*.ts'],
+                tasks: ['ts', 'uglify']
+            },
+            sass: {
+                files: ['sass/*.scss', 'sass/**/*.scss'],
+                tasks: ['compass']
+            },
+            html: {
+                files: ['html/*.html'],
+                tasks: ['minifyHtml']
+            }
         }
     });
 

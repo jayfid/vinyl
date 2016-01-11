@@ -5,19 +5,30 @@ $color-body-bg: #FFF;
 $palette: (
     "black": #000,
     "white": #FFF,
-    "red": #d10000,
-    "orange": #ff6622,
-    "yellow": #ffda21,
-    "green": #33DD00,
-    "blue": #1133CC,
-    "indigo": #220066,
-    "violet": #330044
+    "red": #d34c4c,
+    "orange": #ea9847,
+    "yellow": #f9ed5f,
+    "green": #55e046,
+    "blue": #3a9ef9,
+    "indigo": #904cf2,
+    "violet": #eb59ef
 );
 
-@function colorGet($key) {
-    @if map-has-key($palette, $key) {
-        @return map-get($palette, $key)
-    }
-    @warn "Unknown `#{$key}` in $palette";
-    @return null;
-}
+$palette-dark: (
+    "red": #a53535,
+    "orange": #cc803b,
+    "yellow": #e2d156,
+    "green": #0fd30f,
+    "blue": #0872c1,
+    "indigo": #602cc4,
+    "violet": #bc2ac4
+);
+
+$greys: (
+    "xlight": #d3d3d3,
+    "light": #a5a5a5,
+    "xmedium": #5b5b5b,
+    "medium": #333333,
+    "blue": #2a3438,
+    "darkblue": #171c1e
+);
