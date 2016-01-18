@@ -1,29 +1,54 @@
 /*message and alert widget*/
 
 .msg {
+    display: block;
     padding: 0 1.25rem;
     p {
+        border-radius: 3px;
         border: 2px solid;
+        border-left-width: 15px;
         padding: 1.25rem;
         background-color: colorGet('white');
     }
     a {
-        color: inherit;
+        //color: inherit;
+    }
+    .plain {
+        color: $text-color-default;
     }
     &.notice p {
         border-color: colorGet('orange');
         color: darkColorGet('orange');
+        a {
+            color: darken(darkColorGet('orange'), 20%);
+        }
     }
     &.error p {
         border-color: colorGet('red');
         color: darkColorGet('red');
+        a {
+            color: darken(darkColorGet('red'), 20%);
+        }
     }
     &.info p {
         border-color: colorGet('blue');
         color: darkColorGet('blue');
+        a {
+            color: darken(darkColorGet('blue'), 20%);
+        }
     }
     &.success p {
-        border-color: colorGet('green');
-        color: darkColorGet('green');
+        border-color: colorGet('darkgreen');
+        color: darkColorGet('darkgreen');
+        a {
+            color: darken(darkColorGet('darkgreen'), 20%);
+        }
+    }
+}
+a.msg {
+    //text-decoration: none;
+    &:hover p {
+        //text-decoration: underline;
+        background-color: getGrey('xxlight');
     }
 }

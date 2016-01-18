@@ -15,7 +15,7 @@
     @if map-has-key($palette, $key) {
         @return map-get($palette, $key)
     }
-    @warn "Unknown `#{$key}` in $palette";
+    @warn "Unknown `#{$key}` in palette";
     @return null;
 }
 
@@ -23,6 +23,14 @@
     @if map-has-key($palette-dark, $key) {
         @return map-get($palette-dark, $key);
     }
-    @warn "Unknown `#{$key}` in $palette-dark";
+    @warn "Unknown `#{$key}` in palette-dark";
+    @return null;
+}
+
+@function getGrey($key) {
+    @if map-has-key($greys, $key) {
+        @return map-get($greys, $key);
+    }
+    @warn "Unknown `#{$key}` in greys";
     @return null;
 }

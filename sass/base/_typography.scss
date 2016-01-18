@@ -21,6 +21,20 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: $font-weight-bold;
     margin: 0 0 $gap-base 0;
     line-height: #{$line-height-multiple + 'em'};
+    letter-spacing: 0.01em;
+    &.title {
+        border-bottom: 1px solid;
+        text-transform: uppercase;
+    }
+
+    &.heading {
+        text-indent: 1rem;
+        border-color: #B7B7B7;
+        background-color: #EFEFEF;
+        border-width: 1px 0;
+        border-style: solid;
+        padding: 10px 0;
+    }
 }
 
 p {

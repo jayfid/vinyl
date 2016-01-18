@@ -75,7 +75,7 @@ module.exports = function(grunt) {
             },
             typescript: {
                 files: ['typescript/*.ts'],
-                tasks: ['ts', 'uglify']
+                tasks: ['clean:ts', 'ts', 'uglify']
             },
             sass: {
                 files: ['sass/*.scss', 'sass/**/*.scss'],
@@ -85,6 +85,21 @@ module.exports = function(grunt) {
                 files: ['html/*.html'],
                 tasks: ['minifyHtml']
             }
+        },
+        "http-server": {
+            'dev': {
+                root: "dist",
+                port: 8080,
+                //host: "dev.jayfid.com",
+                runInBackground: true
+            }
+        },
+        clean: {
+            ts: ["javascript/ts"],
+            dist: ["dist/css", "dist/js"]
+        },
+        htmllint: {
+            all: ["html/*.html"]
         }
     });
 

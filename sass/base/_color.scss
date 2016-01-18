@@ -17,3 +17,7 @@ body {
         }
     }
 }
+
+a:not([class]), a:not([class]):visited, a[class=""], a[class=""]:visited {
+    color: darkColorGet('blue');
+}
