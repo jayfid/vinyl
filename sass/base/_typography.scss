@@ -41,3 +41,20 @@ p {
     line-height: #{$line-height-multiple + 'em'};
     margin: 0 0 $gap-base 0;
 }
+
+.example-text {
+    padding: 5px 0;
+    background-color: #DCDCDC;
+    text-align: center;
+    border-radius: 3px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+// See https://www.w3.org/TR/html5/text-level-semantics.html#the-small-element.
+// <small> is suitable for disclaimers, caveats, legal restrictions, or copyrights
+small.copyright {
+    .font-size: .75rem;
+}

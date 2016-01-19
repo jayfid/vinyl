@@ -18,24 +18,32 @@
             <a href="#messages"></a>
         </nav>
     </header>
-    <main id="home" class="cont">
+    <main id="home">
         <section id="palette" class="no-overflow">
             <h4 class="title">Palette</h4>
-            <div class="horiz-content">
-                <div class="box sqr grid-1 color-black color-bg-black">black</div>
-                <div class="box sqr grid-1 color-white color-bg-white">white</div>
-                <div class="box sqr grid-1 color-red color-bg-red">red</div>
-                <div class="box sqr grid-1 color-orange color-bg-orange">orange</div>
-                <div class="box sqr grid-1 color-yellow color-bg-yellow">yellow</div>
-                <div class="box sqr grid-1 color-green color-bg-green">green</div>
-                <div class="box sqr grid-1 color-blue color-bg-blue">blue</div>
-                <div class="box sqr grid-1 color-indigo color-bg-indigo">indigo</div>
-                <div class="box sqr grid-1 color-violet color-bg-violet">violet</div>
+            <div class="cont">
+                <div class="row">
+                    <div class="box sqr grid-2 color-black color-bg-black flex-vcenter">
+                        <p>BLACK</p>
+                    </div>
+                    <div class="box sqr grid-2 color-white color-bg-white flex-vcenter">
+                        <p>WHITE</p>
+                    </div>
+                    <div class="box sqr grid-2 color-red color-bg-red flex-vcenter">
+                        <p>red</p>
+                    </div>
+                    <div class="box sqr grid-2 color-orange color-bg-orange flex-vcenter">orange</div>
+                    <div class="box sqr grid-2 color-yellow color-bg-yellow flex-vcenter">yellow</div>
+                    <div class="box sqr grid-2 color-green color-bg-green flex-vcenter">green</div>
+                    <div class="box sqr grid-2 color-blue color-bg-blue flex-vcenter">blue</div>
+                    <div class="box sqr grid-2 color-indigo color-bg-indigo flex-vcenter">indigo</div>
+                    <div class="box sqr grid-2 color-violet color-bg-violet flex-vcenter">violet</div>
+                </div>
             </div>
         </section>
         <section id="messages">
             <h4 class="title">Messages</h4>
-            <div class="msgs">
+            <div class="msgs cont">
                 <div class="msg notice">
                     <p>This is a message. It has <strong>strong</strong> and <a href="#">link</a>. <span class="plain">This is plain text.</span></p>
                 </div>
@@ -62,6 +70,103 @@
                 <h4>H4 Heading</h4>
                 <h5>H5 Heading</h5>
                 <h6>H6 Heading</h6>
+            </div>
+        </section>
+        <section class="fullscreen" id="fullscreen">
+            <div class="constrain">
+                <h4 class="title">Fullscreen</h4>
+            </div>
+            <p class="example-text">FULLSCREEN</p>
+        </section>
+        <section id="grid">
+            <h4 class="title">Grid Layout</h4>
+            <div class="fullscreen">
+                <p class="example-text">Fullscreen</p>
+            </div>
+            <div class="cont">
+                <div class="row">
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="grid-2">
+                        <p class="example-text">Grid-2</p>
+                    </div>
+                    <div class="grid-10">
+                        <p class="example-text">Grid-10</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="grid-3">
+                        <p class="example-text">Grid-3</p>
+                    </div>
+                    <div class="grid-9">
+                        <p class="example-text">Grid-9</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="grid-4">
+                        <p class="example-text">Grid-4</p>
+                    </div>
+                    <div class="grid-8">
+                        <p class="example-text">Grid-8</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="grid-5">
+                        <p class="example-text">Grid-5</p>
+                    </div>
+                    <div class="grid-7">
+                        <p class="example-text">Grid-7</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="grid-11">
+                        <p class="example-text">Grid-11</p>
+                    </div>
+                    <div class="grid-1">
+                        <p class="example-text">Grid-1</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="grid-12">
+                        <p class="example-text">Grid-12</p>
+                    </div>
+                </div>
             </div>
         </section>
         <section id="forms">
@@ -156,8 +261,13 @@
                 </figure>
             </article>
         </section>
-        <hr>
-        <br>
+        <section id="divisions">
+            <h4 class="title">Division</h4>
+            <h5 class="heading">Horizontal Rule</h5>
+            <hr>
+            <h5 class="heading">Breakline</h5>
+            <br>
+        </section>
         <section id="quotes">
             <h4 class="title">Quotes</h4>
             <blockquote></blockquote>
@@ -240,12 +350,15 @@
 
         </section>
 
-        <aside>
+        <aside class="constrain">
             <h4 class="title">Aside</h4>
         </aside>
     </main>
     <footer>
-        <address></address>
+        <section>
+            <address></address>
+            <small class="copyright">&copy; 20XX Light Industries</small>
+        </section>
     </footer>
     <script src="/js/all.min.js"></script>
 </body>
