@@ -33,7 +33,10 @@ module.exports = function(grunt) {
             default: {
 
                 files: {
-                    'dist/js/all.min.js': ['javascript/*.js', 'javascript/*/*.js']
+                    'dist/js/all.min.js': [
+                        'javascript/*.js',
+                        'javascript/*/*.js'
+                    ]
                 }
             }
         },
@@ -71,19 +74,23 @@ module.exports = function(grunt) {
         watch: {
             javascript: {
                 files: ['javascript/*.js'],
-                tasks: ['uglify']
+                tasks: ['jshint', 'uglify']
             },
             typescript: {
                 files: ['typescript/*.ts'],
-                tasks: ['clean:ts', 'ts', 'uglify']
+                tasks: ['clean:ts', 'ts', 'jshint', 'uglify']
             },
             sass: {
                 files: ['sass/*.scss', 'sass/**/*.scss'],
                 tasks: ['compass']
             },
-            html: {
-                files: ['html/*.html'],
-                tasks: ['minifyHtml']
+            partials: {
+                files: ['html/src/*.html', 'html/src/_includes/*.tpl'],
+                tasks: ['htmlall']
+            },
+            images: {
+                files: ['images/*.png', 'images/*.jpg', 'images/*.gif'],
+                tasks: ['image']
             }
         },
         "http-server": {
@@ -100,10 +107,25 @@ module.exports = function(grunt) {
         },
         htmllint: {
             all: ["html/*.html"]
+        },
+        includereplace: {
+            dist: {
+                options: {
+                    includesDir: 'html/src/_includes'
+                },
+                files: [{
+                    src: '*.html',
+                    dest: "html",
+                    expand: true,
+                    cwd: 'html/src'
+                }]
+            }
         }
     });
 
     require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
-    grunt.registerTask('default', ['jshint', 'sassdoc']);
-    grunt.registerTask('dev', ['compass', 'ts', 'uglify', 'minifyHtml']);
+    grunt.registerTask(  'default' ,[ 'jshint', 'sassdoc'                       ]);
+    grunt.registerTask(  'jsall'   ,[ 'clean:ts', 'ts', 'jshint', 'uglify'      ]);
+    grunt.registerTask(  'htmlall' ,[ 'includereplace', 'htmllint', 'minifyHtml']);
+    grunt.registerTask(  'start'   ,[ 'http-server', 'watch'                    ]);
 };
