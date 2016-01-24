@@ -1,4 +1,15 @@
 module.exports = function(grunt) {
+    var os = require('os');
+    var interfaces = os.networkInterfaces();
+    var addresses = [];
+    for (var k in interfaces) {
+        for (var k2 in interfaces[k]) {
+            var address = interfaces[k][k2];
+            if (address.family === 'IPv4' && !address.internal) {
+                addresses.push(address.address);
+            }
+        }
+    }
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         sassdoc: {
@@ -86,7 +97,7 @@ module.exports = function(grunt) {
             },
             partials: {
                 files: ['html/src/*.html', 'html/src/_includes/*.tpl'],
-                tasks: ['htmlall']
+                tasks: ['includereplace', 'minifyHtml']
             },
             images: {
                 files: ['images/*.png', 'images/*.jpg', 'images/*.gif'],
@@ -97,8 +108,8 @@ module.exports = function(grunt) {
             'dev': {
                 root: "dist",
                 port: 8080,
-                //host: "dev.jayfid.com",
-                runInBackground: true
+                host: addresses[1]
+                //runInBackground: true
             }
         },
         clean: {
@@ -106,7 +117,11 @@ module.exports = function(grunt) {
             dist: ["dist/css", "dist/js"]
         },
         htmllint: {
-            all: ["html/*.html"]
+            all: ["html/*.html"],
+            options: {
+                'id-class-ignore-regex': "^unlint",
+                force: true
+            }
         },
         includereplace: {
             dist: {
