@@ -18,5 +18,11 @@
             flex: 0 0 #{((100 / $col-count) * $index) + '%'};
         }
     }
+    .grid-distribute {
+        padding-left: 10px;
+        padding-right: 10px;
+        min-height: 10px;
+        flex: 1;
+    }
 }
 
