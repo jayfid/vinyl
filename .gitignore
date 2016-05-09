@@ -80,5 +80,6 @@ bower_components/
 build/
 .tscache
 *.swp
-
-docs/sass
+docs/
+dist/
+.tmp
