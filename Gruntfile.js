@@ -114,6 +114,15 @@ module.exports = function(grunt) {
                 }
             }
         },
+        "http-server": {
+            default: {
+                root: '.tmp',
+                port: 9001,
+                customPages: {
+                    '/bower_components/normalize-css/normalize.css': 'bower_components/normalize-css/normalize.css'
+                }
+            } 
+        },
         clean: {
             default: [".tmp"]
         },

@@ -1,1 +1,1 @@
-<script src="/js/all.min.js"></script>
+<script src="/scripts/all.min.js"></script>
