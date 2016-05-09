@@ -21,7 +21,7 @@ module.exports = function(grunt) {
             }
         },
         jshint: {
-            myFiles: ['javascript/*.js'],
+            myFiles: ['app/scripts/*.js'],
             options: {
                 jshintrc: 'grunt/.jshintrc'
             }
@@ -35,18 +35,17 @@ module.exports = function(grunt) {
         },
         ts: {
             default: {
-                outDir: 'javascript/ts',
-                src: 'typescript/*.ts',
-                baseDir: 'typescript'
+                outDir: '.tmp/scripts/typescript/',
+                src: 'app/scripts/typescript/*.ts',
+                baseDir: 'app/scripts/typescript'
             }
         },
         uglify: {
             default: {
 
                 files: {
-                    'dist/js/all.min.js': [
-                        'javascript/*.js',
-                        'javascript/*/*.js'
+                    '.tmp/scripts/all.min.js': [
+                        'app/scripts/**.js'
                     ]
                 }
             }
@@ -54,12 +53,11 @@ module.exports = function(grunt) {
         minifyHtml: {
             options: {
                 cdata: true
-                //quotes: true
             },
-            dist: {
+            default: {
                 files: {
-                    'dist/index.html': 'html/index.html',
-                    'dist/ui.html': 'html/ui.html'
+                    '.tmp/index.html': 'app/markup/index.html',
+                    '.tmp/ui.html': 'app/markup/ui.html'
                 }
             }
         },
@@ -76,64 +74,66 @@ module.exports = function(grunt) {
             dynamic: {
                 files: [{
                     expand: true,
-                    cwd: 'images',
+                    cwd: 'app/images',
                     filter: 'isFile',
                     src: '**.{png,jpg,gif}',
-                    dest: 'dist/img/'
+                    dest: '.tmp/images'
                 }]
             }
         },
         watch: {
-            javascript: {
-                files: ['javascript/*.js'],
+            scripts: {
+                files: ['app/scripts/*.js'],
                 tasks: ['jshint', 'uglify']
             },
             typescript: {
-                files: ['typescript/*.ts'],
+                files: ['app/scripts/typescript/*.ts'],
                 tasks: ['clean:ts', 'ts', 'jshint', 'uglify']
             },
             sass: {
-                files: ['sass/*.scss', 'sass/**/*.scss'],
+                files: ['app/styles/*.scss', 'app/styles/**/*.scss'],
                 tasks: ['compass']
             },
             partials: {
-                files: ['html/src/*.html', 'html/src/_includes/*.tpl'],
+                files: ['app/markup/src/*.html', 'app/markup/src/_includes/*.tpl'],
                 tasks: ['includereplace', 'minifyHtml']
             },
             images: {
-                files: ['images/*.png', 'images/*.jpg', 'images/*.gif'],
+                files: ['app/images/*.png', 'app/images/*.jpg', 'app/images/*.gif'],
                 tasks: ['image']
             }
         },
-        "http-server": {
-            'dev': {
-                root: "dist",
-                port: 8080,
-                host: addresses[1]
-                //runInBackground: true
+        connect: {
+            server: {
+                port: {
+                    port: 9001,
+                    base: '.tmp',
+                    livereload: true,
+                    keepalive: true,
+                    open: true
+                }
             }
         },
         clean: {
-            ts: ["javascript/ts"],
-            dist: ["dist/css", "dist/js"]
+            default: [".tmp"]
         },
         htmllint: {
-            all: ["html/*.html"],
+            all: ["app/markup/*.html"],
             options: {
                 'id-class-ignore-regex': "^unlint",
                 force: true
             }
         },
         includereplace: {
-            dist: {
+            default: {
                 options: {
-                    includesDir: 'html/src/_includes'
+                    includesDir: 'app/markup/src/_includes'
                 },
                 files: [{
                     src: '*.html',
-                    dest: "html",
+                    dest: "app/markup",
                     expand: true,
-                    cwd: 'html/src'
+                    cwd: 'app/markup/src'
                 }]
             }
         }
@@ -141,7 +141,7 @@ module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
     grunt.registerTask(  'default' ,[ 'jshint', 'sassdoc'                       ]);
-    grunt.registerTask(  'jsall'   ,[ 'clean:ts', 'ts', 'jshint', 'uglify'      ]);
+    grunt.registerTask(  'jsall'   ,[ 'ts', 'jshint', 'uglify'                  ]);
     grunt.registerTask(  'htmlall' ,[ 'includereplace', 'htmllint', 'minifyHtml']);
-    grunt.registerTask(  'start'   ,[ 'http-server', 'watch'                    ]);
+
 };
