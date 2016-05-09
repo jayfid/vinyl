@@ -56,8 +56,7 @@ module.exports = function(grunt) {
             },
             default: {
                 files: {
-                    '.tmp/index.html': 'app/markup/index.html',
-                    '.tmp/ui.html': 'app/markup/ui.html'
+                    'dist/index.html': '.tmp/index.html',
                 }
             }
         },
@@ -95,7 +94,7 @@ module.exports = function(grunt) {
                 tasks: ['compass']
             },
             partials: {
-                files: ['app/markup/src/*.html', 'app/markup/src/_includes/*.tpl'],
+                files: ['app/markup/*.html', 'app/markup/**/*.tpl'],
                 tasks: ['includereplace', 'minifyHtml']
             },
             images: {
@@ -127,7 +126,7 @@ module.exports = function(grunt) {
             default: [".tmp"]
         },
         htmllint: {
-            all: ["app/markup/*.html"],
+            all: [".tmp/*.html"],
             options: {
                 'id-class-ignore-regex': "^unlint",
                 force: true
@@ -136,21 +135,21 @@ module.exports = function(grunt) {
         includereplace: {
             default: {
                 options: {
-                    includesDir: 'app/markup/src/_includes'
+                    includesDir: 'app/markup/_includes'
                 },
                 files: [{
                     src: '*.html',
-                    dest: "app/markup",
+                    dest: ".tmp",
                     expand: true,
-                    cwd: 'app/markup/src'
+                    cwd: 'app/markup'
                 }]
             }
         }
     });
 
     require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
-    grunt.registerTask(  'default' ,[ 'jshint', 'sassdoc'                       ]);
-    grunt.registerTask(  'jsall'   ,[ 'ts', 'jshint', 'uglify'                  ]);
-    grunt.registerTask(  'htmlall' ,[ 'includereplace', 'htmllint', 'minifyHtml']);
+    grunt.registerTask(  'default' ,[ 'jshint'                     ]);
+    grunt.registerTask(  'scripts' ,[ 'ts', 'jshint', 'uglify'     ]);
+    grunt.registerTask(  'html'    ,[ 'includereplace', 'htmllint' ]);
 
 };
