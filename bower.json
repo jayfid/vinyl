@@ -1,0 +1,21 @@
+{
+  "name": "vinyl",
+  "description": "CSS Framework",
+  "main": "index.html",
+  "authors": [
+    "jayfid"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize-css": "normalize.css#^4.1.1"
+  }
+}

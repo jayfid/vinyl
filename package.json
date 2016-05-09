@@ -1,5 +1,5 @@
 {
-  "name": "vinyl",
+  "name": "vinylsiding",
   "version": "1.0.0",
   "description": "CSS Framework",
   "main": "index.js",
@@ -9,22 +9,25 @@
   },
   "devDependencies": {
     "clean": "^4.0.2",
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.7.0",
-    "grunt-contrib-compass": "^1.0.4",
-    "grunt-contrib-jshint": "^0.12.0",
-    "grunt-contrib-uglify": "^0.11.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-html": "^5.0.1",
-    "grunt-http-server": "^1.13.0",
-    "grunt-image": "^1.2.1",
-    "grunt-include-replace": "^3.2.0",
-    "grunt-minify-html": "^2.0.0",
-    "grunt-sassdoc": "^2.0.1",
-    "grunt-ts": "^5.3.2",
-    "load-grunt-tasks": "^3.4.0",
+    "coffee-script": "^1.10.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-compass": "^1.1.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-html": "^7.0.0",
+    "grunt-image": "^1.5.0",
+    "grunt-include-replace": "^4.0.1",
+    "grunt-minify-html": "^2.1.0",
+    "grunt-sassdoc": "^2.0.2",
+    "grunt-ts": "^5.5.0-beta.2",
+    "jshint": "^2.9.2",
+    "load-grunt-tasks": "^3.5.0",
+    "marked": "^0.3.5",
     "sassdoc": "^2.1.20",
-    "typescript": "^1.7.5"
+    "typescript": "^1.8.10"
   },
   "scripts": {
     "test": "echo 'untested.'"
@@ -38,5 +41,6 @@
   "bugs": {
     "url": "https://github.com/jayfid/vinyl/issues"
   },
-  "homepage": "https://github.com/jayfid/vinyl#readme"
+  "homepage": "https://github.com/jayfid/vinyl#readme",
+  "dependencies": {}
 }
