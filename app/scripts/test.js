@@ -9,7 +9,8 @@
     }
     for (var i = 0, len = document.images.length; i < len; i++) {
         if (!isImageOk(document.images[i])) {
-            document.images[i].src= "/img/pixel.png";
+            document.images[i].src= "/images/pixel.png";
         }
     }
+    
 })();

@@ -2,14 +2,19 @@
 <html>
 <head>
 @@include('page/head.tpl', {"title": "@@title"})
+<!--bower:css-->
+<!--endbower-->
 </head>
 <body>
     <header>
     @@include('page/nav.tpl')
     </header>
-    <main id="content">
+    <section id="content">
         @@include('@@main')
-    </main>
+    </section>
     @@include('page/footer.tpl')
+   
     @@include('page/scripts.tpl')
+     <!--bower:js-->
+    <!--endbower-->
 </body>
