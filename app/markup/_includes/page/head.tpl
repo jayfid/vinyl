@@ -5,5 +5,5 @@
     <meta name="description" content="none">
     <meta name="keywords" content="none">
     <title>@@title</title>
-    <link rel="stylesheet" href="/css/vinyl.css">
+    <link rel="stylesheet" href="/styles/vinyl.css">
 </head>
