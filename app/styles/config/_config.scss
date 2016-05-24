@@ -1,7 +1,6 @@
 /// generic config
 
-$debug: true !default;
-
+$debug: false !default;
 @import 'config/colors';
 @import 'config/media';
 @import 'config/grid';

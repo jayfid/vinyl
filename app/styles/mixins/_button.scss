@@ -1,28 +1,28 @@
 @mixin btn($flavor, $border, $bg, $text) {
     .btn-#{$flavor} {
-        border-color: colorGet($border);
-        color: colorGet($text);
-        background-color: colorGet($bg);
+        border-color: colorGet($border, 'base');
+        color: colorGet($text, 'base');
+        background-color: colorGet($bg, 'base');
         &:hover {
-            border-color: darken(colorGet($border), 20%);
-            color: darken(colorGet($text), 20%);
-            background-color: darken(colorGet($bg), 20%);
+            border-color: darken(colorGet($border, 'base'), 20%);
+            color: darken(colorGet($text, 'base'), 20%);
+            background-color: darken(colorGet($bg, 'base'), 20%);
         }
         &:active {
-            border-color: darken(colorGet($border), 40%);
-            color: darken(colorGet($text), 40%);
-            background-color: darken(colorGet($bg), 40%);
+            border-color: darken(colorGet($border, 'base'), 40%);
+            color: darken(colorGet($text, 'base'), 40%);
+            background-color: darken(colorGet($bg, 'base'), 40%);
         }
         &:disabled {
-            border-color: desaturate(colorGet($border), 80%);
-            color: desaturate(colorGet($text), 80%);
-            background-color: desaturate(colorGet($bg), 80%);
+            border-color: desaturate(colorGet($border, 'base'), 80%);
+            color: desaturate(colorGet($text, 'base'), 80%);
+            background-color: desaturate(colorGet($bg, 'base'), 80%);
         }
     }
 }
 
 @function btnColorDark($color) {
-    $hex: colorGet($color);
+    $hex: colorGet($color, 'base');
     @if isDark($color) {
         $newColor: desaturate(lighten($hex, 10%), 10%);
     }

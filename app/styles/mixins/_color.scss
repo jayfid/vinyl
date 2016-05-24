@@ -11,26 +11,29 @@
     @warn "invalid type for variable $color";
 }
 
-@function colorGet($key) {
-    @if map-has-key($palette, $key) {
-        @return map-get($palette, $key)
+@function colorGet($key, $palette_name) {
+    @if map-has-key($metapalette, $palette_name) {
+        $selected_palette: map-get($metapalette, $palette_name);
+        @if map-has-key($selected_palette, $key) {
+            @return map-get($selected_palette, $key);
+        }
     }
-    @warn "Unknown `#{$key}` in palette";
+    @warn "Unknown `#{$key}` in palette #{palette+name}";
     @return null;
 }
 
-@function darkColorGet($key) {
-    @if map-has-key($palette-dark, $key) {
-        @return map-get($palette-dark, $key);
-    }
-    @warn "Unknown `#{$key}` in palette-dark";
-    @return null;
-}
+// @function darkColorGet($key) {
+//     @if map-has-key($palette-dark, $key) {
+//         @return map-get($palette-dark, $key);
+//     }
+//     @warn "Unknown `#{$key}` in palette-dark";
+//     @return null;
+// }
 
-@function getGrey($key) {
-    @if map-has-key($greys, $key) {
-        @return map-get($greys, $key);
-    }
-    @warn "Unknown `#{$key}` in greys";
-    @return null;
-}
+// @function getGrey($key) {
+//     @if map-has-key($greys, $key) {
+//         @return map-get($greys, $key);
+//     }
+//     @warn "Unknown `#{$key}` in greys";
+//     @return null;
+// }

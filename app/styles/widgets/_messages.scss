@@ -4,10 +4,10 @@
     display: block;
     p {
         border-radius: 3px;
-        border: 2px solid;
-        border-left-width: 15px;
+        border: 1px solid;
+        //border-left-width: 15px;
         padding: 1.25rem;
-        background-color: colorGet('white');
+        background-color: colorGet('white', 'base');
     }
     a {
         //color: inherit;
@@ -16,10 +16,10 @@
         color: $text-color-default;
     }
     &.notice p {
-        border-color: colorGet('orange');
-        color: darkColorGet('orange');
+        border-color: colorGet('orange', 'base');
+        color: colorGet('orange', 'dark');
         a {
-            color: darken(darkColorGet('orange'), 20%);
+            color: darken(colorGet('orange'), 20%);
         }
     }
     &.error p {
