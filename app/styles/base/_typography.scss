@@ -10,43 +10,48 @@ body {
 body * {
     font-family: inherit;
 }
-
 @each $level, $size in $headers {
     #{$level} {
         @include fontSize($size);
     }
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: $font-weight-bold;
-    margin: 0 0 $gap-base 0;
-    line-height: #{$line-height-multiple + 'em'};
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight   : $font-weight-bold;
+    margin        : 0 0 $gap-base;
+    line-height   : #{$line-height-multiple + 'em'};
     letter-spacing: 0.01em;
+
     &.title {
-        border-bottom: 1px solid;
+        border-bottom : 1px solid;
         text-transform: uppercase;
     }
 
     &.heading {
-        text-indent: 1rem;
-        border-color: #B7B7B7;
+        text-indent     : 1rem;
+        border-color    : #B7B7B7;
         background-color: #EFEFEF;
-        border-width: 1px 0;
-        border-style: solid;
-        padding: 10px 0;
+        border-width    : 1px 0;
+        border-style    : solid;
+        padding         : 10px 0;
     }
 }
 
 p {
     line-height: #{$line-height-multiple + 'em'};
-    margin: 0 0 $gap-base 0;
+    margin     : 0 0 $gap-base;
 }
 
 .example-text {
-    padding: 5px 0;
+    padding         : 5px 0;
     background-color: #DCDCDC;
-    text-align: center;
-    border-radius: 3px;
+    text-align      : center;
+    border-radius   : 3px;
 }
 
 .text-center {
@@ -57,5 +62,5 @@ p {
 // <small> is suitable for disclaimers, caveats, legal restrictions, or copyrights
 
 small.copyright {
-    font-size: .75rem;
+    font-size: 0.75rem;
 }

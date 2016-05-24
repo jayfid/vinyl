@@ -3,59 +3,66 @@ body {
         box-sizing: border-box;
     }
 }
-section, .constrain {
+
+.constrain,
+section {
     max-width: maxBreakpoint();
-    margin: auto;
+    margin   : auto;
+
     &.fullscreen {
         max-width: initial;
     }
 }
+
 .box {
-    //padding: $gap-base;
-    //margin: $gap-base / 2;
     border-bottom: 20px solid;
-    text-align: center;
-    overflow: hidden;
+    text-align   : center;
+    overflow     : hidden;
 }
+
 .flex-vcenter {
-    display: ms-flexbox;
-    display: webkit-flexbox;
-    display: flex;
-    -ms-flex-align: center;
+    display            : ms-flexbox;
+    display            : webkit-flexbox;
+    display            : flex;
+    -ms-flex-align     : center;
     -webkit-align-items: center;
-    -webkit-box-align: center;
-    align-items: center;
+    -webkit-box-align  : center;
+    align-items        : center;
+
     & > * {
         flex: 1;
     }
 }
+
 .cont {
-    position: relative;
+    position : relative;
     max-width: 100%;
-    overflow: hidden;
+    overflow : hidden;
 }
+
 .no-overflow {
     overflow: hidden;
 }
 
 .row {
     &.vcenter {
-        align-items: center;
+        align-items    : center;
         justify-content: center;
     }
 }
+
 .cont {
     padding: 0 10px;
 }
+
 @media screen and (min-width: #{map-get($breakpoints, 'milli')}px) {
-    .cont {
-       
-    }
+    .cont {}
     @include boxes();
+
     .row {
-        display: flex;
-        flex-wrap: wrap;
-        margin-left: -10px;
+        display     : flex;
+        flex-wrap   : wrap;
+        margin-left : -10px;
         margin-right: -10px;
     }
 }
@@ -64,10 +71,9 @@ section, .constrain {
     .cont {
         padding: 0;
     }
+
     .row {
-        margin-left: 0;
+        margin-left : 0;
         margin-right: 0;
     }
 }
-
-//@include 
