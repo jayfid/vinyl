@@ -1,0 +1,122 @@
+/// generic config
+
+$debug: false !default;
+
+/// color vars
+/// palettes of palettes
+
+$color-body-bg: #fff;
+
+$palette: (
+    'black': #000,
+    'white': #fff,
+    'red': #d34c4c,
+    'orange': #ea9847,
+    'yellow': #f9ed5f,
+    'green': #55e046,
+    'darkgreen': #32ad25,
+    'blue': #3a9ef9,
+    'indigo': #904cf2,
+    'violet': #eb59ef
+);
+
+$palette-dark: (
+    'red': #a53535,
+    'orange': #cc803b,
+    'yellow': #e2d156,
+    'green': #0fd30f,
+    'darkgreen': #298a1f,
+    'blue': #0872c1,
+    'indigo': #602cc4,
+    'violet': #bc2ac4
+);
+
+$greys: (
+    'xxlight': #f5f5f5,
+    'xlight': #d3d3d3,
+    'light': #a5a5a5,
+    'xmedium': #5b5b5b,
+    'medium': #333,
+    'blue': #2a3438,
+    'darkblue': #171c1e
+);
+
+$metapalette: (
+  'base': $palette,
+  'dark': $palette-dark,
+  'grey': $greys
+);
+
+
+/*media vars*/
+
+/// grid vars
+
+$gap-base: 1rem;
+
+$col-count: 12;
+
+$breakpoints: (
+    "yocto": 0,
+    "atto": 360,
+    "nano": 408,
+    "milli": 768,
+    "centi": 924,
+    "deci": 1188
+);
+
+$scrollbar-width: 17;
+
+/*typography vars*/
+$font-base-value: 14;
+
+$font-size-base: $font-base-value + 'px';
+
+$font-size-header: 1 * $font-base-value;
+
+$font-family-sans: "Helvetica Neue", helvetica, arial, sans-serif;
+/* From https://css-tricks.com/snippets/css/font-stacks/ */
+$font-family-serif: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+$font-family-code: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+/*  */
+
+$font-family-base: $font-family-sans;
+
+$font-weight-xtra-light: 200;
+$font-weight-light: 300;
+$font-weight-base: 400;
+$font-weight-bold: 700;
+$font-weight-xtra-bold: 900;
+
+$line-height-multiple: 1.25;
+
+$headers: (
+    "h1": $font-size-header * 2.25,
+    "h2": $font-size-header * 2,
+    "h3": $font-size-header * 1.75,
+    "h4": $font-size-header * 1.5,
+    "h5": $font-size-header * 1.25,
+    "h6": $font-size-header
+);
+
+$text-color-default: map-get($palette, 'black');
+
+/// button vars
+
+$btn-radius: 5;
+
+$btn-flavors: (
+    // "std": ("border": {color}, "bg": {color}, "text": {color})
+    "std": ("border": 'black', "bg": 'white', "text": 'black')
+);
+
+/*message and alert vars*/
+
+////
+/// Intended usage: elem1 {z-index: $z-index-mid} elem-over-elem1 {z-index: $z-index-mid + 1}
+////
+
+$z-index-base: 1;
+$z-index-mid: 10;
+$z-index-high: 100;
+$z-index-modal: 1000;

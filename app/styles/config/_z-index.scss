@@ -1,8 +1,0 @@
-////
-/// Intended usage: elem1 {z-index: $z-index-mid} elem-over-elem1 {z-index: $z-index-mid + 1}
-////
-
-$z-index-base: 1;
-$z-index-mid: 10;
-$z-index-high: 100;
-$z-index-modal: 1000;

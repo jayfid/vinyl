@@ -2,14 +2,12 @@
 /// File level annotation test
 /// @author jayfid
 ////
-@import 'config/config';
-@import 'mixins/mixins';
-
+@import 'config';
+@import 'mixins';
 
 @import '/bower_components/normalize-css/normalize.css';
 
 @import 'base/base';
-@import 'widgets/widgets';
 
 @if $debug {
     html * {

@@ -1,0 +1,143 @@
+/// usage: .elem { @extend %clearfix;}
+%clearfix {
+    *zoom: 1;
+    &:before, &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+/// usage: .elem { @extend %visuallyhidden;}
+%visuallyhidden {
+    margin: -1px;
+    padding: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    clip: rect(0,0,0,0,0);
+    position: absolute;
+}
+
+@function isDark($color) {
+    @if type-of($color) == 'color' {
+        $darken: darken($color, 50%);
+        @if $darken == #000 {
+            @return true;
+        }
+        @else {
+            @return false;
+        }
+    }
+    @warn "invalid type for variable $color";
+}
+
+/// color mixinis
+
+@function colorGet($key, $palette_name) {
+    @if map-has-key($metapalette, $palette_name) {
+        $selected_palette: map-get($metapalette, $palette_name);
+        @if map-has-key($selected_palette, $key) {
+            @return map-get($selected_palette, $key);
+        }
+    }
+    @warn "Unknown `#{$key}` in palette #{palette+name}";
+    @return null;
+}
+
+// @function darkColorGet($key) {
+//     @if map-has-key($palette-dark, $key) {
+//         @return map-get($palette-dark, $key);
+//     }
+//     @warn "Unknown `#{$key}` in palette-dark";
+//     @return null;
+// }
+
+// @function getGrey($key) {
+//     @if map-has-key($greys, $key) {
+//         @return map-get($greys, $key);
+//     }
+//     @warn "Unknown `#{$key}` in greys";
+//     @return null;
+// }
+
+/// grid mixins
+
+@function maxBreakpoint($breakpoints: $breakpoints) {
+    $max: 0;
+    @each $tag, $px in $breakpoints {
+        @if $px > $max {
+            $max: $px;
+        }
+    }
+    @return #{$max + 'px'};
+}
+
+
+@mixin boxes($col-count: $col-count) {
+    @for $index from 1 through $col-count {
+        .grid-#{$index} {
+            padding-left: 10px;
+            padding-right: 10px;
+            min-height: 1px;
+            flex: 0 0 #{((100 / $col-count) * $index) + '%'};
+        }
+    }
+    .grid-distribute {
+        padding-left: 10px;
+        padding-right: 10px;
+        min-height: 10px;
+        flex: 1;
+    }
+}
+
+/// typography mixins
+
+@mixin fontSize($size) {
+    font-size: #{$size + 'px'};
+    font-size: calculateRem($size);
+}
+
+@function calculateRem($size) {
+    $remSize: $size / $font-base-value;
+    @return #{$remSize}rem;
+}
+
+/// button mixins
+
+@mixin btn($flavor, $border, $bg, $text) {
+    .btn-#{$flavor} {
+        border-color: colorGet($border, 'base');
+        color: colorGet($text, 'base');
+        background-color: colorGet($bg, 'base');
+        &:hover {
+            border-color: darken(colorGet($border, 'base'), 20%);
+            color: darken(colorGet($text, 'base'), 20%);
+            background-color: darken(colorGet($bg, 'base'), 20%);
+        }
+        &:active {
+            border-color: darken(colorGet($border, 'base'), 40%);
+            color: darken(colorGet($text, 'base'), 40%);
+            background-color: darken(colorGet($bg, 'base'), 40%);
+        }
+        &:disabled {
+            border-color: desaturate(colorGet($border, 'base'), 80%);
+            color: desaturate(colorGet($text, 'base'), 80%);
+            background-color: desaturate(colorGet($bg, 'base'), 80%);
+        }
+    }
+}
+
+@function btnColorDark($color) {
+    $hex: colorGet($color, 'base');
+    @if isDark($color) {
+        $newColor: desaturate(lighten($hex, 10%), 10%);
+    }
+    @else {
+        $newColor: saturate(darken($hex, 10%), 10%);
+    }
+    @return $newColor;
+}
