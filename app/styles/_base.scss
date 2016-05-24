@@ -1,0 +1,237 @@
+/*typography vars*/
+html {
+    font-size: $font-size-base;
+}
+
+body {
+    font-family: $font-family-base;
+}
+
+body * {
+    font-family: inherit;
+}
+@each $level, $size in $headers {
+    #{$level} {
+        @include fontSize($size);
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight   : $font-weight-bold;
+    margin        : 0 0 $gap-base;
+    line-height   : #{$line-height-multiple + 'em'};
+    letter-spacing: 0.01em;
+
+    &.title {
+        border-bottom : 1px solid;
+        text-transform: uppercase;
+    }
+
+    &.heading {
+        text-indent     : 1rem;
+        border-color    : #B7B7B7;
+        background-color: #EFEFEF;
+        border-width    : 1px 0;
+        border-style    : solid;
+        padding         : 10px 0;
+    }
+}
+
+p {
+    line-height: #{$line-height-multiple + 'em'};
+    margin     : 0 0 $gap-base;
+}
+
+.example-text {
+    padding         : 5px 0;
+    background-color: #DCDCDC;
+    text-align      : center;
+    border-radius   : 3px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+// See https://www.w3.org/TR/html5/text-level-semantics.html#the-small-element.
+// <small> is suitable for disclaimers, caveats, legal restrictions, or copyrights
+
+small.copyright {
+    font-size: 0.75rem;
+}
+
+body {
+    background-color: $color-body-bg;
+}
+
+@each $color, $hex in $palette {
+    .color-bg-#{$color} {
+        background-color: #{$hex};
+        @if isDark($hex) {
+             color: lighten($hex, 30%);
+        }
+        @else {
+            color: darken($hex, 30%);
+        }
+    }
+}
+
+/// color vars
+
+a:not([class]),
+a:not([class]):visited,
+a[class=""],
+a[class=""]:visited {
+    color: colorGet('blue', 'dark');
+}
+
+/// grid vars
+body {
+    * {
+        box-sizing: border-box;
+    }
+}
+
+.constrain,
+section {
+    max-width: maxBreakpoint();
+    margin   : auto;
+
+    &.fullscreen {
+        max-width: initial;
+    }
+}
+
+.box {
+    border-bottom: 20px solid;
+    text-align   : center;
+    overflow     : hidden;
+}
+
+.flex-vcenter {
+    display            : ms-flexbox;
+    display            : webkit-flexbox;
+    display            : flex;
+    -ms-flex-align     : center;
+    -webkit-align-items: center;
+    -webkit-box-align  : center;
+    align-items        : center;
+
+    & > * {
+        flex: 1;
+    }
+}
+
+.cont {
+    position : relative;
+    max-width: 100%;
+    overflow : hidden;
+}
+
+.no-overflow {
+    overflow: hidden;
+}
+
+.row {
+    &.vcenter {
+        align-items    : center;
+        justify-content: center;
+    }
+}
+
+.cont {
+    padding: 0 10px;
+}
+
+@media screen and (min-width: #{map-get($breakpoints, 'milli')}px) {
+    .cont {}
+    @include boxes();
+
+    .row {
+        display     : flex;
+        flex-wrap   : wrap;
+        margin-left : -10px;
+        margin-right: -10px;
+    }
+}
+
+@media screen and (min-width: #{map-get($breakpoints, 'deci') + $scrollbar-width}px) {
+    .cont {
+        padding: 0;
+    }
+
+    .row {
+        margin-left : 0;
+        margin-right: 0;
+    }
+}
+
+@each $flavor, $colors in $btn-flavors {
+    @include btn($flavor, map-get($colors, 'border'), map-get($colors, 'bg'), map-get($colors, 'text'));
+}
+
+.btn {
+    cursor: pointer;
+    &:disabled {
+        cursor: default;
+    }
+}
+
+/*message and alert widget*/
+
+.msg {
+    display: block;
+    p {
+        border-radius: 3px;
+        border: 1px solid;
+        //border-left-width: 15px;
+        padding: 1.25rem;
+        background-color: colorGet('white', 'base');
+    }
+    a {
+        //color: inherit;
+    }
+    .plain {
+        color: $text-color-default;
+    }
+    &.notice p {
+        border-color: colorGet('orange', 'base');
+        color: colorGet('orange', 'dark');
+        a {
+            color: darken(colorGet('orange'), 20%);
+        }
+    }
+    &.error p {
+        border-color: colorGet('red');
+        color: darkColorGet('red');
+        a {
+            color: darken(darkColorGet('red'), 20%);
+        }
+    }
+    &.info p {
+        border-color: colorGet('blue');
+        color: darkColorGet('blue');
+        a {
+            color: darken(darkColorGet('blue'), 20%);
+        }
+    }
+    &.success p {
+        border-color: colorGet('darkgreen');
+        color: darkColorGet('darkgreen');
+        a {
+            color: darken(darkColorGet('darkgreen'), 20%);
+        }
+    }
+}
+a.msg {
+    //text-decoration: none;
+    &:hover p {
+        //text-decoration: underline;
+        background-color: getGrey('xxlight');
+    }
+}
