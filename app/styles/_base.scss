@@ -1,8 +1,13 @@
 /// typography
+
+// set a root font size for use with em/rem units
+// default: 14px
 html {
     font-size: $font-size-base;
 }
 
+// let all elements have an implicit font family.  especially useful when
+// embedding iframes.
 body {
     font-family: $font-family-base;
 }
@@ -10,6 +15,9 @@ body {
 body * {
     font-family: inherit;
 }
+
+// set a fairly arbitrary heading styles.  assuming this will be
+// overwritten in local css in most projects.
 @each $level, $size in $headers {
     #{$level} {
         @include fontSize($size);
@@ -24,7 +32,7 @@ h5,
 h6 {
     font-weight   : $font-weight-bold;
     margin        : 0 0 $gap-base;
-    line-height   : #{$line-height-multiple + 'em'};
+    line-height   : $line-height-multiple * 1em;
     letter-spacing: 0.01em;
 
     &.title {
@@ -42,30 +50,35 @@ h6 {
     }
 }
 
+// bowtie for h# elements
 .fancy-dan::after {
   height: 0;
-  border-bottom: 3px solid #e36d6e;
+  border-bottom: calculateRem(3) solid #e36d6e;
   display: block;
-  width: 50px;
-  padding-top: 3px;
+  width: calculateRem(50);
+  padding-top: calculateRem(3);
   margin: 0 auto;
   content: "";
   line-height: 0;
 }
 
+// dribbblefied near-black text block with large line-height
 .display-text {
   font-size: 1rem;
   line-height: 2.4rem;
   color: #232323;
 }
 
+// 1000101
 code, .code-text {
   font-family: $font-family-code;
+  white-space: pre;
 }
 
+
 p {
-    line-height: #{$line-height-multiple + 'em'};
-    margin     : 0 0 $gap-base;
+    line-height: $line-height-multiple * 1em;
+    margin     : 0 0 1rem;
 }
 
 .example-text {
@@ -105,11 +118,11 @@ p {
 }
 
 .noselect {
-  @include noselect;
+  @extend %noselect;
 }
 
 .clearfix {
-  @include clearfix;
+   @extend %clearfix;
 }
 
 // https://www.w3.org/TR/html5/text-level-semantics.html#the-small-element.

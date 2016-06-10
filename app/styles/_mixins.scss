@@ -1,28 +1,4 @@
-/// usage: .elem { @extend %clearfix;}
-%clearfix {
-    *zoom: 1;
-    &:before, &:after {
-        content: "";
-        display: table;
-    }
-    &:after {
-        clear: both;
-    }
-}
-
-/// usage: .elem { @extend %visuallyhidden;}
-%visuallyhidden {
-    margin: -1px;
-    padding: 0;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    clip: rect(0,0,0,0,0);
-    position: absolute;
-    visibility: hidden;
-}
-
+// why would a grown man put logic in his STYLE LAYER.
 @function isDark($color) {
     @if type-of($color) == 'color' {
         $darken: darken($color, 50%);
@@ -38,6 +14,8 @@
 
 /// color mixinis
 
+// returns hex from a combination of color and palette names.
+// mainly to for convenience and consistency
 @function colorGet($key, $palette_name) {
     @if map-has-key($metapalette, $palette_name) {
         $selected_palette: map-get($metapalette, $palette_name);
@@ -49,24 +27,11 @@
     @return null;
 }
 
-// @function darkColorGet($key) {
-//     @if map-has-key($palette-dark, $key) {
-//         @return map-get($palette-dark, $key);
-//     }
-//     @warn "Unknown `#{$key}` in palette-dark";
-//     @return null;
-// }
-
-// @function getGrey($key) {
-//     @if map-has-key($greys, $key) {
-//         @return map-get($greys, $key);
-//     }
-//     @warn "Unknown `#{$key}` in greys";
-//     @return null;
-// }
-
 /// grid mixins
 
+// returns the largest breakpoint in a list of breakpoints.
+// used to allow modifications to config variables to casscade to various
+// dependent css rules.
 @function maxBreakpoint($breakpoints: $breakpoints) {
     $max: 0;
     @each $tag, $px in $breakpoints {
@@ -77,7 +42,8 @@
     @return #{$max + 'px'};
 }
 
-
+// prints out the list of grid classes
+// not very important since grids are surprisingly useless.
 @mixin boxes($col-count: $col-count) {
     @for $index from 1 through $col-count {
         .grid-#{$index} {
@@ -95,15 +61,18 @@
     }
 }
 
+// print a list of containing divs in incremental widths of ~ 100px
+// vertical content bars. occasionally useful
 @mixin alleys($col-count: $col-count) {
   @for $index from 1 through $col-count {
     .alley-#{$index}00 {
       max-width: 100%;
-      width: $index * 100px;
+      width: calculateRem($index * 100);
     }
   }
 }
 
+//
 @mixin paddings($limit: 20) {
   @for $index from 1 through $limit {
     $increment: $index * 5;
@@ -124,18 +93,27 @@
 
 /// typography mixins
 
+// shorthand to print a rem font-size with a pixel backup.  not using em
+// because it has the ability to blow up.
 @mixin fontSize($size) {
-    font-size: #{$size + 'px'};
+    font-size: $size * 1px;
     font-size: calculateRem($size);
 }
 
+// return rem equivalent for supplied pixel measurement, without units
+@function calculateRemScale($size) {
+  @return round(($size / $font-base-value) * 1000000) /1000000;
+}
+
+// return rem equivalent for supplied pixel measurement, with units
 @function calculateRem($size) {
-    $remSize: $size / $font-base-value;
-    @return #{$remSize}rem;
+    @return calculateRemScale($size) * 1rem;
 }
 
 /// button mixins
 
+// prints list of button color variant classes.
+// auto build button styling by updating config.
 @mixin btn($flavor, $border, $bg, $text) {
     .btn-#{$flavor} {
         border-color: colorGet($border, 'base');
@@ -159,6 +137,7 @@
     }
 }
 
+
 @function btnColorDark($color) {
     $hex: colorGet($color, 'base');
     @if isDark($color) {
@@ -171,9 +150,12 @@
 }
 
 
-// credit - modified from http://stackoverflow.com/a/4407335
+/// a list of generic attributes you may want to add to class
+///
 
-@mixin noselect {
+// credit - modified from http://stackoverflow.com/a/4407335
+/// usage: .elem { @extend %noselect;}
+%noselect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -kthml-user-select: none;
@@ -182,11 +164,27 @@
   user-select: none;
 }
 
-@mixin clearfix {
-  &::after {
-    content: "";
-    line-height: 0;
-    display: table;
-    clear: both;
-  }
+/// usage: .elem { @extend %clearfix;}
+%clearfix {
+    *zoom: 1;
+    &:before, &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+/// usage: .elem { @extend %visuallyhidden;}
+%visuallyhidden {
+    margin: -1px;
+    padding: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    clip: rect(0,0,0,0,0);
+    position: absolute;
+    visibility: hidden;
 }
