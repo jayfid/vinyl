@@ -1,4 +1,4 @@
-/*typography vars*/
+/// typography
 html {
     font-size: $font-size-base;
 }
@@ -42,6 +42,27 @@ h6 {
     }
 }
 
+.fancy-dan::after {
+  height: 0;
+  border-bottom: 3px solid #e36d6e;
+  display: block;
+  width: 50px;
+  padding-top: 3px;
+  margin: 0 auto;
+  content: "";
+  line-height: 0;
+}
+
+.display-text {
+  font-size: 1rem;
+  line-height: 2.4rem;
+  color: #232323;
+}
+
+code, .code-text {
+  font-family: $font-family-code;
+}
+
 p {
     line-height: #{$line-height-multiple + 'em'};
     margin     : 0 0 $gap-base;
@@ -54,15 +75,48 @@ p {
     border-radius   : 3px;
 }
 
+.text-left {
+  text-align: left;
+}
+
 .text-center {
     text-align: center;
 }
 
-// See https://www.w3.org/TR/html5/text-level-semantics.html#the-small-element.
+.text-right {
+  text-align: right;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.lean {
+  margin: 0;
+  padding: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.noselect {
+  @include noselect;
+}
+
+.clearfix {
+  @include clearfix;
+}
+
+// https://www.w3.org/TR/html5/text-level-semantics.html#the-small-element.
 // <small> is suitable for disclaimers, caveats, legal restrictions, or copyrights
 
 small.copyright {
-    font-size: 0.75rem;
+    @include fontSize(12);
 }
 
 body {
@@ -72,16 +126,22 @@ body {
 @each $color, $hex in $palette {
     .color-bg-#{$color} {
         background-color: #{$hex};
-        @if isDark($hex) {
-             color: lighten($hex, 30%);
+
+        &.complimentary-color {
+          @if isDark($hex) {
+               color: lighten($hex, 30%);
+          }
+          @else {
+              color: darken($hex, 30%);
+          }
         }
-        @else {
-            color: darken($hex, 30%);
-        }
+    }
+    .color-text-#{$color} {
+      color: #{$hex};
     }
 }
 
-/// color vars
+/// color
 
 a:not([class]),
 a:not([class]):visited,
@@ -90,7 +150,7 @@ a[class=""]:visited {
     color: colorGet('blue', 'dark');
 }
 
-/// grid vars
+/// grid
 body {
     * {
         box-sizing: border-box;
@@ -131,10 +191,15 @@ section {
     position : relative;
     max-width: 100%;
     overflow : hidden;
+    padding: 0 1.75rem;
 }
 
 .no-overflow {
     overflow: hidden;
+}
+
+.lane {
+  margin: 0 auto;
 }
 
 .row {
@@ -144,14 +209,23 @@ section {
     }
 }
 
-.cont {
-    padding: 0 10px;
+.card {
+    background-color: #f1f1f1;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #ababab;
 }
+
+footer {
+  overflow: hidden;
+}
+
+@include paddings();
 
 @media screen and (min-width: #{map-get($breakpoints, 'milli')}px) {
     .cont {}
     @include boxes();
-
+    @include alleys();
     .row {
         display     : flex;
         flex-wrap   : wrap;
@@ -182,19 +256,15 @@ section {
     }
 }
 
-/*message and alert widget*/
+/// message and alert widget
 
 .msg {
     display: block;
     p {
         border-radius: 3px;
         border: 1px solid;
-        //border-left-width: 15px;
         padding: 1.25rem;
         background-color: colorGet('white', 'base');
-    }
-    a {
-        //color: inherit;
     }
     .plain {
         color: $text-color-default;
@@ -203,35 +273,164 @@ section {
         border-color: colorGet('orange', 'base');
         color: colorGet('orange', 'dark');
         a {
-            color: darken(colorGet('orange'), 20%);
+            color: darken(colorGet('orange', 'base'), 20%);
         }
     }
     &.error p {
-        border-color: colorGet('red');
-        color: darkColorGet('red');
+        border-color: colorGet('red', 'base');
+        color: colorGet('red', 'dark');
         a {
-            color: darken(darkColorGet('red'), 20%);
+            color: darken(colorGet('red', 'dark'), 20%);
         }
     }
     &.info p {
-        border-color: colorGet('blue');
-        color: darkColorGet('blue');
+        border-color: colorGet('blue', 'base');
+        color: colorGet('blue', 'dark');
         a {
-            color: darken(darkColorGet('blue'), 20%);
+            color: darken(colorGet('blue', 'dark'), 20%);
         }
     }
     &.success p {
-        border-color: colorGet('darkgreen');
-        color: darkColorGet('darkgreen');
+        border-color: colorGet('darkgreen', 'base');
+        color: colorGet('darkgreen', 'dark');
         a {
-            color: darken(darkColorGet('darkgreen'), 20%);
+            color: darken(colorGet('darkgreen', 'dark'), 20%);
         }
     }
 }
 a.msg {
-    //text-decoration: none;
     &:hover p {
-        //text-decoration: underline;
-        background-color: getGrey('xxlight');
+        background-color: colorGet('xxlight', 'grey');
     }
+}
+
+.divide-above {
+  padding-top: 50px;
+  border-top: 1px solid #d6dfe3;
+}
+
+::-webkit-input-placeholder {
+    color: $placeholder-color;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    color: $placeholder-color;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    color: $placeholder-color;
+}
+
+:-ms-input-placeholder {
+    color: $placeholder-color;
+}
+
+*:disabled {
+    color: $placeholder-color-disabled;
+
+    &::-webkit-input-placeholder {
+        color: $placeholder-color-disabled;
+    }
+
+    &:-moz-placeholder {
+        /* Firefox 18- */
+        color: $placeholder-color-disabled;
+    }
+
+    &::-moz-placeholder {
+        /* Firefox 19+ */
+        color: $placeholder-color-disabled;
+    }
+
+    &:-ms-input-placeholder {
+        color: $placeholder-color-disabled;
+    }
+}
+
+.style-a {
+  .input {
+    border-radius: 3px;
+    border: 1px solid $accent-color;
+    padding-top: 1.429rem;
+    padding-bottom: 1.429rem;
+
+    input, .prefix, .suffix, .action {
+      display: inline-block;
+      font-size: 1.286rem;
+    }
+    .prefix, .suffix, .action {
+    color: $accent-color;
+    }
+    .suffix {
+      margin: 0 0 0 .5rem;
+    }
+    .prefix {
+      margin: 0 .5rem 0 0;
+    }
+    .action {
+      margin: 0;
+      float: right;
+    }
+  }
+
+  .input-group {
+    .input {
+      border-bottom-width: 0;
+      &:first-child {
+        border-radius: 3px 3px 0 0;
+      }
+      &:last-child {
+        border-radius: 0 0 3px 3px;
+        border-bottom-width: 1px;
+      }
+    }
+  }
+
+  button {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid $accent-color;
+    outline: none;
+    appearance: none;
+    background: $accent-color;
+    color: #fff;
+    text-align: center;
+    padding: 1.429rem 0;
+    font-size: 1.286rem;
+    cursor: pointer;
+    transition: background-color .2s;
+    &:hover {
+      background-color: #299485 !important;
+      border-color: #299485;
+      outline: none;
+      appearance: none;
+      box-shadow: none;
+    }
+    &:active {
+      background-color: #fff !important;
+      color: $accent-color !important;
+      outline: none;
+      appearance: none;
+      box-shadow: none;
+    }
+    &:focus {
+      outline: none;
+      appearance: none;
+      box-shadow: none;
+    }
+  }
+
+  .button-group {
+
+    & button:first-child {
+      border-radius: 8px 8px 0 0;
+    }
+    & button:last-child {
+      border-radius: 0 0 8px 8px;
+      background-color: #30a494;
+      border-top-color: #1a8374;
+    }
+  }
 }
