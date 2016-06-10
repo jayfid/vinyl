@@ -7,6 +7,10 @@ $debug: false !default;
 
 $color-body-bg: #fff;
 
+// It's rather handy having a palette of colors to work off of.  Each group
+// of complientary colors can be reused to enforce consistency and save time.
+// To store this logically, we maintain a "palette of palettes" (take that, dig)
+
 $palette: (
     'black': #000,
     'white': #fff,
@@ -26,7 +30,7 @@ $palette-dark: (
     'yellow': #e2d156,
     'green': #0fd30f,
     'darkgreen': #298a1f,
-    'blue': #0872c1,
+    'blue': #3d63df,
     'indigo': #602cc4,
     'violet': #bc2ac4
 );
@@ -47,12 +51,16 @@ $metapalette: (
   'grey': $greys
 );
 
+$placeholder-color: #454545;
+$placeholder-color-disabled: #999;
 
-/*media vars*/
+$accent-color: #29bba6;
+
+/// media vars
 
 /// grid vars
 
-$gap-base: 1rem;
+$gap-base: 2rem;
 
 $col-count: 12;
 
@@ -67,18 +75,17 @@ $breakpoints: (
 
 $scrollbar-width: 17;
 
-/*typography vars*/
+/// typography vars
 $font-base-value: 14;
 
-$font-size-base: $font-base-value + 'px';
+$font-size-base: $font-base-value * 1px;
 
-$font-size-header: 1 * $font-base-value;
+$font-size-header: $font-base-value;
 
 $font-family-sans: "Helvetica Neue", helvetica, arial, sans-serif;
-/* From https://css-tricks.com/snippets/css/font-stacks/ */
+// Modified from https://css-tricks.com/snippets/css/font-stacks/
 $font-family-serif: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
-$font-family-code: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
-/*  */
+$font-family-code:  "Nimbus Mono L", Monaco, "Courier New", Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Courier, monospace;
 
 $font-family-base: $font-family-sans;
 
@@ -110,7 +117,7 @@ $btn-flavors: (
     "std": ("border": 'black', "bg": 'white', "text": 'black')
 );
 
-/*message and alert vars*/
+/// message and alert vars
 
 ////
 /// Intended usage: elem1 {z-index: $z-index-mid} elem-over-elem1 {z-index: $z-index-mid + 1}

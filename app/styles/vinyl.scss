@@ -2,12 +2,16 @@
 /// File level annotation test
 /// @author jayfid
 ////
+
+/*
+ * Vinyl Siding
+ * A minor framework for web apps.
+ * License @ https://github.com/jayfid/vinyl/LICENSE
+ */
+
 @import 'config';
 @import 'mixins';
-
-@import '/bower_components/normalize-css/normalize.css';
-
-@import 'base/base';
+@import 'base';
 
 @if $debug {
     html * {

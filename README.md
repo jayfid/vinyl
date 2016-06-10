@@ -10,7 +10,6 @@ Open Source license TBD.
 ## Table of Contents
 tbd
 
-
 ## Ideology
 As network transfer times go down and browser abilities improve, the web offers a much more viable landscape for application building.  The goal of Vinyl is to create a core foundation where discrete application components can be built and maintained modularly while still providing a consistent UX.
 
@@ -21,15 +20,8 @@ As network transfer times go down and browser abilities improve, the web offers 
 - Preprocess *everything* with grunt.
 
 ## Tooling
-Vinyl uses [Grunt](http://gruntjs.com/) for common tasks.  Current grunt tasks include:
-- [compass](https://github.com/gruntjs/grunt-contrib-compass): Compile SASS
-- [jshint](https://github.com/gruntjs/grunt-contrib-jshint): Proofread javascript
-- [uglify](https://github.com/gruntjs/grunt-contrib-uglify): Minify javascript
-- [image](https://github.com/1000ch/grunt-image): Optimize Images
-- [minify-html](https://github.com/sindresorhus/grunt-minify-html): Minify HTML
-- [sassdoc](https://github.com/SassDoc/grunt-sassdoc): generate documentation from SASS source
-- [ts](https://github.com/TypeStrong/grunt-ts): Compile Typescript to javascript
-- [watch](https://github.com/gruntjs/grunt-contrib-watch): Watch for changes
+Vinyl uses [Gulp](http://gulpjs.com/) for common tasks.  Current tasks include:
+- TBD
 
 ## Core CSS
 Vinyl supplies modern, consistent, and useful UI elements.  All CSS is designed to be responsive, implementing Mobile First design ideas.
