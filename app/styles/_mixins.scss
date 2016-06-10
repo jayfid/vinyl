@@ -2,7 +2,7 @@
 %clearfix {
     *zoom: 1;
     &:before, &:after {
-        content: " ";
+        content: "";
         display: table;
     }
     &:after {
@@ -20,6 +20,7 @@
     clip: rect(0,0,0,0);
     clip: rect(0,0,0,0,0);
     position: absolute;
+    visibility: hidden;
 }
 
 @function isDark($color) {
@@ -94,6 +95,33 @@
     }
 }
 
+@mixin alleys($col-count: $col-count) {
+  @for $index from 1 through $col-count {
+    .alley-#{$index}00 {
+      max-width: 100%;
+      width: $index * 100px;
+    }
+  }
+}
+
+@mixin paddings($limit: 20) {
+  @for $index from 1 through $limit {
+    $increment: $index * 5;
+    .tpush-#{$increment} {
+      margin-top: calculateRem($increment);
+    }
+    .lpush-#{$increment} {
+      margin-left: calculateRem($increment);
+    }
+    .rpush-#{$increment} {
+      margin-right: calculateRem($increment);
+    }
+    .bpush-#{$increment} {
+      margin-bottom: calculateRem($increment);
+    }
+  }
+}
+
 /// typography mixins
 
 @mixin fontSize($size) {
@@ -140,4 +168,25 @@
         $newColor: saturate(darken($hex, 10%), 10%);
     }
     @return $newColor;
+}
+
+
+// credit - modified from http://stackoverflow.com/a/4407335
+
+@mixin noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -kthml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin clearfix {
+  &::after {
+    content: "";
+    line-height: 0;
+    display: table;
+    clear: both;
+  }
 }
