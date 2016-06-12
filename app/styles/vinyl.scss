@@ -8,11 +8,9 @@
  * A minor framework for web apps.
  * License @ https://github.com/jayfid/vinyl/LICENSE
  */
-
 @import 'config';
 @import 'mixins';
 @import 'base';
-
 @if $debug {
     html * {
         outline: 1px red solid !important;
