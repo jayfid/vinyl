@@ -51,23 +51,23 @@ h6 {
 }
 
 .font-size-a {
-  font-size: 1.1em;
+    font-size: 1.1em;
 }
 
 .font-size-b {
-  font-size: 1.2em;
+    font-size: 1.2em;
 }
 
 .font-size-c {
-  font-size: 1.3em;
+    font-size: 1.3em;
 }
 
 .font-size-d {
-  font-size: 1.4em;
+    font-size: 1.4em;
 }
 
 .font-size-e {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 // bowtie for h# elements
@@ -233,8 +233,8 @@ section {
 }
 
 footer {
-  // generally helpful for stopping the footer from cutting off bottom whitespace
-  overflow: hidden;
+    // generally helpful for stopping the footer from cutting off bottom whitespace
+    overflow: hidden;
 }
 
 // generate utility classes for various margins
@@ -245,15 +245,15 @@ footer {
 
 // default: 768px
 @media screen and (min-width: map-get($breakpoints, 'milli') * 1px) {
-  // generate grid classes
-  @include boxes();
+    // generate grid classes
+    @include boxes();
 
-  .row {
-      display     : flex;
-      flex-wrap   : wrap;
-      margin-left : -10px;
-      margin-right: -10px;
-  }
+    .row {
+        display     : flex;
+        flex-wrap   : wrap;
+        margin-left : -10px;
+        margin-right: -10px;
+    }
 }
 
 // default: 1188
@@ -281,10 +281,10 @@ footer {
 
 // nothing to see here
 input.incognito {
-  background:transparent !important;
-  border:none !important;
-  appearance: none;
-  outline: none !important;
+    background: transparent !important;
+    border    : none !important;
+    appearance: none;
+    outline   : none !important;
 }
 
 /// message and alert widget
@@ -397,27 +397,29 @@ $style-a-border-radius-button: calculateRem(8);
 
 .style-a {
     .input {
-        position: relative;
+        position      : relative;
         border-radius : calculateRem(3);
         border        : 1px solid $accent-color;
         padding-top   : calculateRem(10);
         padding-bottom: calculateRem(10);
 
         .prefix,
+        .select-style,
         .suffix,
         input {
-            display  : inline-block;
-            font-size: 1.286rem;
+            display       : inline-block;
+            font-size     : 1.286rem;
+            vertical-align: middle;
         }
 
         .label {
-          font-size: 1rem;
+            font-size: 1rem;
         }
 
         .action,
+        .label,
         .prefix,
-        .suffix,
-        .label {
+        .suffix {
             color: $accent-color;
         }
 
@@ -425,40 +427,28 @@ $style-a-border-radius-button: calculateRem(8);
             margin: 0 0 0 0.5rem;
         }
 
-        .prefix, .label {
+        .label,
+        .prefix {
             margin: 0 0.5rem 0 0;
         }
 
         .action {
-          cursor: pointer;
-          position: absolute;
-          padding: 0 calculateRem(12);
-          font-size: calculateRem(12);
-          height: 100%;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          margin: 0;
+            cursor   : pointer;
+            position : absolute;
+            padding  : 0 calculateRem(12);
+            font-size: calculateRem(12);
+            height   : 100%;
+            top      : 0;
+            right    : 0;
+            bottom   : 0;
+            margin   : 0;
         }
     }
-
-    // select.select-style-a {
-    //   border-radius: $style-a-border-radius-button;
-    //   background: $accent-color;
-    //   color: #fff;
-    //   border: 1px solid $accent-color;
-    //   padding: .4rem;
-    //   cursor: pointer;
-    //   &:focus {
-    //     background: $accent-color;
-    //     color: #fff;
-    //   }
-    // }
 
     .input-group {
         .input {
             border-bottom-width: 0;
-            border-radius: 0;
+            border-radius      : 0;
 
             &:first-child {
                 border-radius: 3px 3px 0 0;
@@ -510,39 +500,137 @@ $style-a-border-radius-button: calculateRem(8);
     }
 
     .button-group {
-      button.btn-style-a {
-        border-radius: 0;
+        button.btn-style-a {
+            border-radius: 0;
 
-        &:not(:first-child) {
-          border-top-color: #1a8374;
+            &:not(:first-child) {
+                border-top-color: #1a8374;
+            }
+
+            &:first-child {
+                border-radius: $style-a-border-radius-button $style-a-border-radius-button 0 0;
+            }
+
+            &:last-child {
+                border-radius   : 0 0 $style-a-border-radius-button $style-a-border-radius-button;
+                background-color: #30a494;
+            }
+        }
+    }
+
+    .select-style {
+        position: relative;
+        display : inline-block;
+
+        .select-style-inner {
+            cursor          : pointer;
+            background-color: $accent-color;
+            color           : #fff;
+            border          : 1px solid $accent-color;
+            border-radius   : $style-a-border-radius-button;
+            position        : relative;
+            overflow        : hidden;
+
+            .down-arrow {
+                fill: #fff;
+            }
+
+            &:hover {
+                background-color: #fff;
+                color           : $accent-color;
+
+                .down-arrow {
+                    fill: $accent-color;
+                }
+            }
+
+            .select-style-arrow {
+                margin : 0 1.2rem 0 0;
+                padding: 0.25rem 0;
+            }
+
+            .select-style-value {
+                display: inline-block;
+                padding: 0.25rem 0 0.25rem 0.5rem;
+            }
+
+            .select-style-arrow,
+            .select-style-arrow svg,
+            .select-style-value {
+                vertical-align: middle;
+            }
+
         }
 
-        &:first-child {
-            border-radius: $style-a-border-radius-button $style-a-border-radius-button 0 0;
-        }
-
-        &:last-child {
+        .select-style-options {
+            z-index         : $z-index-mid + 1;
+            display         : none;
+            background-color: #fff;
+            position        : absolute;
+            top             : 100%;
+            top             : calc(100% - 1px);
+            left            : 0;
+            text-align      : center;
+            border          : 1px solid $accent-color;
             border-radius   : 0 0 $style-a-border-radius-button $style-a-border-radius-button;
-            background-color: #30a494;
+            padding         : 0.25rem 0;
+
+            p {
+                background-color: #fff;
+                white-space     : nowrap;
+                cursor          : pointer;
+                display         : block;
+                padding         : 0.3rem 4.25rem;
+                margin          : 0;
+
+                &:hover {
+                    background-color: $accent-color;
+                    color           : #fff;
+                }
+
+                &.select-style-default {
+                    background-color: darken($accent-color, 5%);
+                    color           : #fff;
+                }
+            }
         }
-      }
+
+        &.show {
+            .select-style-options {
+                display: block;
+            }
+
+            .select-style-inner {
+                background-color: #fff;
+                color           : #000;
+                border-radius   : $style-a-border-radius-button $style-a-border-radius-button 0 0;
+
+                .select-style-arrow {
+                    .down-arrow {
+                        fill: #000;
+                    }
+                }
+            }
+
+        }
+
     }
 }
 
 .overlay {
-  display: none;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
-  transition: opacity .1s;
-  z-index: $z-index-modal;
+    display   : none;
+    position  : fixed;
+    height    : 100%;
+    width     : 100%;
+    top       : 0;
+    left      : 0;
+    right     : 0;
+    bottom    : 0;
+    background: rgba(0, 0, 0, 0.75);
+    transition: opacity 0.1s;
+    z-index   : $z-index-modal;
 
-  &.show {
-    display: flex;
-  }
+    &.show {
+        display: flex;
+    }
 }
