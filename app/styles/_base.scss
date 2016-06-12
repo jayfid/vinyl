@@ -50,37 +50,59 @@ h6 {
     }
 }
 
+.font-size-a {
+  font-size: 1.1em;
+}
+
+.font-size-b {
+  font-size: 1.2em;
+}
+
+.font-size-c {
+  font-size: 1.3em;
+}
+
+.font-size-d {
+  font-size: 1.4em;
+}
+
+.font-size-e {
+  font-size: 1.5em;
+}
+
 // bowtie for h# elements
 .fancy-dan::after {
-  height: 0;
-  border-bottom: calculateRem(3) solid #e36d6e;
-  display: block;
-  width: calculateRem(50);
-  padding-top: calculateRem(3);
-  margin: 0 auto;
-  content: "";
-  line-height: 0;
+    height       : 0;
+    border-bottom: calculateRem(3) solid #e36d6e;
+    display      : block;
+    width        : calculateRem(50);
+    padding-top  : calculateRem(3);
+    margin       : 0 auto;
+    content      : "";
+    line-height  : 0;
 }
 
 // dribbblefied near-black text block with large line-height
 .display-text {
-  font-size: 1rem;
-  line-height: 2.4rem;
-  color: #232323;
+    font-size  : 1rem;
+    line-height: 2.4rem;
+    color      : #232323;
 }
 
 // 1000101
-code, .code-text {
-  font-family: $font-family-code;
-  white-space: pre;
+.code-text,
+code {
+    font-family: $font-family-code;
+    white-space: pre;
 }
-
 
 p {
     line-height: $line-height-multiple * 1em;
     margin     : 0 0 1rem;
 }
 
+// commonly used utility classes
+// may want to prefix these to prevent overlap with other contrib CSS
 .example-text {
     padding         : 5px 0;
     background-color: #DCDCDC;
@@ -89,7 +111,7 @@ p {
 }
 
 .text-left {
-  text-align: left;
+    text-align: left;
 }
 
 .text-center {
@@ -97,64 +119,48 @@ p {
 }
 
 .text-right {
-  text-align: right;
+    text-align: right;
 }
 
 .left {
-  float: left;
+    float: left;
 }
 
 .right {
-  float: right;
+    float: right;
 }
 
 .lean {
-  margin: 0;
-  padding: 0;
+    margin : 0;
+    padding: 0;
 }
 
 .hidden {
-  display: none !important;
+    display: none !important;
 }
 
 .noselect {
-  @extend %noselect;
+    @extend %noselect;
 }
 
 .clearfix {
-   @extend %clearfix;
+    @extend %clearfix;
 }
 
 // https://www.w3.org/TR/html5/text-level-semantics.html#the-small-element.
-// <small> is suitable for disclaimers, caveats, legal restrictions, or copyrights
-
+// "<small> is suitable for disclaimers, caveats,
+// legal restrictions, or copyrights"
 small.copyright {
     @include fontSize(12);
 }
 
+/// color
 body {
     background-color: $color-body-bg;
 }
 
-@each $color, $hex in $palette {
-    .color-bg-#{$color} {
-        background-color: #{$hex};
-
-        &.complimentary-color {
-          @if isDark($hex) {
-               color: lighten($hex, 30%);
-          }
-          @else {
-              color: darken($hex, 30%);
-          }
-        }
-    }
-    .color-text-#{$color} {
-      color: #{$hex};
-    }
-}
-
-/// color
+// print colors for default palette
+@include colors();
 
 a:not([class]),
 a:not([class]):visited,
@@ -181,19 +187,16 @@ section {
 }
 
 .box {
-    border-bottom: 20px solid;
+    border-bottom: calculateRem(20) solid;
     text-align   : center;
     overflow     : hidden;
 }
 
 .flex-vcenter {
-    display            : ms-flexbox;
-    display            : webkit-flexbox;
-    display            : flex;
-    -ms-flex-align     : center;
-    -webkit-align-items: center;
-    -webkit-box-align  : center;
-    align-items        : center;
+    display    : flex;
+    box-align  : center;
+    flex-align : center;
+    align-items: center;
 
     & > * {
         flex: 1;
@@ -204,7 +207,7 @@ section {
     position : relative;
     max-width: 100%;
     overflow : hidden;
-    padding: 0 1.75rem;
+    padding  : 0 1.75rem;
 }
 
 .no-overflow {
@@ -212,7 +215,7 @@ section {
 }
 
 .lane {
-  margin: 0 auto;
+    margin: 0 auto;
 }
 
 .row {
@@ -224,93 +227,119 @@ section {
 
 .card {
     background-color: #f1f1f1;
-    padding: 5px;
-    margin: 5px;
-    border: 1px solid #ababab;
+    padding         : calculateRem(5);
+    margin          : calculateRem(5);
+    border          : 1px solid #ababab;
 }
 
 footer {
+  // generally helpful for stopping the footer from cutting off bottom whitespace
   overflow: hidden;
 }
 
-@include paddings();
+// generate utility classes for various margins
+@include margins();
 
-@media screen and (min-width: #{map-get($breakpoints, 'milli')}px) {
-    .cont {}
-    @include boxes();
-    @include alleys();
-    .row {
-        display     : flex;
-        flex-wrap   : wrap;
-        margin-left : -10px;
-        margin-right: -10px;
-    }
+// generate classes for various widths
+@include alleys();
+
+// default: 768px
+@media screen and (min-width: map-get($breakpoints, 'milli') * 1px) {
+  // generate grid classes
+  @include boxes();
+
+  .row {
+      display     : flex;
+      flex-wrap   : wrap;
+      margin-left : -10px;
+      margin-right: -10px;
+  }
 }
 
-@media screen and (min-width: #{map-get($breakpoints, 'deci') + $scrollbar-width}px) {
-    .cont {
-        padding: 0;
-    }
-
+// default: 1188
+@media screen and (min-width: (map-get($breakpoints, 'deci') + $scrollbar-width) * 1px) {
     .row {
         margin-left : 0;
         margin-right: 0;
     }
 }
 
+/// form elements
+
+// generate button colors
 @each $flavor, $colors in $btn-flavors {
-    @include btn($flavor, map-get($colors, 'border'), map-get($colors, 'bg'), map-get($colors, 'text'));
+     @include btn($flavor, map-get($colors, 'border'), map-get($colors, 'bg'), map-get($colors, 'text'));
 }
 
 .btn {
     cursor: pointer;
+
     &:disabled {
         cursor: default;
     }
+}
+
+// nothing to see here
+input.incognito {
+  background:transparent !important;
+  border:none !important;
+  appearance: none;
+  outline: none !important;
 }
 
 /// message and alert widget
 
 .msg {
     display: block;
+
     p {
-        border-radius: 3px;
-        border: 1px solid;
-        padding: 1.25rem;
+        border-radius   : 3px;
+        border          : 1px solid;
+        padding         : 1.25rem;
         background-color: colorGet('white', 'base');
     }
+
     .plain {
         color: $text-color-default;
     }
+
     &.notice p {
         border-color: colorGet('orange', 'base');
-        color: colorGet('orange', 'dark');
+        color       : colorGet('orange', 'dark');
+
         a {
             color: darken(colorGet('orange', 'base'), 20%);
         }
     }
+
     &.error p {
         border-color: colorGet('red', 'base');
-        color: colorGet('red', 'dark');
+        color       : colorGet('red', 'dark');
+
         a {
             color: darken(colorGet('red', 'dark'), 20%);
         }
     }
+
     &.info p {
         border-color: colorGet('blue', 'base');
-        color: colorGet('blue', 'dark');
+        color       : colorGet('blue', 'dark');
+
         a {
             color: darken(colorGet('blue', 'dark'), 20%);
         }
     }
+
     &.success p {
         border-color: colorGet('darkgreen', 'base');
-        color: colorGet('darkgreen', 'dark');
+        color       : colorGet('darkgreen', 'dark');
+
         a {
             color: darken(colorGet('darkgreen', 'dark'), 20%);
         }
     }
 }
+
 a.msg {
     &:hover p {
         background-color: colorGet('xxlight', 'grey');
@@ -318,8 +347,8 @@ a.msg {
 }
 
 .divide-above {
-  padding-top: 50px;
-  border-top: 1px solid #d6dfe3;
+    padding-top: 50px;
+    border-top : 1px solid #d6dfe3;
 }
 
 ::-webkit-input-placeholder {
@@ -362,88 +391,158 @@ a.msg {
     }
 }
 
+/// style-a
+
+$style-a-border-radius-button: calculateRem(8);
+
 .style-a {
-  .input {
-    border-radius: 3px;
-    border: 1px solid $accent-color;
-    padding-top: 1.429rem;
-    padding-bottom: 1.429rem;
-
-    input, .prefix, .suffix, .action {
-      display: inline-block;
-      font-size: 1.286rem;
-    }
-    .prefix, .suffix, .action {
-    color: $accent-color;
-    }
-    .suffix {
-      margin: 0 0 0 .5rem;
-    }
-    .prefix {
-      margin: 0 .5rem 0 0;
-    }
-    .action {
-      margin: 0;
-      float: right;
-    }
-  }
-
-  .input-group {
     .input {
-      border-bottom-width: 0;
-      &:first-child {
-        border-radius: 3px 3px 0 0;
+        position: relative;
+        border-radius : calculateRem(3);
+        border        : 1px solid $accent-color;
+        padding-top   : calculateRem(10);
+        padding-bottom: calculateRem(10);
+
+        .prefix,
+        .suffix,
+        input {
+            display  : inline-block;
+            font-size: 1.286rem;
+        }
+
+        .label {
+          font-size: 1rem;
+        }
+
+        .action,
+        .prefix,
+        .suffix,
+        .label {
+            color: $accent-color;
+        }
+
+        .suffix {
+            margin: 0 0 0 0.5rem;
+        }
+
+        .prefix, .label {
+            margin: 0 0.5rem 0 0;
+        }
+
+        .action {
+          cursor: pointer;
+          position: absolute;
+          padding: 0 calculateRem(12);
+          font-size: calculateRem(12);
+          height: 100%;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          margin: 0;
+        }
+    }
+
+    // select.select-style-a {
+    //   border-radius: $style-a-border-radius-button;
+    //   background: $accent-color;
+    //   color: #fff;
+    //   border: 1px solid $accent-color;
+    //   padding: .4rem;
+    //   cursor: pointer;
+    //   &:focus {
+    //     background: $accent-color;
+    //     color: #fff;
+    //   }
+    // }
+
+    .input-group {
+        .input {
+            border-bottom-width: 0;
+            border-radius: 0;
+
+            &:first-child {
+                border-radius: 3px 3px 0 0;
+            }
+
+            &:last-child {
+                border-radius      : 0 0 3px 3px;
+                border-bottom-width: 1px;
+            }
+        }
+    }
+
+    button.btn-style-a {
+        width        : 100%;
+        border-radius: calculateRem(8);
+        border       : 1px solid $accent-color;
+        outline      : none;
+        appearance   : none;
+        background   : $accent-color;
+        color        : #fff;
+        text-align   : center;
+        line-height  : 1.5rem;
+        padding      : calculateRem(10);
+        font-size    : calculateRem(18);
+        cursor       : pointer;
+        transition   : background-color 0.2s;
+
+        &:hover {
+            background-color: #299485 !important;
+            border-color    : #299485;
+            outline         : none;
+            appearance      : none;
+            box-shadow      : none;
+        }
+
+        &:active {
+            background-color: #fff !important;
+            color           : $accent-color !important;
+            outline         : none;
+            appearance      : none;
+            box-shadow      : none;
+        }
+
+        &:focus {
+            outline   : none;
+            appearance: none;
+            box-shadow: none;
+        }
+    }
+
+    .button-group {
+      button.btn-style-a {
+        border-radius: 0;
+
+        &:not(:first-child) {
+          border-top-color: #1a8374;
+        }
+
+        &:first-child {
+            border-radius: $style-a-border-radius-button $style-a-border-radius-button 0 0;
+        }
+
+        &:last-child {
+            border-radius   : 0 0 $style-a-border-radius-button $style-a-border-radius-button;
+            background-color: #30a494;
+        }
       }
-      &:last-child {
-        border-radius: 0 0 3px 3px;
-        border-bottom-width: 1px;
-      }
     }
-  }
+}
 
-  button {
-    width: 100%;
-    border-radius: 8px;
-    border: 1px solid $accent-color;
-    outline: none;
-    appearance: none;
-    background: $accent-color;
-    color: #fff;
-    text-align: center;
-    padding: 1.429rem 0;
-    font-size: 1.286rem;
-    cursor: pointer;
-    transition: background-color .2s;
-    &:hover {
-      background-color: #299485 !important;
-      border-color: #299485;
-      outline: none;
-      appearance: none;
-      box-shadow: none;
-    }
-    &:active {
-      background-color: #fff !important;
-      color: $accent-color !important;
-      outline: none;
-      appearance: none;
-      box-shadow: none;
-    }
-    &:focus {
-      outline: none;
-      appearance: none;
-      box-shadow: none;
-    }
-  }
+.overlay {
+  display: none;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  transition: opacity .1s;
+  z-index: $z-index-modal;
 
-  .button-group {
-
-    & button:first-child {
-      border-radius: 8px 8px 0 0;
-    }
-    & button:last-child {
-      border-radius: 0 0 8px 8px;
-      background-color: #30a494;
-      border-top-color: #1a8374;
-    }
+  &.show {
+    display: flex;
   }
 }

@@ -12,7 +12,7 @@
     @warn "invalid type for variable $color";
 }
 
-/// color mixinis
+/// color mixins
 
 // returns hex from a combination of color and palette names.
 // mainly to for convenience and consistency
@@ -23,8 +23,30 @@
             @return map-get($selected_palette, $key);
         }
     }
-    @warn "Unknown `#{$key}` in palette #{palette+name}";
+    @warn "Unknown `#{$key}` in palette #{$palette_name}";
     @return null;
+}
+
+// print classes for a palette's to be used for color and background color.
+@mixin colors($palette: $palette) {
+  @each $color, $hex in $palette {
+      .color-bg-#{$color} {
+        background-color: #{$hex};
+
+        // set a similar but distinct text color to match the background
+        &.complimentary-color {
+          @if isDark($hex) {
+               color: lighten($hex, 30%);
+          }
+          @else {
+              color: darken($hex, 30%);
+          }
+        }
+      }
+      .color-text-#{$color} {
+        color: #{$hex};
+      }
+  }
 }
 
 /// grid mixins
@@ -72,8 +94,8 @@
   }
 }
 
-//
-@mixin paddings($limit: 20) {
+// print set of utility classes to add top,down,left,right margins
+@mixin margins($limit: 20) {
   @for $index from 1 through $limit {
     $increment: $index * 5;
     .tpush-#{$increment} {

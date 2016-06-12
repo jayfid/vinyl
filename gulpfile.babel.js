@@ -29,12 +29,12 @@ gulp.task('stylesplus', () => {
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.sass.sync({
-      outputStyle: 'expanded',
+      outputStyle: 'compressed',
       precision: 10,
       includePaths: ['.']
     }).on('error', $.sass.logError))
     .pipe($.autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}))
-    .pipe($.sourcemaps.write())
+    //.pipe($.sourcemaps.write())
     .pipe(gulp.dest('../mpg/.tmp/styles'))
     .pipe(reload({stream: true}));
 });
