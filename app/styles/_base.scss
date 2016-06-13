@@ -10,6 +10,7 @@ html {
 // embedding iframes.
 body {
     font-family: $font-family-base;
+    margin: 0;
 }
 
 body * {
@@ -265,6 +266,11 @@ footer {
 }
 
 /// form elements
+
+// hide microsoft's "clear" button on text input fields
+input[type=text]::-ms-clear {
+  display: none;
+}
 
 // generate button colors
 @each $flavor, $colors in $btn-flavors {
