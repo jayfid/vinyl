@@ -481,6 +481,8 @@ $style-a-border-radius-button: calculateRem(8);
         font-size    : calculateRem(18);
         cursor       : pointer;
         transition   : background-color 0.2s;
+        // for iOS safari
+        margin: 0;
 
         &:hover {
             background-color: #299485 !important;
