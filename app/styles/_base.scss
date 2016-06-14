@@ -523,6 +523,10 @@ $style-a-border-radius-button: calculateRem(8);
                 border-radius   : 0 0 $style-a-border-radius-button $style-a-border-radius-button;
                 background-color: #30a494;
             }
+
+            &:only-child {
+              border-radius: $style-a-border-radius-button;
+            }
         }
     }
 
@@ -653,4 +657,24 @@ $style-a-border-radius-button: calculateRem(8);
   width: 100%;
   height: 100%;
   background: transparent;
+}
+
+.hide {
+  display: none;
+
+  &.show-block  {
+    display: block;
+  }
+
+  &.show-flex {
+    display: flex;
+  }
+
+  &.show-inline {
+    display: inline;
+  }
+
+  &.show-inline-block {
+    display: inline;
+  }
 }
