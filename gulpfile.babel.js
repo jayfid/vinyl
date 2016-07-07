@@ -39,6 +39,20 @@ gulp.task('stylesplus', () => {
     .pipe(reload({stream: true}));
 });
 
+gulp.task('giveawaystyles', () => {
+  return gulp.src('app/styles/*.scss')
+    .pipe($.plumber())
+    .pipe($.sourcemaps.init())
+    .pipe($.sass.sync({
+      outputStyle: 'compressed',
+      precision: 10,
+      includePaths: ['.']
+    }).on('error', $.sass.logError))
+    .pipe($.autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}))
+    .pipe(gulp.dest('../giveaway/.tmp/styles'))
+    .pipe(reload({stream: true}));
+});
+
 gulp.task('scripts', () => {
   return gulp.src('app/scripts/**/*.js')
     .pipe($.plumber())
@@ -171,6 +185,10 @@ gulp.task('serve:test', ['scripts'], () => {
 
 gulp.task('mpgstyle', [], () => {
   gulp.watch('app/styles/**/*.scss', ['stylesplus']);
+});
+
+gulp.task('gstyle', [], () => {
+  gulp.watch('app/styles/**/*.scss', ['giveawaystyles']);
 });
 
 // inject bower components
