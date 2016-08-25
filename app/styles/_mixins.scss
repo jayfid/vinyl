@@ -101,16 +101,32 @@
             margin-top: calculateRem($increment);
         }
 
+        .tpad-#{$increment} {
+            padding-top: calculateRem($increment) !important;
+        }
+
         .lpush-#{$increment} {
             margin-left: calculateRem($increment);
+        }
+
+        .lpad-#{$increment} {
+            padding-left: calculateRem($increment) !important;
         }
 
         .rpush-#{$increment} {
             margin-right: calculateRem($increment);
         }
 
+        .rpad-#{$increment} {
+            padding-right: calculateRem($increment) !important;
+        }
+
         .bpush-#{$increment} {
             margin-bottom: calculateRem($increment);
+        }
+
+        .bpush-#{$increment} {
+            padding-bottom: calculateRem($increment) !important; 
         }
     }
 }

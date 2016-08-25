@@ -810,6 +810,18 @@ ul {
 // we'll implicitly state when the hamburger icon is visible
 .hamburgler {
     display: none;
+    padding: 5px;
+    cursor: pointer;
+    .i-line {
+        fill: #000;
+    }
+
+    &:hover {
+        background-color: #000;
+        .i-line {
+            fill: #fff;
+        }
+    }
 }
 
 @media screen and (max-width: map-get($breakpoints, 'milli') * 1px) {
@@ -823,6 +835,10 @@ ul {
             bottom: 0;
             left: 0;
             right: 0;
+        }
+
+        .link {
+
         }
     }
 
@@ -838,6 +854,12 @@ ul {
             width: 1.8rem;
             height: 1.8rem;
         }
+    }
+}
+
+@media screen and (min-width: map-get($breakpoints, 'milli') * 1px) {
+    .nav-main {
+        padding: calculateRem(5);
     }
 }
 

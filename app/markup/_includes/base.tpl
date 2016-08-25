@@ -16,9 +16,9 @@
     <!--endbower-->
 </head>
 <body>
-    <header>
-        <div class="container mobile-wall-pad collapsible-nav">
-            <nav class="nav-main">
+    <header class="tpad-20 bpad-20">
+        <div class="container mobile-wall-pad">
+            <nav class="nav-main collapsible-nav">
                 <a href="/">HOME</a>
                 <a href="/ui.html">UI</a>
                 <a href="/">TEST #1</a>
