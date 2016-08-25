@@ -22,8 +22,9 @@ var VinylObj = (function() {
         addNav: function(nav) {
             var burgerDiv = document.createElement('div');
             burgerDiv.className = 'hamburgler';
-            burgerDiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 25" class="ham"><title>hamburger menu</title><rect class="color-fill-black" y="0"  width="30" height="5" /><rect class="color-fill-black" y="10" width="30" height="5" /><rect class="color-fill-black" y="20" width="30" height="5" /></svg>';
-            //nav.parentElement.insertBefore(burgerDiv, nav);
+            burgerDiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 25" class="ham"><rect class="i-line" y="0"  width="30" height="5" /><rect class="i-line" y="10" width="30" height="5" /><rect class="i-line" y="20" width="30" height="5" /></svg>';
+
+            nav.parentElement.insertBefore(burgerDiv, nav);
 
         },
         fun: function() {
