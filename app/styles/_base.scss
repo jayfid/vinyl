@@ -9,12 +9,29 @@ html {
 // let all elements have an implicit font family.  especially useful when
 // embedding iframes.
 body {
-    font-family: $font-family-base;
-    margin: 0;
+    background-color: $color-body-bg;
+    font-family     : $font-family-base;
+    margin          : 0;
+
+    * {
+        font-family: inherit;
+        box-sizing: border-box;
+    }
 }
 
-body * {
-    font-family: inherit;
+// handle images overflowing content
+// with a backup class to override the constraint
+html {
+    img {
+        &.img {
+            max-width: 100%;
+            height   : auto;
+        }
+
+        &.exceed-width {
+            max-width: initial;
+        }
+    }
 }
 
 // set a fairly arbitrary heading styles.  assuming this will be
@@ -36,6 +53,7 @@ h6 {
     line-height   : $line-height-multiple * 1em;
     letter-spacing: 0.01em;
 
+    &.border-bottom,
     &.title {
         border-bottom : 1px solid;
         text-transform: uppercase;
@@ -49,6 +67,22 @@ h6 {
         border-style    : solid;
         padding         : 10px 0;
     }
+}
+
+// the correct emfasis on the correct sylabell.
+em {
+    font-weight: 700;
+}
+
+// strongly emphasize
+strong {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+// alternative to <del>
+.strike {
+    text-decoration: line-through;
 }
 
 .font-size-a {
@@ -156,9 +190,6 @@ small.copyright {
 }
 
 /// color
-body {
-    background-color: $color-body-bg;
-}
 
 // print colors for default palette
 @include colors();
@@ -171,20 +202,16 @@ a[class=""]:visited {
 }
 
 /// grid
-body {
-    * {
-        box-sizing: border-box;
-    }
-}
 
 .constrain,
-section, .container {
+.container {
     max-width: maxBreakpoint();
     margin   : auto;
 
     &.fullscreen {
         max-width: initial;
     }
+
 }
 
 .box {
@@ -193,6 +220,7 @@ section, .container {
     overflow     : hidden;
 }
 
+// vertically center children of an element
 .flex-vcenter {
     display    : flex;
     box-align  : center;
@@ -202,6 +230,11 @@ section, .container {
     & > * {
         flex: 1;
     }
+}
+
+// horizontally center children of a flex element
+.flex-hcenter {
+    justify-content: center;
 }
 
 .cont {
@@ -224,10 +257,11 @@ section, .container {
         align-items    : center;
         justify-content: center;
     }
+
     & > div[class^="grid-"] > .inner {
-      height: 100%;
-      padding-left: 5px;
-      padding-right: 5px;
+        height       : 100%;
+        padding-left : 5px;
+        padding-right: 5px;
     }
 }
 
@@ -255,8 +289,8 @@ footer {
     @include boxes();
 
     .row {
-        display     : flex;
-        flex-wrap   : wrap;
+        display  : flex;
+        flex-wrap: wrap;
     }
 }
 
@@ -272,7 +306,7 @@ footer {
 
 // hide microsoft's "clear" button on text input fields
 input[type=text]::-ms-clear {
-  display: none;
+    display: none;
 }
 
 // generate button colors
@@ -281,7 +315,10 @@ input[type=text]::-ms-clear {
 }
 
 .btn {
-    cursor: pointer;
+    cursor         : pointer;
+    text-decoration: none;
+    border-style   : solid;
+    outline        : none;
 
     &:disabled {
         cursor: default;
@@ -404,6 +441,13 @@ a.msg {
 
 $style-a-border-radius-button: calculateRem(8);
 
+.input {
+    .prefix, .suffix {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
 .style-a {
     .input {
         position      : relative;
@@ -470,7 +514,7 @@ $style-a-border-radius-button: calculateRem(8);
         }
     }
 
-    button.btn-style-a {
+    .btn-style-a {
         width        : 100%;
         border-radius: calculateRem(8);
         border       : 1px solid $accent-color;
@@ -485,7 +529,7 @@ $style-a-border-radius-button: calculateRem(8);
         cursor       : pointer;
         transition   : background-color 0.2s;
         // for iOS safari
-        margin: 0;
+        margin       : 0;
 
         &:hover {
             background-color: #299485 !important;
@@ -528,7 +572,7 @@ $style-a-border-radius-button: calculateRem(8);
             }
 
             &:only-child {
-              border-radius: $style-a-border-radius-button;
+                border-radius: $style-a-border-radius-button;
             }
         }
     }
@@ -643,7 +687,7 @@ $style-a-border-radius-button: calculateRem(8);
     bottom    : 0;
     background: rgba(0, 0, 0, 0.75);
     transition: opacity 0.1s;
-    overflow: hidden;
+    overflow  : hidden;
     z-index   : $z-index-modal;
 
     &.show {
@@ -651,48 +695,157 @@ $style-a-border-radius-button: calculateRem(8);
     }
 
     & > div:last-child {
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-      margin: 2rem 1.4rem 1.4rem;
+        overflow                  : auto;
+        -webkit-overflow-scrolling: touch;
+        margin                    : 2rem 1.4rem 1.4rem;
     }
 }
 
 .show-overlay .overlay {
-  display: flex;
+    display: flex;
 }
 
 body.show-overlay {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .screen {
-  position: absolute;
-  z-index: z-index-mid + 2;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent;
+    position  : absolute;
+    z-index   : z-index-mid + 2;
+    top       : 0;
+    left      : 0;
+    right     : 0;
+    bottom    : 0;
+    width     : 100%;
+    height    : 100%;
+    background: transparent;
 }
 
 .hide {
-  display: none;
+    display: none;
 
-  &.show-block  {
-    display: block;
+    &.show-block {
+        display: block;
+    }
+
+    &.show-flex {
+        display: flex;
+    }
+
+    &.show-inline {
+        display: inline;
+    }
+
+    &.show-inline-block {
+        display: inline;
+    }
+}
+
+/// table
+table {
+    border-collapse: collapse;
+    border-spacing : 0;
+
+    td,
+    tr {
+        vertical-align: top;
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+}
+
+// lists
+ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            line-height: 1.3rem;
+        }
+}
+
+.input-group {
+    display: inline-table;
+
+    .input {
+        width: 100%;
+    }
+    .input, .input-submit {
+        display: table-cell;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+
+// style like a paper letter
+.letter {
+  padding: 1.25rem;
+  background-color: #fff;
+  border: 1px solid #d4d4d4;
+  margin-right: 10%;
+  margin-left: 10%;
+  font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+
+  p {
+    line-height: 1.5rem;
+    font-size: 1.1rem;
   }
 
-  &.show-flex {
-    display: flex;
-  }
+  .letter-body {
+    text-indent: 2rem;
 
-  &.show-inline {
-    display: inline;
-  }
+    &::first-letter {
+      font-size: 1.4rem;
+    }
 
-  &.show-inline-block {
-    display: inline;
   }
+}
+
+// we'll implicitly state when the hamburger icon is visible
+.hamburgler {
+    display: none;
+}
+
+@media screen and (max-width: map-get($breakpoints, 'milli') * 1px) {
+    .nav-main {
+        display: none;
+        &.cover {
+            position: fixed;
+            overflow: auto;
+            display: none;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+
+    .mobile-hide {
+        display: none;
+    }
+
+    .hamburgler {
+        display: inline-block;
+        overflow: hidden;
+
+        .ham {
+            width: 1.8rem;
+            height: 1.8rem;
+        }
+    }
+}
+
+@media screen and (max-width: maxBreakpoint()) {
+    .container, .constrain {
+        &.mobile-wall-pad {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
 }

@@ -1,20 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-@@include('page/head.tpl', {"title": "@@title"})
-<!--bower:css-->
-<!--endbower-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="description" content="none">
+        <meta name="keywords" content="none">
+        <title>@@title</title>
+        <link rel="stylesheet" href="/bower_components/normalize-css/normalize.css">
+        <link rel="stylesheet" href="/styles/vinyl.css">
+    </head>
+
+    <!--bower:css-->
+    <!--endbower-->
 </head>
 <body>
     <header>
-    @@include('page/nav.tpl')
+        <div class="container mobile-wall-pad collapsible-nav">
+            <nav class="nav-main">
+                <a href="/">HOME</a>
+                <a href="/ui.html">UI</a>
+                <a href="/">TEST #1</a>
+                <a href="/">TEST #2</a>
+            </nav>
+        </div>
     </header>
     <section id="content">
         @@include('@@main')
     </section>
-    @@include('page/footer.tpl')
-   
-    @@include('page/scripts.tpl')
-     <!--bower:js-->
+
+    <footer>
+        <section class="container mobile-wall-pad">
+            <div class="row">
+                <div class="grid-12">
+                    <h2>Footer</h2>
+                    <address></address>
+                    <small class="copyright">&copy; 20XX Light Industries</small>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+    <script src="/scripts/test.js"></script>
+
+    <!--bower:js-->
     <!--endbower-->
 </body>
