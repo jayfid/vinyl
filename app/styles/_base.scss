@@ -825,7 +825,7 @@ ul {
 }
 
 @media screen and (max-width: map-get($breakpoints, 'milli') * 1px) {
-    .nav-main {
+    .collapsible-nav {
         display: none;
         &.cover {
             position: fixed;
@@ -840,6 +840,19 @@ ul {
         .link {
 
         }
+    }
+
+    .show-nav > .collapsible-nav {
+        display: block;
+        position: fixed;
+        width: 80%;
+        background-color: transparentize(black, 0.1);
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 30%;
+        height: 100%;
+        width: 75%;
     }
 
     .mobile-hide {
@@ -858,7 +871,7 @@ ul {
 }
 
 @media screen and (min-width: map-get($breakpoints, 'milli') * 1px) {
-    .nav-main {
+    .collapsible-nav {
         padding: calculateRem(5);
     }
 }
