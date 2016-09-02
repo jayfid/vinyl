@@ -203,6 +203,11 @@ a[class=""]:visited {
 
 /// grid
 
+.frame {
+    position: relative;
+    display: block;
+}
+
 .constrain,
 .container {
     max-width: maxBreakpoint();
@@ -435,6 +440,25 @@ a.msg {
     &:-ms-input-placeholder {
         color: $placeholder-color-disabled;
     }
+}
+
+/// overlay
+
+.overlay-top-level {
+    display: none;
+    background-color: rgba(0,0,0,0.6);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    z-index: $z-index-high;
+}
+
+.overlay-show .overlay-top-level {
+    display: block;
 }
 
 /// style-a
@@ -853,6 +877,19 @@ ul {
         right: 30%;
         height: 100%;
         width: 75%;
+
+        & > .link {
+            padding: calculateRem(20);
+            text-align: center;
+            color: #fff;
+            font-size: calculateRem(24);
+            text-decoration: none;
+            display: block;
+
+            &:hover {
+                background-color: rgba(0,0,0,0.4);
+            }
+        }
     }
 
     .mobile-hide {
