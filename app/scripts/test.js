@@ -13,6 +13,7 @@ class VinylUtil {
         return true;
     }
 
+    // todo - add method descriptions
     toggleClass( element, elemClass ) {
         if ( !element || !elemClass ) {
             return false;
@@ -245,30 +246,121 @@ class VinylNavWrap {
         this.targetElement = navElem;
         this.utility = new VinylUtil();
     }
-    burgerfy(burgerClassName='hamburgler') {
+    burgerfy(callback, burgerClassName='hamburgler') {
         this.burgerDiv = document.createElement('div');
         this.utility.addClass(this.burgerDiv, burgerClassName);
         this.burgerDiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 25" class="ham"><rect class="i-line" y="0"  width="30" height="5" /><rect class="i-line" y="10" width="30" height="5" /><rect class="i-line" y="20" width="30" height="5" /></svg>';
         this.targetElement.parentElement.insertBefore(this.burgerDiv, this.targetElement);
         this.burgerDiv.addEventListener('click', () => {
-            this.utility.toggleClass(this.targetElement.parentElement, 'show-nav');
+            callback(this.targetElement, this.burgerDiv);
         }, true);
     }
+
+
 }
 
 class Vinyl {
     constructor(options={}) {
         this.navList = [];
+        this.utility = new VinylUtil();
+        this.locks = {};
         this.options = Object.assign({
-            'navSelector': '.collapsible-nav'
+            'navSelector': '.collapsible-nav',
+            'frameSelector': '.frame'
         }, options);
         var menus = document.querySelectorAll(this.options.navSelector);
         if (menus && menus.length) {
             for ( let i = 0, len = menus.length; i < len; i++ ) {
-                let newNav = new VinylNavWrap(menus[i]);
-                newNav.burgerfy();
+                this.createNav(menus[i]);
             }
         }
+
+        this.addOverlayToDOM();
+    }
+
+
+    createNav(nav) {
+        let newNav = new VinylNavWrap(nav);
+        newNav.burgerfy((a, b) => {
+            this.openMobileMenu(a, b);
+        });
+    }
+
+    // return true if new lock acquired, otherwise false
+    acquireLock(uniqueKey, milliseconds = 1) {
+        if ( (this.checkLock(uniqueKey)) ) {
+            return false;
+        }
+        this.locks[uniqueKey] = Date.now() + milliseconds;
+        return true;
+    }
+
+    // return true if lock is currently active, otherwise false
+    checkLock(uniqueKey) {
+        if (typeof this.locks[uniqueKey] === 'undefined') {
+            return false;
+        }
+
+        // if uniqueKey's expiry timestamp is in the past, expire the lock
+        if ( this.locks[uniqueKey] < Date.now() ) {
+            this.clearLock(uniqueKey);
+            return false;
+        }
+
+        return true;
+    }
+
+    //return true if uniqueKey existed and has been deleted, otherwise false
+    clearLock(uniqueKey) {
+        if (typeof this.locks[uniqueKey] === 'undefined' ) {
+            return false;
+        }
+        return delete this.locks[uniqueKey];
+    }
+
+    addOverlayToDOM() {
+        this.overlay = document.createElement('div');
+        this.overlay.className = 'overlay-top-level';
+        var frames = document.querySelectorAll(this.options.frameSelector);
+        if (frames && frames.length) {
+            frames[0].appendChild(this.overlay);
+        }
+    }
+
+    showOverlay() {
+        this.utility.addClass(this.overlay.parentElement, 'overlay-show');
+    }
+
+    hideOverlay() {
+        this.utility.removeClass(this.overlay.parentElement, 'overlay-show');
+    }
+
+    closeMobileMenu(target, button) {
+        this.utility.removeClass(button, 'rotate');
+    }
+
+    openMobileMenu(target, button) {
+        // attempt to acquire lock, otherwise return
+        if ( !(this.acquireLock('MobileMenuAnimation')) ) {
+            return false;
+        }
+        // if already open, close
+        if (this.utility.hasClass(document.body, 'overlay-show')) {
+            return this.closeMobileMenu();
+        }
+        // overlay
+        this.utility.addClass(document.body, 'overlay-show');
+
+        // rotate burger div
+        this.utility.addClass(button.parentElement, 'rotate');
+        // preposition nav
+
+        // slide links into place
+
+        // slide body and nav
+
+        // attach listener to overlay to close this
+        this.clearLock('MobileMenuAnimation');
     }
 }
 
