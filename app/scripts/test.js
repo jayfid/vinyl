@@ -2,30 +2,34 @@
 
 /**
  ** Everyday I spend my time... drinking wine... feelin' fine.
+ ** @file 
  */
 
+// generic utility class with static methods.
 class VinylUtil {
     // credit https://stereochro.me/ideas/detecting-broken-images-js
-    isImageOk( img ) {
+    static isImageOk( img ) {
         if (!img.complete || (typeof img.naturalWidth !== 'undefined' && img.naturalWidth === 0)) {
             return false;
         }
         return true;
     }
 
-    // todo - add method descriptions
-    toggleClass( element, elemClass ) {
+    // if elemClass is a class on `element`, remove it.
+    // otherwise, add it.
+    static toggleClass( element, elemClass ) {
         if ( !element || !elemClass ) {
             return false;
         }
-        if ( this.hasClass( element, elemClass ) ) {
-            return this.removeClass( element, elemClass );
+        if ( VinylUtil.hasClass( element, elemClass ) ) {
+            return VinylUtil.removeClass( element, elemClass );
         } else {
-            return this.addClass( element, elemClass );
+            return VinylUtil.addClass( element, elemClass );
         }
     }
 
-    hasClass( element, elemClass ) {
+    // function does thing.
+    static hasClass( element, elemClass ) {
         if ( typeof element.className !== 'string' ) {
             return false;
         }
@@ -46,22 +50,22 @@ class VinylUtil {
         return found;
     }
 
-    addClass( element, elemClass ) {
+    static addClass( element, elemClass ) {
         if ( typeof element.className === 'undefined' ) {
             return false;
         }
-        if ( this.hasClass( element, elemClass ) ) {
+        if ( VinylUtil.hasClass( element, elemClass ) ) {
           return true;
         }
         element.className += ` ${elemClass}`;
         return true;
     }
 
-    removeClass( element, elemClass ) {
+    static removeClass( element, elemClass ) {
         if ( typeof element.className === 'undefined' ) {
             return false;
         }
-        if ( !this.hasClass( element, elemClass ) ) {
+        if ( !VinylUtil.hasClass( element, elemClass ) ) {
             return false;
         }
 
@@ -78,7 +82,7 @@ class VinylUtil {
         return true;
     }
 
-    findParentWithClass( element, elemClass, limit ) {
+    static findParentWithClass( element, elemClass, limit ) {
         var found = false, count = 0;
         if ( !limit ) {
             limit = 100;
@@ -89,7 +93,7 @@ class VinylUtil {
                 return false;
             }
             if ( typeof element.className !== 'undefined' ) {
-                if ( this.hasClass( element, elemClass ) ) {
+                if ( VinylUtil.hasClass( element, elemClass ) ) {
                     found = element;
                 } else {
                     element = element.parentNode;
@@ -100,7 +104,7 @@ class VinylUtil {
         return found;
     }
 
-    findParentLink( element, limit ) {
+    static findParentLink( element, limit ) {
         var found = false, count = 0;
         if ( !limit ) {
             limit = 100;
@@ -120,7 +124,7 @@ class VinylUtil {
         return found;
     }
 
-    findFirstChild( node ) {
+    static findFirstChild( node ) {
         var firstChild = node.firstChild;
         while ( firstChild !== null && firstChild.nodeType === 3 ) {
             firstChild = firstChild.nextSibling;
@@ -128,7 +132,7 @@ class VinylUtil {
         return firstChild;
     }
 
-    getParam( param ) {
+    static getParam( param ) {
         var search = window.location.search.substring( 1 ),
         comparisonResult = null,
         compareKeyValuePair = function ( pair ) {
@@ -155,11 +159,11 @@ class VinylUtil {
         return comparisonResult;
     }
 
-    scrollIntoView( elem, position ) {
+    static scrollIntoView( elem, position ) {
         var currentWindowYOffset = ( window.pageYOffset || document.documentElement.scrollTop ) - ( document.documentElement.clientTop || 0 );
         var elementWindowYOffset;
         if ( position && position === 'bottom' ) {
-            var elemY = this.getPosition( elem ).y + currentWindowYOffset;
+            var elemY = VinylUtil.getPosition( elem ).y + currentWindowYOffset;
             var elemHeight = elem.offsetHeight;
             var elemBottomPixel = elemY + elemHeight;
             var extraSpacePixels = 30;
@@ -167,7 +171,7 @@ class VinylUtil {
             var calculatedOffset = elemBottomPixel - windowHeight + extraSpacePixels;
             elementWindowYOffset = ( calculatedOffset >= 0 ) ? calculatedOffset : 0;
         } else {
-            elementWindowYOffset = this.getPosition( elem ).y;
+            elementWindowYOffset = VinylUtil.getPosition( elem ).y;
         }
 
         var initialWindowYOffset = currentWindowYOffset;
@@ -198,7 +202,7 @@ class VinylUtil {
     }
 
     // adapted from - http://stackoverflow.com/a/24829409
-    getPosition( element ) {
+    static getPosition( element ) {
         var xPosition = 0;
         var yPosition = 0;
 
@@ -215,14 +219,14 @@ class VinylUtil {
     }
 
     // adapted from - http://stackoverflow.com/a/5354536
-    checkVisible(elm) {
+    static checkVisible(elm) {
         var rect = elm.getBoundingClientRect();
         var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
         return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
     }
 
     // adapted from - http://stackoverflow.com/a/9039885
-    iOS() {
+    static iOS() {
         var iDevices = [
             'iPad Simulator',
             'iPhone Simulator',
@@ -244,11 +248,10 @@ class VinylUtil {
 class VinylNavWrap {
     constructor(navElem) {
         this.targetElement = navElem;
-        this.utility = new VinylUtil();
     }
     burgerfy(callback, burgerClassName='hamburgler') {
         this.burgerDiv = document.createElement('div');
-        this.utility.addClass(this.burgerDiv, burgerClassName);
+        VinylUtil.addClass(this.burgerDiv, burgerClassName);
         this.burgerDiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 25" class="ham"><rect class="i-line" y="0"  width="30" height="5" /><rect class="i-line" y="10" width="30" height="5" /><rect class="i-line" y="20" width="30" height="5" /></svg>';
         this.targetElement.parentElement.insertBefore(this.burgerDiv, this.targetElement);
         this.burgerDiv.addEventListener('click', () => {
@@ -262,7 +265,6 @@ class VinylNavWrap {
 class Vinyl {
     constructor(options={}) {
         this.navList = [];
-        this.utility = new VinylUtil();
         this.locks = {};
         this.options = Object.assign({
             'navSelector': '.collapsible-nav',
@@ -328,15 +330,15 @@ class Vinyl {
     }
 
     showOverlay() {
-        this.utility.addClass(this.overlay.parentElement, 'overlay-show');
+        VinylUtil.addClass(this.overlay.parentElement, 'overlay-show');
     }
 
     hideOverlay() {
-        this.utility.removeClass(this.overlay.parentElement, 'overlay-show');
+        VinylUtil.removeClass(this.overlay.parentElement, 'overlay-show');
     }
 
     closeMobileMenu(target, button) {
-        this.utility.removeClass(button, 'rotate');
+        VinylUtil.removeClass(button, 'rotate');
     }
 
     openMobileMenu(target, button) {
@@ -345,14 +347,14 @@ class Vinyl {
             return false;
         }
         // if already open, close
-        if (this.utility.hasClass(document.body, 'overlay-show')) {
+        if (VinylUtil.hasClass(document.body, 'overlay-show')) {
             return this.closeMobileMenu();
         }
         // overlay
-        this.utility.addClass(document.body, 'overlay-show');
+        VinylUtil.addClass(document.body, 'overlay-show');
 
         // rotate burger div
-        this.utility.addClass(button.parentElement, 'rotate');
+        VinylUtil.addClass(button.parentElement, 'rotate');
         // preposition nav
 
         // slide links into place
