@@ -1,7 +1,11 @@
+<section id="alternating">
+    <h4 class="title">Alternating Rows</h4>
+    @@include('snippet/alternating.tpl')
+</section>
 <section id="palette" class="no-overflow">
     <h4 class="title">Palette</h4>
     <div class="cont">
-        <div class="row">
+        <div class="row flex">
             @@include('snippet/palette.tpl')
         </div>
     </div>

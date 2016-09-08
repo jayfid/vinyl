@@ -67,15 +67,15 @@
 
 // prints out the list of grid classes
 // not very important since grids are surprisingly useless.
-@mixin boxes($col-count: $col-count) {
+@mixin boxes($col-count: $col-count, $qualifier: '') {
      @for $index from 1 through $col-count{
-        .grid-#{$index} {
+        .grid-#{$qualifier}#{$index} {
             min-height   : 1px;
             flex         : 0 0 #{((100 / $col-count) * $index) + '%'};
         }
     }
 
-    .grid-distribute {
+    .grid-#{$qualifier}distribute {
         min-height   : 10px;
         flex         : 1;
     }
@@ -125,7 +125,7 @@
             margin-bottom: calculateRem($increment);
         }
 
-        .bpush-#{$increment} {
+        .bpad-#{$increment} {
             padding-bottom: calculateRem($increment) !important; 
         }
     }

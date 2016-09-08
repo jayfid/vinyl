@@ -208,6 +208,12 @@ a[class=""]:visited {
     display: block;
 }
 
+.sliding-pane {
+    position: relative;
+    left: 0;
+    transition: left $duration-menu-slide cubic-bezier(.59,.3,.47,.96);
+}
+
 .constrain,
 .container {
     max-width: maxBreakpoint();
@@ -220,7 +226,6 @@ a[class=""]:visited {
 }
 
 .box {
-    border-bottom: calculateRem(20) solid;
     text-align   : center;
     overflow     : hidden;
 }
@@ -246,7 +251,6 @@ a[class=""]:visited {
     position : relative;
     max-width: 100%;
     overflow : hidden;
-    padding  : 0 1.75rem;
 }
 
 .no-overflow {
@@ -258,6 +262,10 @@ a[class=""]:visited {
 }
 
 .row {
+    &.flex {
+        display: flex;
+    }
+
     &.vcenter {
         align-items    : center;
         justify-content: center;
@@ -277,16 +285,17 @@ a[class=""]:visited {
     border          : 1px solid #ababab;
 }
 
-footer {
-    // generally helpful for stopping the footer from cutting off bottom whitespace
-    overflow: hidden;
-}
-
 // generate utility classes for various margins
 @include margins();
 
 // generate classes for various widths
 @include alleys();
+
+@include boxes($col-count, 'all-');
+
+@media screen and (max-width: (map-get($breakpoints, 'milli') - 1) * 1px) {
+    @include boxes($col-count, 'tablet-');
+}
 
 // default: 768px
 @media screen and (min-width: map-get($breakpoints, 'milli') * 1px) {
@@ -296,8 +305,14 @@ footer {
     .row {
         display  : flex;
         flex-wrap: wrap;
+
+        &.desktop-reverse {
+            flex-direction: row-reverse;
+        }
     }
 }
+
+
 
 // default: 1188
 @media screen and (min-width: (map-get($breakpoints, 'deci') + $scrollbar-width) * 1px) {
@@ -836,6 +851,7 @@ ul {
     display: none;
     padding: 5px;
     cursor: pointer;
+    transition: all $duration-menu-slide ease-out;
     .i-line {
         fill: #000;
     }
@@ -848,9 +864,48 @@ ul {
     }
 }
 
+.animating {
+    .hamburgler {
+        background-color: transparent !important;
+    }
+}
+
+.rotate > .hamburgler {
+    position: absolute;
+    z-index: $z-index-high + 1;
+    transform: rotate(1.25turn);
+    .i-line {
+        fill: #fff;
+    }
+}
+
 @media screen and (max-width: map-get($breakpoints, 'milli') * 1px) {
+    .sticky-top {
+        position: fixed;
+        top:0;
+        left:0;
+        right: 0;
+        z-index: $z-index-high + 50;
+        transition: all $duration-menu-slide cubic-bezier(.59,.3,.47,.96);
+    }
+
+    .menu-shift .sticky-top {
+        left: 85%;
+    }
+
     .collapsible-nav {
-        display: none;
+        display: block;
+        position: fixed;
+        background-color: transparentize(black, 0.1);
+        top: 0;
+        left: -100%;
+        bottom: 0;
+        right: initial;
+        width: 100%;
+        height: 100%;
+        padding-left: 15%;
+        transition: all $duration-menu-slide cubic-bezier(.59,.3,.47,.96);
+
         &.cover {
             position: fixed;
             overflow: auto;
@@ -862,38 +917,59 @@ ul {
         }
 
         .link {
-
-        }
-    }
-
-    .show-nav > .collapsible-nav {
-        display: block;
-        position: fixed;
-        width: 80%;
-        background-color: transparentize(black, 0.1);
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 30%;
-        height: 100%;
-        width: 75%;
-
-        & > .link {
             padding: calculateRem(20);
-            text-align: center;
+            padding-left: 0;
             color: #fff;
             font-size: calculateRem(24);
             text-decoration: none;
             display: block;
+            transition: padding-left 500ms ease-out;
 
             &:hover {
                 background-color: rgba(0,0,0,0.4);
             }
+
+            &:nth-of-type(1) {
+                transition-delay: 00.1s;
+            }
+
+            &:nth-of-type(2) {
+                transition-delay: 0.16s;
+            }
+
+            &:nth-of-type(3) {
+                transition-delay: 0.22s;
+            }
+
+            &:nth-of-type(4) {
+                transition-delay: 0.28s;
+            }
+
+            &:nth-of-type(5) {
+                transition-delay: 0.34s;
+            }
         }
+
+
     }
 
+    .show-nav {
+        & > .collapsible-nav {
+            left: -15%;
+            right: 30%;
+            z-index: $z-index-high + 2;
+        }
+
+        .link {
+            padding-left: 75px;
+        }
+    }
     .mobile-hide {
         display: none;
+    }
+
+    .menu-shift .sliding-pane {
+        left: 85%;
     }
 
     .hamburgler {
@@ -910,6 +986,10 @@ ul {
 @media screen and (min-width: map-get($breakpoints, 'milli') * 1px) {
     .collapsible-nav {
         padding: calculateRem(5);
+    }
+
+    .desktop-hide {
+        display: none;
     }
 }
 
