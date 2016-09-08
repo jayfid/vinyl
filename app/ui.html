@@ -1,64 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="description" content="none">
-        <meta name="keywords" content="none">
-        <title>UI ELEMENTS</title>
-        <link rel="stylesheet" href="/bower_components/normalize-css/normalize.css">
-        <link rel="stylesheet" href="/styles/vinyl.css">
-    </head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="none">
+    <meta name="keywords" content="none">
+    <title>UI ELEMENTS</title>
 
-    <!--bower:css-->
-    <!--endbower-->
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/normalize-css/normalize.css">
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="/styles/vinyl.css">
+    <!-- endbuild -->
 </head>
 <body>
 
     <div class="frame">
+        <div class="compensate-fixed-menu"></div>
 
-        <header class="tpad-20 bpad-20">
-            <div class="container mobile-wall-pad">
-                <nav class="nav-main collapsible-nav">
-                    <a class="link" href="/" class="link-row-1">HOME</a>
-                    <a class="link" href="/ui.html">UI</a>
-                    <a class="link" href="/">TEST #1</a>
-                    <a class="link" href="/">TEST #2</a>
-                </nav>
-            </div>
-        </header>
-        <section id="content">
-            <section id="palette" class="no-overflow">
+        <div class="sliding-pane">
+
+            <header class="tpad-20 bpad-20 color-bg-blue sticky-top" id="header-bar">
+                <div class="container mobile-wall-pad set-height" data-height-ref="">
+                    <nav class="nav-main collapsible-nav">
+                        <div class="set-height color-bg-white desktop-hide" data-height-ref="header-bar"></div>
+                        <a class="link" href="/" class="link-row-1">HOME</a>
+                        <a class="link" href="/ui.html">UI</a>
+                        <a class="link" href="/">TEST #1</a>
+                        <a class="link" href="/">TEST #2</a>
+                    </nav>
+                </div>
+            </header>
+            <section id="content">
+                <section id="alternating">
+    <h4 class="title">Alternating Rows</h4>
+    <div class="row">
+	<div class="grid-6 color-bg-red no-overflow">
+		<h3 class="text-center color-text-white">Box 1</h3>
+	</div>
+	<div class="grid-6 color-bg-blue no-overflow">
+		<h3 class="text-center color-text-white">Box 2</h3>
+	</div>
+</div>
+<div class="row desktop-reverse">
+	<div class="grid-6 color-bg-red no-overflow">
+		<h3 class="text-center color-text-white">Box 4</h3>
+	</div>
+	<div class="grid-6 color-bg-blue no-overflow">
+		<h3 class="text-center color-text-white">Box 3</h3>
+	</div>
+</div>
+
+</section>
+<section id="palette" class="no-overflow">
     <h4 class="title">Palette</h4>
     <div class="cont">
-        <div class="row">
-            <div class="box sqr grid-distribute color-bg-black flex-vcenter">
+        <div class="row flex">
+            <div class="box sqr grid-all-distribute color-bg-black flex-vcenter">
     <p>BLACK</p>
 </div>
-<div class="box sqr grid-distribute color-bg-white flex-vcenter">
+<div class="box sqr grid-all-distribute color-bg-white flex-vcenter">
     <p>WHITE</p>
 </div>
-<div class="box sqr grid-distribute color-bg-red flex-vcenter">
+<div class="box sqr grid-all-distribute color-bg-red flex-vcenter">
     <p>RED</p>
 </div>
-<div class="box sqr grid-distribute color-bg-orange flex-vcenter">
+<div class="box sqr grid-all-distribute color-bg-orange flex-vcenter">
     <p>ORANGE</p>
 </div>
-<div class="box sqr grid-distribute color-bg-yellow flex-vcenter">
+<div class="box sqr grid-all-distribute color-bg-yellow flex-vcenter">
     <p>YELLOW</p>
 </div>
-<div class="box sqr grid-distribute color-bg-green flex-vcenter">
+<div class="box sqr grid-all-distribute color-bg-green flex-vcenter">
     <p>GREEN</p>
 </div>
-<div class="box sqr grid-distribute color-bg-blue flex-vcenter">
+<div class="box sqr grid-all-distribute color-bg-blue flex-vcenter">
     <p>BLUE</p>
 </div>
-<div class="box sqr grid-distribute color-bg-indigo flex-vcenter">
+<div class="box sqr grid-all-distribute color-bg-indigo flex-vcenter">
     <p>INDIGO</p>
 </div>
-<div class="box sqr grid-distribute color-bg-violet flex-vcenter">
+<div class="box sqr grid-all-distribute color-bg-violet flex-vcenter">
     <p>VIOLET</p>
 </div>
 
@@ -353,7 +380,27 @@
 </section>
 <section id="tables">
     <h4 class="title">Tables</h4>
-    <table></table>
+    <table>
+    <caption>Caption</caption>
+    <thead>
+        <tr>
+            <th>Header content 1</th>
+            <th>Header content 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Body content 1</td>
+            <td>Body content 2</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>Footer content 1</td>
+            <td>Footer content 2</td>
+        </tr>
+    </tfoot>
+</table>
 
 </section>
 <section id="text">
@@ -361,7 +408,7 @@
      <p>
     <a href="#">link</a>
     <a href="/" download="/images/pixel.png">download</a>
-    <a href="#home" class="target-blank">Target Blank</a>
+    <a href="#home" target="_blank">Target Blank</a>
     <a href="mailto:example@example.com">Email Link</a>
     <a href="tel:+12125551212">Telephone Link</a>
 </p>
@@ -380,25 +427,31 @@
 
 </section>
 
-        </section>
-
-        <footer>
-            <section class="container mobile-wall-pad">
-                <div class="row">
-                    <div class="grid-12">
-                        <h2>Footer</h2>
-                        <address></address>
-                        <small class="copyright">&copy; 20XX Light Industries</small>
-                    </div>
-                </div>
             </section>
-        </footer>
 
-    </div>
+            <footer>
+                <section class="container mobile-wall-pad">
+                    <div class="row">
+                        <div class="grid-12">
+                            <h2>Footer</h2>
+                            <address></address>
+                            <small class="copyright">&copy; 20XX Light Industries</small>
+                        </div>
+                    </div>
+                </section>
+            </footer>
 
-    <script src="/scripts/test.js"></script>
+        </div> <!-- sliding-pane -->
 
-    <!--bower:js-->
-    <!--endbower-->
+    </div> <!-- frame -->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js scripts/vinyl.js -->
+    <script src="/scripts/vinyl.js"></script>
+    <!-- endbuild -->
 </body>
 
