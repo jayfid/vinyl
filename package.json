@@ -1,15 +1,11 @@
 {
-  "name": "vinylsiding",
+  "name": "vinylSiding",
   "version": "1.0.0",
   "description": "CSS Framework",
-  "main": "index.js",
+  "main": "index.html",
   "private": true,
   "engines": {
     "node": ">=0.12.0"
-  },
-  "directories": {
-    "doc": "docs",
-    "example": "examples"
   },
   "devDependencies": {
     "babel-core": "^6.4.0",
@@ -50,7 +46,8 @@
     }
   },
   "scripts": {
-    "test": "echo 'untested.'"
+    "test": "npm run test-app",
+    "test-app": "mocha --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",
@@ -58,9 +55,6 @@
   },
   "author": "jayfid",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jayfid/vinyl/issues"
-  },
   "homepage": "https://github.com/jayfid/vinyl#readme",
   "dependencies": {}
 }
