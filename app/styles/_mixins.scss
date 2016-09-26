@@ -47,6 +47,10 @@
         .color-text-#{$color} {
             color: #{$hex};
         }
+
+        .color-fill-#{$color} {
+            fill: #{$hex};
+        }
     }
 }
 
