@@ -14,7 +14,7 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:css styles/main.css -->
+    <!-- build:css styles/vinyl.css -->
     <link rel="stylesheet" href="/styles/vinyl.css">
     <!-- endbuild -->
 </head>
