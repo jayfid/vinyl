@@ -10,8 +10,8 @@ html {
 // embedding iframes.
 body {
     background-color: $color-body-bg;
-    font-family     : $font-family-base;
-    margin          : 0;
+    font-family: $font-family-base;
+    margin: 0;
 
     * {
         font-family: inherit;
@@ -25,7 +25,7 @@ html {
     img {
         &.img {
             max-width: 100%;
-            height   : auto;
+            height: auto;
         }
 
         &.exceed-width {
@@ -36,36 +36,36 @@ html {
 
 // set a fairly arbitrary heading styles.  assuming this will be
 // overwritten in local css in most projects.
-@each $level, $size in $headers {
+@each $level in $size in $headers {
     #{$level} {
         @include fontSize($size);
     }
 }
-
+cds
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    font-weight   : $font-weight-bold;
-    margin        : 0 0 $gap-base;
-    line-height   : $line-height-multiple * 1em;
+    font-weight: $font-weight-bold;
+    margin: 0 0 $gap-base;
+    line-height: $line-height-multiple * 1em;
     letter-spacing: 0.01em;
 
     &.border-bottom,
     &.title {
-        border-bottom : 1px solid;
+        border-bottom: 1px solid;
         text-transform: uppercase;
     }
 
     &.heading {
-        text-indent     : 1rem;
-        border-color    : #B7B7B7;
+        text-indent: 1rem;
+        border-color: #B7B7B7;
         background-color: #EFEFEF;
-        border-width    : 1px 0;
-        border-style    : solid;
-        padding         : 10px 0;
+        border-width: 1px 0;
+        border-style: solid;
+        padding: 10px 0;
     }
 }
 
@@ -107,21 +107,21 @@ strong {
 
 // bowtie for h# elements
 .fancy-dan::after {
-    height       : 0;
+    height: 0;
     border-bottom: calculateRem(3) solid #e36d6e;
-    display      : block;
-    width        : calculateRem(50);
-    padding-top  : calculateRem(3);
-    margin       : 0 auto;
-    content      : "";
-    line-height  : 0;
+    display: block;
+    width: calculateRem(50);
+    padding-top: calculateRem(3);
+    margin: 0 auto;
+    content: "";
+    line-height: 0;
 }
 
 // dribbblefied near-black text block with large line-height
 .display-text {
-    font-size  : 1rem;
+    font-size: 1rem;
     line-height: 2.4rem;
-    color      : #232323;
+    color: #232323;
 }
 
 // 1000101
@@ -133,16 +133,16 @@ code {
 
 p {
     line-height: $line-height-multiple * 1em;
-    margin     : 0 0 1rem;
+    margin: 0 0 1rem;
 }
 
 // commonly used utility classes
 // may want to prefix these to prevent overlap with other contrib CSS
 .example-text {
-    padding         : 5px 0;
+    padding: 5px 0;
     background-color: #DCDCDC;
-    text-align      : center;
-    border-radius   : 3px;
+    text-align: center;
+    border-radius: 3px;
 }
 
 .text-left {
@@ -166,7 +166,7 @@ p {
 }
 
 .lean {
-    margin : 0;
+    margin: 0;
     padding: 0;
 }
 
@@ -192,13 +192,13 @@ small.copyright {
 /// color
 
 // print colors for default palette
-@include colors();
+@include colors;
 
 a:not([class]),
 a:not([class]):visited,
 a[class=""],
 a[class=""]:visited {
-    color: colorGet('blue', 'dark');
+    color: colorGet("blue", "dark");
 }
 
 /// grid
@@ -211,35 +211,30 @@ a[class=""]:visited {
 .sliding-pane {
     position: relative;
     left: 0;
-    transition: left $duration-menu-slide cubic-bezier(.59,.3,.47,.96);
+    transition: left $duration-menu-slide cubic-bezier(0.59, 0.3, 0.47, 0.96);
 }
 
 .constrain,
 .container {
     max-width: maxBreakpoint();
-    margin   : auto;
+    margin: auto;
 
     &.fullscreen {
         max-width: initial;
     }
-
 }
 
 .box {
-    text-align   : center;
-    overflow     : hidden;
+    text-align: center;
+    overflow: hidden;
 }
 
 // vertically center children of an element
 .flex-vcenter {
-    display    : flex;
-    box-align  : center;
-    flex-align : center;
+    display: flex;
+    box-align: center;
+    flex-align: center;
     align-items: center;
-
-    & > * {
-        flex: 1;
-    }
 }
 
 // horizontally center children of a flex element
@@ -248,9 +243,9 @@ a[class=""]:visited {
 }
 
 .cont {
-    position : relative;
+    position: relative;
     max-width: 100%;
-    overflow : hidden;
+    overflow: hidden;
 }
 
 .no-overflow {
@@ -267,43 +262,43 @@ a[class=""]:visited {
     }
 
     &.vcenter {
-        align-items    : center;
+        align-items: center;
         justify-content: center;
     }
 
     & > div[class^="grid-"] > .inner {
-        height       : 100%;
-        padding-left : 5px;
+        height: 100%;
+        padding-left: 5px;
         padding-right: 5px;
     }
 }
 
 .card {
     background-color: #f1f1f1;
-    padding         : calculateRem(5);
-    margin          : calculateRem(5);
-    border          : 1px solid #ababab;
+    padding: calculateRem(5);
+    margin: calculateRem(5);
+    border: 1px solid #ababab;
 }
 
 // generate utility classes for various margins
-@include margins();
+@include margins;
 
 // generate classes for various widths
-@include alleys();
+@include alleys;
 
-@include boxes($col-count, 'all-');
+@include boxes($col-count, "all-");
 
-@media screen and (max-width: (map-get($breakpoints, 'milli') - 1) * 1px) {
-    @include boxes($col-count, 'tablet-');
+@media screen and (max-width: (map-get($breakpoints, "milli") - 1) * 1px) {
+    @include boxes($col-count, "tablet-");
 }
 
 // default: 768px
-@media screen and (min-width: map-get($breakpoints, 'milli') * 1px) {
+@media screen and (min-width: map-get($breakpoints, "milli") * 1px) {
     // generate grid classes
-    @include boxes();
+    @include boxes;
 
     .row {
-        display  : flex;
+        display: flex;
         flex-wrap: wrap;
 
         &.desktop-reverse {
@@ -312,12 +307,10 @@ a[class=""]:visited {
     }
 }
 
-
-
 // default: 1188
-@media screen and (min-width: (map-get($breakpoints, 'deci') + $scrollbar-width) * 1px) {
+@media screen and (min-width: (map-get($breakpoints, "deci") + $scrollbar-width) * 1px) {
     .row {
-        margin-left : 0;
+        margin-left: 0;
         margin-right: 0;
     }
 }
@@ -331,14 +324,14 @@ input[type=text]::-ms-clear {
 
 // generate button colors
 @each $flavor, $colors in $btn-flavors {
-     @include btn($flavor, map-get($colors, 'border'), map-get($colors, 'bg'), map-get($colors, 'text'));
+    @include btn($flavor, map-get($colors, "border"), map-get($colors, "bg"), map-get($colors, "text"));
 }
 
 .btn {
-    cursor         : pointer;
+    cursor: pointer;
     text-decoration: none;
-    border-style   : solid;
-    outline        : none;
+    border-style: solid;
+    outline: none;
 
     &:disabled {
         cursor: default;
@@ -348,9 +341,9 @@ input[type=text]::-ms-clear {
 // nothing to see here
 input.incognito {
     background: transparent !important;
-    border    : none !important;
+    border: none !important;
     appearance: none;
-    outline   : none !important;
+    outline: none !important;
 }
 
 /// message and alert widget
@@ -359,10 +352,10 @@ input.incognito {
     display: block;
 
     p {
-        border-radius   : 3px;
-        border          : 1px solid;
-        padding         : 1.25rem;
-        background-color: colorGet('white', 'base');
+        border-radius: 3px;
+        border: 1px solid;
+        padding: 1.25rem;
+        background-color: colorGet("white", "base");
     }
 
     .plain {
@@ -370,51 +363,51 @@ input.incognito {
     }
 
     &.notice p {
-        border-color: colorGet('orange', 'base');
-        color       : colorGet('orange', 'dark');
+        border-color: colorGet("orange", "base");
+        color: colorGet("orange", "dark");
 
         a {
-            color: darken(colorGet('orange', 'base'), 20%);
+            color: darken(colorGet("orange", "base"), 20%);
         }
     }
 
     &.error p {
-        border-color: colorGet('red', 'base');
-        color       : colorGet('red', 'dark');
+        border-color: colorGet("red", "base");
+        color: colorGet("red", "dark");
 
         a {
-            color: darken(colorGet('red', 'dark'), 20%);
+            color: darken(colorGet("red", "dark"), 20%);
         }
     }
 
     &.info p {
-        border-color: colorGet('blue', 'base');
-        color       : colorGet('blue', 'dark');
+        border-color: colorGet("blue", "base");
+        color: colorGet("blue", "dark");
 
         a {
-            color: darken(colorGet('blue', 'dark'), 20%);
+            color: darken(colorGet("blue", "dark"), 20%);
         }
     }
 
     &.success p {
-        border-color: colorGet('darkgreen', 'base');
-        color       : colorGet('darkgreen', 'dark');
+        border-color: colorGet("darkgreen", "base");
+        color: colorGet("darkgreen", "dark");
 
         a {
-            color: darken(colorGet('darkgreen', 'dark'), 20%);
+            color: darken(colorGet("darkgreen", "dark"), 20%);
         }
     }
 }
 
 a.msg {
     &:hover p {
-        background-color: colorGet('xxlight', 'grey');
+        background-color: colorGet("xxlight", "grey");
     }
 }
 
 .divide-above {
     padding-top: 50px;
-    border-top : 1px solid #d6dfe3;
+    border-top: 1px solid #d6dfe3;
 }
 
 ::-webkit-input-placeholder {
@@ -461,7 +454,7 @@ a.msg {
 
 .overlay-top-level {
     display: none;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     top: 0;
     bottom: 0;
@@ -489,18 +482,18 @@ $style-a-border-radius-button: calculateRem(8);
 
 .style-a {
     .input {
-        position      : relative;
-        border-radius : calculateRem(3);
-        border        : 1px solid $accent-color;
-        padding-top   : calculateRem(10);
+        position: relative;
+        border-radius: calculateRem(3);
+        border: 1px solid $accent-color;
+        padding-top: calculateRem(10);
         padding-bottom: calculateRem(10);
 
         .prefix,
         .select-style,
         .suffix,
         input {
-            display       : inline-block;
-            font-size     : 1.286rem;
+            display: inline-block;
+            font-size: 1.286rem;
             vertical-align: middle;
         }
 
@@ -525,69 +518,70 @@ $style-a-border-radius-button: calculateRem(8);
         }
 
         .action {
-            cursor   : pointer;
-            position : absolute;
-            padding  : 0 calculateRem(12);
+            cursor: pointer;
+            position: absolute;
+            padding: 0 calculateRem(12);
             font-size: calculateRem(12);
-            height   : 100%;
-            top      : 0;
-            right    : 0;
-            bottom   : 0;
-            margin   : 0;
+            height: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
         }
     }
 
     .input-group {
         .input {
             border-bottom-width: 0;
-            border-radius      : 0;
+            border-radius: 0;
 
             &:first-child {
                 border-radius: 3px 3px 0 0;
             }
 
             &:last-child {
-                border-radius      : 0 0 3px 3px;
+                border-radius: 0 0 3px 3px;
                 border-bottom-width: 1px;
             }
         }
     }
 
     .btn-style-a {
-        width        : 100%;
+        width: 100%;
         border-radius: calculateRem(8);
-        border       : 1px solid $accent-color;
-        outline      : none;
-        appearance   : none;
-        background   : $accent-color;
-        color        : #fff;
-        text-align   : center;
-        line-height  : 1.5rem;
-        padding      : calculateRem(10);
-        font-size    : calculateRem(18);
-        cursor       : pointer;
-        transition   : background-color 0.2s;
+        border: 1px solid $accent-color;
+        outline: none;
+        appearance: none;
+        background: $accent-color;
+        color: #fff;
+        text-align: center;
+        line-height: 1.5rem;
+        padding: calculateRem(10);
+        font-size: calculateRem(18);
+        cursor: pointer;
+        transition: background-color 0.2s;
+
         // for iOS safari
-        margin       : 0;
+        margin: 0;
 
         &:hover {
             background-color: #299485 !important;
-            border-color    : #299485;
-            outline         : none;
-            appearance      : none;
-            box-shadow      : none;
+            border-color: #299485;
+            outline: none;
+            appearance: none;
+            box-shadow: none;
         }
 
         &:active {
             background-color: #fff !important;
-            color           : $accent-color !important;
-            outline         : none;
-            appearance      : none;
-            box-shadow      : none;
+            color: $accent-color !important;
+            outline: none;
+            appearance: none;
+            box-shadow: none;
         }
 
         &:focus {
-            outline   : none;
+            outline: none;
             appearance: none;
             box-shadow: none;
         }
@@ -606,7 +600,7 @@ $style-a-border-radius-button: calculateRem(8);
             }
 
             &:last-child {
-                border-radius   : 0 0 $style-a-border-radius-button $style-a-border-radius-button;
+                border-radius: 0 0 $style-a-border-radius-button $style-a-border-radius-button;
                 background-color: #30a494;
             }
 
@@ -618,16 +612,16 @@ $style-a-border-radius-button: calculateRem(8);
 
     .select-style {
         position: relative;
-        display : inline-block;
+        display: inline-block;
 
         .select-style-inner {
-            cursor          : pointer;
+            cursor: pointer;
             background-color: $accent-color;
-            color           : #fff;
-            border          : 1px solid $accent-color;
-            border-radius   : $style-a-border-radius-button;
-            position        : relative;
-            overflow        : hidden;
+            color: #fff;
+            border: 1px solid $accent-color;
+            border-radius: $style-a-border-radius-button;
+            position: relative;
+            overflow: hidden;
 
             .down-arrow {
                 fill: #fff;
@@ -635,7 +629,7 @@ $style-a-border-radius-button: calculateRem(8);
 
             &:hover {
                 background-color: #fff;
-                color           : $accent-color;
+                color: $accent-color;
 
                 .down-arrow {
                     fill: $accent-color;
@@ -643,7 +637,7 @@ $style-a-border-radius-button: calculateRem(8);
             }
 
             .select-style-arrow {
-                margin : 0 1.2rem 0 0;
+                margin: 0 1.2rem 0 0;
                 padding: 0.25rem 0;
             }
 
@@ -657,38 +651,37 @@ $style-a-border-radius-button: calculateRem(8);
             .select-style-value {
                 vertical-align: middle;
             }
-
         }
 
         .select-style-options {
-            z-index         : $z-index-mid + 1;
-            display         : none;
+            z-index: $z-index-mid + 1;
+            display: none;
             background-color: #fff;
-            position        : absolute;
-            top             : 100%;
-            top             : calc(100% - 1px);
-            left            : 0;
-            text-align      : center;
-            border          : 1px solid $accent-color;
-            border-radius   : 0 0 $style-a-border-radius-button $style-a-border-radius-button;
-            padding         : 0.25rem 0;
+            position: absolute;
+            top: 100%;
+            top: calc(100% - 1px);
+            left: 0;
+            text-align: center;
+            border: 1px solid $accent-color;
+            border-radius: 0 0 $style-a-border-radius-button $style-a-border-radius-button;
+            padding: 0.25rem 0;
 
             p {
                 background-color: #fff;
-                white-space     : nowrap;
-                cursor          : pointer;
-                display         : block;
-                padding         : 0.3rem 4.25rem;
-                margin          : 0;
+                white-space: nowrap;
+                cursor: pointer;
+                display: block;
+                padding: 0.3rem 4.25rem;
+                margin: 0;
 
                 &:hover {
                     background-color: $accent-color;
-                    color           : #fff;
+                    color: #fff;
                 }
 
                 &.select-style-default {
                     background-color: darken($accent-color, 5%);
-                    color           : #fff;
+                    color: #fff;
                 }
             }
         }
@@ -700,8 +693,8 @@ $style-a-border-radius-button: calculateRem(8);
 
             .select-style-inner {
                 background-color: #fff;
-                color           : #000;
-                border-radius   : $style-a-border-radius-button $style-a-border-radius-button 0 0;
+                color: #000;
+                border-radius: $style-a-border-radius-button $style-a-border-radius-button 0 0;
 
                 .select-style-arrow {
                     .down-arrow {
@@ -709,34 +702,32 @@ $style-a-border-radius-button: calculateRem(8);
                     }
                 }
             }
-
         }
-
     }
 }
 
 .overlay {
-    display   : none;
-    position  : fixed;
-    height    : 100%;
-    width     : 100%;
-    top       : 0;
-    left      : 0;
-    right     : 0;
-    bottom    : 0;
+    display: none;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.75);
     transition: opacity 0.1s;
-    overflow  : hidden;
-    z-index   : $z-index-modal;
+    overflow: hidden;
+    z-index: $z-index-modal;
 
     &.show {
         display: flex;
     }
 
     & > div:last-child {
-        overflow                  : auto;
+        overflow: auto;
         -webkit-overflow-scrolling: touch;
-        margin                    : 2rem 1.4rem 1.4rem;
+        margin: 2rem 1.4rem 1.4rem;
     }
 }
 
@@ -749,14 +740,14 @@ body.show-overlay {
 }
 
 .screen {
-    position  : absolute;
-    z-index   : z-index-mid + 2;
-    top       : 0;
-    left      : 0;
-    right     : 0;
-    bottom    : 0;
-    width     : 100%;
-    height    : 100%;
+    position: absolute;
+    z-index: z-index-mid + 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     background: transparent;
 }
 
@@ -783,7 +774,7 @@ body.show-overlay {
 /// table
 table {
     border-collapse: collapse;
-    border-spacing : 0;
+    border-spacing: 0;
 
     td,
     tr {
@@ -797,13 +788,13 @@ table {
 
 // lists
 ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
-        li {
-            line-height: 1.3rem;
-        }
+    li {
+        line-height: 1.3rem;
+    }
 }
 
 .input-group {
@@ -812,6 +803,7 @@ ul {
     .input {
         width: 100%;
     }
+
     .input, .input-submit {
         display: table-cell;
     }
@@ -824,26 +816,25 @@ ul {
 
 // style like a paper letter
 .letter {
-  padding: 1.25rem;
-  background-color: #fff;
-  border: 1px solid #d4d4d4;
-  margin-right: 10%;
-  margin-left: 10%;
-  font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+    padding: 1.25rem;
+    background-color: #fff;
+    border: 1px solid #d4d4d4;
+    margin-right: 10%;
+    margin-left: 10%;
+    font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
 
-  p {
-    line-height: 1.5rem;
-    font-size: 1.1rem;
-  }
-
-  .letter-body {
-    text-indent: 2rem;
-
-    &::first-letter {
-      font-size: 1.4rem;
+    p {
+        line-height: 1.5rem;
+        font-size: 1.1rem;
     }
 
-  }
+    .letter-body {
+        text-indent: 2rem;
+
+        &::first-letter {
+            font-size: 1.4rem;
+        }
+    }
 }
 
 // we'll implicitly state when the hamburger icon is visible
@@ -852,12 +843,14 @@ ul {
     padding: 5px;
     cursor: pointer;
     transition: all $duration-menu-slide ease-out;
+
     .i-line {
         fill: #000;
     }
 
     &:hover {
         background-color: #000;
+
         .i-line {
             fill: #fff;
         }
@@ -874,19 +867,20 @@ ul {
     position: absolute;
     z-index: $z-index-high + 1;
     transform: rotate(1.25turn);
+
     .i-line {
         fill: #fff;
     }
 }
 
-@media screen and (max-width: map-get($breakpoints, 'milli') * 1px) {
+@media screen and (max-width: map-get($breakpoints, "milli") * 1px) {
     .sticky-top {
         position: fixed;
-        top:0;
-        left:0;
+        top: 0;
+        left: 0;
         right: 0;
         z-index: $z-index-high + 50;
-        transition: all $duration-menu-slide cubic-bezier(.59,.3,.47,.96);
+        transition: all $duration-menu-slide cubic-bezier(0.59, 0.3, 0.47, 0.96);
     }
 
     .menu-shift .sticky-top {
@@ -904,7 +898,7 @@ ul {
         width: 100%;
         height: 100%;
         padding-left: 15%;
-        transition: all $duration-menu-slide cubic-bezier(.59,.3,.47,.96);
+        transition: all $duration-menu-slide cubic-bezier(0.59, 0.3, 0.47, 0.96);
 
         &.cover {
             position: fixed;
@@ -926,7 +920,7 @@ ul {
             transition: padding-left 500ms ease-out;
 
             &:hover {
-                background-color: rgba(0,0,0,0.4);
+                background-color: rgba(0, 0, 0, 0.4);
             }
 
             &:nth-of-type(1) {
@@ -949,8 +943,6 @@ ul {
                 transition-delay: 0.34s;
             }
         }
-
-
     }
 
     .show-nav {
@@ -964,6 +956,7 @@ ul {
             padding-left: 75px;
         }
     }
+
     .mobile-hide {
         display: none;
     }
@@ -983,7 +976,7 @@ ul {
     }
 }
 
-@media screen and (min-width: map-get($breakpoints, 'milli') * 1px) {
+@media screen and (min-width: map-get($breakpoints, "milli") * 1px) {
     .collapsible-nav {
         padding: calculateRem(5);
     }
