@@ -36,12 +36,12 @@ html {
 
 // set a fairly arbitrary heading styles.  assuming this will be
 // overwritten in local css in most projects.
-@each $level in $size in $headers {
+@each $level, $size in $headers {
     #{$level} {
         @include fontSize($size);
     }
 }
-cds
+
 h1,
 h2,
 h3,

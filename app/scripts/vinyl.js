@@ -7,6 +7,75 @@
  ** Make useful utility functions available.
  */
 
+class PersistentStorageClass {
+    static initializeOnce() {
+        if ( typeof window.PersistentStorage === 'undefined' ) {
+            window.PersistentStorage = {
+                elements: {},
+                data: {}
+            };
+        }
+        return;
+    }
+
+    static setValue(moduleName, fieldName, fieldData) {
+        this.initializeOnce();
+        if ( typeof window.PersistentStorage.data[moduleName] === 'undefined' ) {
+            window.PersistentStorage.data[moduleName] = {};
+        }
+        window.PersistentStorage.data[moduleName][fieldName] = fieldData;
+    }
+
+    static getValue(moduleName, fieldName) {
+        this.initializeOnce();
+
+        if ( typeof window.PersistentStorage.data[moduleName] === 'undefined' ) {
+            return null;
+        }
+
+        if ( typeof window.PersistentStorage.data[moduleName][fieldName] === 'undefined' ){
+            return null;
+        }
+
+        return window.PersistentStorage.data[moduleName][fieldName];
+    }
+
+    static tagElement(moduleName, element, data) {
+        this.initializeOnce();
+        var identifier = this.makeID();
+        if ( typeof window.PersistentStorage.elements[moduleName] === 'undefined' ) {
+            window.PersistentStorage.elements[moduleName] = {};
+        }
+        window.PersistentStorage.elements[moduleName][identifier] = data;
+        element.setAttribute(`data-ps-${moduleName}`, identifier);
+    }
+
+    static getTag(moduleName, element) {
+        this.initializeOnce();
+        var identifier = element.getAttribute(`data-ps-${moduleName}`);
+        if (!identifier) {
+            return null;
+        }
+        if ( typeof window.PersistentStorage.elements[moduleName] === 'undefined' ) {
+            return null;
+        }
+        if ( typeof window.PersistentStorage.elements[moduleName][identifier] === 'undefined' ) {
+            return null;
+        }
+        return window.PersistentStorage.elements[moduleName][identifier];
+    }
+
+    // adapted from http://stackoverflow.com/a/1349426
+    static makeID() {
+        var text = '';
+        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for ( let i = 0, len = possible.length; i < 10; i++ ) {
+            text += possible.charAt( Math.floor( Math.random() * len ));
+        }
+        return text;
+    }
+}
+
 /** generic utility class with static methods. */
 class VinylUtil {
     /**
@@ -530,3 +599,4 @@ class Vinyl {
 }
 
 window.Vinyl = new Vinyl();
+window.PersistentStorageClass = PersistentStorageClass;
