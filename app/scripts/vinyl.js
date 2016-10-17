@@ -369,6 +369,9 @@ class VinylUtil {
 
     // adapted from - http://stackoverflow.com/a/5354536
     static checkVisible(elm) {
+        if (!elm) {
+            throw 'Invalid Element';
+        }
         var rect = elm.getBoundingClientRect();
         var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
         return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
