@@ -873,6 +873,14 @@ ul {
     }
 }
 
+.sticky-top-desktop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-index-high + 50;
+}
+
 @media screen and (max-width: map-get($breakpoints, "milli") * 1px) {
     .sticky-top {
         position: fixed;
