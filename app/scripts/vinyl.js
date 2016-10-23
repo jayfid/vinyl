@@ -9,10 +9,11 @@
 
 class PersistentStorageClass {
     static initializeOnce() {
-        if ( typeof window.PersistentStorage === 'undefined' ) {
+        if (typeof window.PersistentStorage === 'undefined') {
             window.PersistentStorage = {
                 elements: {},
-                data: {}
+                data: {},
+                uniq: 1
             };
         }
         return;
@@ -20,7 +21,7 @@ class PersistentStorageClass {
 
     static setValue(moduleName, fieldName, fieldData) {
         this.initializeOnce();
-        if ( typeof window.PersistentStorage.data[moduleName] === 'undefined' ) {
+        if (typeof window.PersistentStorage.data[moduleName] === 'undefined') {
             window.PersistentStorage.data[moduleName] = {};
         }
         window.PersistentStorage.data[moduleName][fieldName] = fieldData;
@@ -29,11 +30,11 @@ class PersistentStorageClass {
     static getValue(moduleName, fieldName) {
         this.initializeOnce();
 
-        if ( typeof window.PersistentStorage.data[moduleName] === 'undefined' ) {
+        if (typeof window.PersistentStorage.data[moduleName] === 'undefined') {
             return null;
         }
 
-        if ( typeof window.PersistentStorage.data[moduleName][fieldName] === 'undefined' ){
+        if (typeof window.PersistentStorage.data[moduleName][fieldName] === 'undefined') {
             return null;
         }
 
@@ -43,7 +44,7 @@ class PersistentStorageClass {
     static tagElement(moduleName, element, data) {
         this.initializeOnce();
         var identifier = this.makeID();
-        if ( typeof window.PersistentStorage.elements[moduleName] === 'undefined' ) {
+        if (typeof window.PersistentStorage.elements[moduleName] === 'undefined') {
             window.PersistentStorage.elements[moduleName] = {};
         }
         window.PersistentStorage.elements[moduleName][identifier] = data;
@@ -56,23 +57,46 @@ class PersistentStorageClass {
         if (!identifier) {
             return null;
         }
-        if ( typeof window.PersistentStorage.elements[moduleName] === 'undefined' ) {
+        if (typeof window.PersistentStorage.elements[moduleName] === 'undefined') {
             return null;
         }
-        if ( typeof window.PersistentStorage.elements[moduleName][identifier] === 'undefined' ) {
+        if (typeof window.PersistentStorage.elements[moduleName][identifier] === 'undefined') {
             return null;
         }
         return window.PersistentStorage.elements[moduleName][identifier];
     }
 
-    // adapted from http://stackoverflow.com/a/1349426
     static makeID() {
-        var text = '';
-        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for ( let i = 0, len = possible.length; i < 10; i++ ) {
-            text += possible.charAt( Math.floor( Math.random() * len ));
+        return window.PersistentStorage.uniq++;
+    }
+}
+
+// Interface Class for getting/setting private, global scoped data via PersistentStorageClass.
+class PersistentStorageClassConsumerInterface {
+    constructor(key) {
+        PersistentStorageClassConsumerInterface.checkDependencies();
+        if (!key) {
+            throw 'key is required to create a storage interface.';
         }
-        return text;
+        this.key = key;
+    }
+
+    getData(fieldName) {
+        return PersistentStorageClass.getValue(this.key, fieldName);
+    }
+
+    setData(fieldName, data) {
+        return PersistentStorageClass.setValue(this.key, fieldName, data);
+    }
+
+    getUniqueID() {
+        return PersistentStorageClass.makeID();
+    }
+
+    static checkDependencies() {
+        if (typeof window.PersistentStorage === 'undefined') {
+            throw 'global PersistentStorage object not found.';
+        }
     }
 }
 
@@ -83,11 +107,11 @@ class VinylUtil {
      * @param  {Element} img - An <img> node.
      * @return {Boolean} True if image is loaded, otherwise false.
      */
-    static isImageOk( img ) {
+    static isImageOk(img) {
         // adapted from https://stereochro.me/ideas/detecting-broken-images-js
-        if ( !img.complete
-            || ( typeof img.naturalWidth !== 'undefined'
-                && img.naturalWidth === 0 ) ) {
+        if (!img.complete
+            || (typeof img.naturalWidth !== 'undefined'
+                && img.naturalWidth === 0)) {
             return false;
         }
         return true;
@@ -99,14 +123,14 @@ class VinylUtil {
      * @param  {String} elemClass - Class to toggle.
      * @return {Boolean} True on success, otherwise false.
      */
-    static toggleClass( element, elemClass ) {
-        if ( !element || !elemClass ) {
+    static toggleClass(element, elemClass) {
+        if (!element || !elemClass) {
             return false;
         }
-        if ( VinylUtil.hasClass( element, elemClass ) ) {
-            return VinylUtil.removeClass( element, elemClass );
+        if (VinylUtil.hasClass(element, elemClass)) {
+            return VinylUtil.removeClass(element, elemClass);
         } else {
-            return VinylUtil.addClass( element, elemClass );
+            return VinylUtil.addClass(element, elemClass);
         }
     }
 
@@ -116,29 +140,29 @@ class VinylUtil {
      * @param  {String} elemClass - Class name to match.
      * @return {Boolean} True if element has class, otherwise false.
      */
-    static hasClass( element, elemClass ) {
-        if ( typeof element.className !== 'string' ) {
+    static hasClass(element, elemClass) {
+        if (typeof element.className !== 'string') {
             return false;
         }
 
-        if ( element.className === elemClass ) {
-          return true;
-        }
-
-        if ( !element.className.match( elemClass ) ) {
-          return false;
-        }
-
-        var classes = element.className.split( ' ' );
-
-        if ( !classes || !classes.length ) {
-            return false;
-        }
-
-        for ( let i = 0, len = classes.length; i < len; i++ ) {
-          if ( classes[ i ] === elemClass ) {
+        if (element.className === elemClass) {
             return true;
-          }
+        }
+
+        if (!element.className.match(elemClass)) {
+            return false;
+        }
+
+        var classes = element.className.split(' ');
+
+        if (!classes || !classes.length) {
+            return false;
+        }
+
+        for (let i = 0, len = classes.length; i < len; i++) {
+            if (classes[i] === elemClass) {
+                return true;
+            }
         }
 
         return false;
@@ -150,13 +174,13 @@ class VinylUtil {
      * @param  {String} elemClass - Class to add to element.
      * @return {Boolean} True on success, otherwise false.
      */
-    static addClass( element, elemClass ) {
-        if ( typeof element.className === 'undefined' ) {
+    static addClass(element, elemClass) {
+        if (typeof element.className === 'undefined') {
             return false;
         }
 
-        if ( VinylUtil.hasClass( element, elemClass ) ) {
-          return true;
+        if (VinylUtil.hasClass(element, elemClass)) {
+            return true;
         }
 
         element.className += ` ${elemClass}`;
@@ -181,24 +205,24 @@ class VinylUtil {
      * @param  {String} elemClass - Class to remove from element.
      * @return {Boolean} True on success, otherwise false.
      */
-    static removeClass( element, elemClass ) {
-        if ( typeof element.className === 'undefined' ) {
+    static removeClass(element, elemClass) {
+        if (typeof element.className === 'undefined') {
             return false;
         }
 
-        if ( !VinylUtil.hasClass( element, elemClass ) ) {
+        if (!VinylUtil.hasClass(element, elemClass)) {
             return false;
         }
 
-        var classes = element.className.split( ' ' ),
+        var classes = element.className.split(' '),
             preservedClasses = [];
 
-        for ( let i = 0, len = classes.length; i < len; i++ ) {
-            if ( classes[ i ] !== elemClass ) {
-                preservedClasses.push(classes[ i ]);
+        for (let i = 0, len = classes.length; i < len; i++) {
+            if (classes[i] !== elemClass) {
+                preservedClasses.push(classes[i]);
             }
         }
-        element.className = preservedClasses.join( ' ' );
+        element.className = preservedClasses.join(' ');
         return true;
     }
 
@@ -209,18 +233,18 @@ class VinylUtil {
      * @param  {Integer} limit - Maximum number of nodes to check
      * @return {Element} The matched element if found, otherwise false.
      */
-    static findParentWithClass( element, elemClass, limit ) {
+    static findParentWithClass(element, elemClass, limit) {
         var found = false, count = 0;
-        if ( !limit ) {
+        if (!limit) {
             limit = 100;
         }
-        while ( element !== null && !found && count < limit ) {
-            if ( element.tagName === 'BODY' ) {
+        while (element !== null && !found && count < limit) {
+            if (element.tagName === 'BODY') {
                 // we've gone too far!
                 return false;
             }
 
-            if ( VinylUtil.hasClass( element, elemClass ) ) {
+            if (VinylUtil.hasClass(element, elemClass)) {
                 found = element;
             } else {
                 element = element.parentNode;
@@ -237,17 +261,17 @@ class VinylUtil {
      * @param  {Integer} limit - Maximum number of nodes to check
      * @return {Element} The matched element if found, otherwise false.
      */
-    static findParentLink( element, limit ) {
+    static findParentLink(element, limit) {
         var found = false, count = 0;
-        if ( !limit ) {
+        if (!limit) {
             limit = 100;
         }
-        while ( element !== null && !found && count < limit ) {
-            if ( element.tagName === 'BODY' ) {
+        while (element !== null && !found && count < limit) {
+            if (element.tagName === 'BODY') {
                 // we've gone too far!
                 return false;
             }
-            if ( element.localName.toLowerCase() === 'a' ) {
+            if (element.localName.toLowerCase() === 'a') {
                 found = element;
             } else {
                 element = element.parentNode;
@@ -262,9 +286,9 @@ class VinylUtil {
      * @param  {Element} element - DOM element.
      * @return {Element} The html element if found, otherwise element.firstChild.
      */
-    static findFirstChild( element ) {
+    static findFirstChild(element) {
         var firstChild = element.firstChild;
-        while ( firstChild && firstChild.nodeType !== 1 ) {
+        while (firstChild && firstChild.nodeType !== 1) {
             firstChild = firstChild.nextSibling;
         }
         return firstChild;
@@ -275,19 +299,19 @@ class VinylUtil {
      * @param  {String} key - The get parameter to search for.
      * @return {String} The value of the supplied GET param, otherwise false.
      */
-    static getParam( key ) {
+    static getParam(key) {
         var search = window.location.search.toLowerCase().substring(1),
             params = [];
 
-        if ( search.indexOf('&') <= -1 ) {
+        if (search.indexOf('&') <= -1) {
             params.push(search);
         } else {
             params = search.split('&');
         }
 
-        for ( let i = 0, len = params.length; i < len; i++ ) {
-            let comparisonResult = VinylUtil.compareKeyValuePair( params[i], key );
-            if ( comparisonResult !== null ) {
+        for (let i = 0, len = params.length; i < len; i++) {
+            let comparisonResult = VinylUtil.compareKeyValuePair(params[i], key);
+            if (comparisonResult !== null) {
                 return comparisonResult;
             }
         }
@@ -295,69 +319,80 @@ class VinylUtil {
         return false;
     }
 
-    static compareKeyValuePair( pair, key ) {
+    static compareKeyValuePair(pair, key) {
         var keyValue = pair.split('=');
-        var decodedKey = decodeURIComponent( keyValue[0] ),
-            decodedValue = decodeURIComponent( keyValue[1] );
+        var decodedKey = decodeURIComponent(keyValue[0]),
+            decodedValue = decodeURIComponent(keyValue[1]);
 
-        if ( decodedKey.toString() === key ) {
+        if (decodedKey.toString() === key) {
             return decodedValue;
         }
         return null;
     }
 
-    static scrollIntoView( elem, position ) {
-        var currentWindowYOffset = ( window.pageYOffset || document.documentElement.scrollTop ) -
-            ( document.documentElement.clientTop || 0 );
+    static scrollIntoView(elem, position) {
+        var currentWindowYOffset = (window.pageYOffset || document.documentElement.scrollTop) -
+            (document.documentElement.clientTop || 0);
         var elementWindowYOffset;
-        if ( position && position === 'bottom' ) {
-            var elemY = VinylUtil.getPosition( elem ).y + currentWindowYOffset;
+        if (position && position === 'bottom') {
+            var elemY = VinylUtil.getPosition(elem).y + currentWindowYOffset;
             var elemHeight = elem.offsetHeight;
             var elemBottomPixel = elemY + elemHeight;
             var extraSpacePixels = 30;
             var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
             var calculatedOffset = elemBottomPixel - windowHeight + extraSpacePixels;
-            elementWindowYOffset = ( calculatedOffset >= 0 ) ? calculatedOffset : 0;
+            elementWindowYOffset = (calculatedOffset >= 0) ? calculatedOffset : 0;
         } else {
-            elementWindowYOffset = VinylUtil.getPosition( elem ).y;
+            elementWindowYOffset = VinylUtil.getPosition(elem).y;
         }
 
         var initialWindowYOffset = currentWindowYOffset;
 
-        if ( initialWindowYOffset === elementWindowYOffset ) {
+        if (initialWindowYOffset === elementWindowYOffset) {
             return;
         }
 
-        var interval = window.setInterval( () => {
-            if ( currentWindowYOffset !== elementWindowYOffset ) {
+        var interval = window.setInterval(() => {
+            if (currentWindowYOffset !== elementWindowYOffset) {
                 var offset = 1;
-                var distance = Math.abs( currentWindowYOffset - elementWindowYOffset );
-                if ( distance < 10 ) {
+                var distance = Math.abs(currentWindowYOffset - elementWindowYOffset);
+                if (distance < 10) {
                     offset = distance;
                 } else {
-                    offset += Math.floor( Math.sqrt( distance ) );
+                    offset += Math.floor(Math.sqrt(distance));
                 }
 
-                if ( currentWindowYOffset > elementWindowYOffset ) {
+                if (currentWindowYOffset > elementWindowYOffset) {
                     currentWindowYOffset -= offset;
                 } else {
                     currentWindowYOffset += offset;
                 }
-                window.scrollTo( 0, currentWindowYOffset );
+                window.scrollTo(0, currentWindowYOffset);
             } else {
-                window.clearInterval( interval );
+                window.clearInterval(interval);
             }
-        }, 25 );
+        }, 25);
+    }
+
+    static waitUntilVisible(key, elemSelector, callback) {
+        window.PersistentStorageClass.setValue(key, 'waitVisibleInterval', window.setInterval(() => {
+            if (!this.checkVisible(document.querySelector(elemSelector))) {
+                return;
+            }
+            window.clearInterval(window.PersistentStorageClass.getValue(key, 'waitVisibleInterval'));
+            // once element is in view, call callback.
+            callback();
+        }), 100);
     }
 
     // adapted from - http://stackoverflow.com/a/24829409
-    static getPosition( element ) {
+    static getPosition(element) {
         var xPosition = 0;
         var yPosition = 0;
 
-        while ( element ) {
-            xPosition += ( element.offsetLeft - element.scrollLeft + element.clientLeft );
-            yPosition += ( element.offsetTop - element.scrollTop + element.clientTop );
+        while (element) {
+            xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+            yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
             element = element.offsetParent;
         }
 
@@ -387,18 +422,17 @@ class VinylUtil {
             'iPhone',
             'iPod'
         ];
-        if ( navigator.platform ) {
+        if (navigator.platform) {
             while (iDevices.length) {
-                if (navigator.platform === iDevices.pop()){ return true; }
+                if (navigator.platform === iDevices.pop()) { return true; }
             }
         }
         return false;
     }
-
 }
 
 class Vinyl {
-    constructor(options={}) {
+    constructor(options = {}) {
         this.navList = [];
         this.locks = {};
         this.options = Object.assign({
@@ -418,7 +452,7 @@ class Vinyl {
     setupMenus() {
         var elements = document.querySelectorAll(this.options.navSelector);
         if (elements && elements.length) {
-            for ( let i = 0, len = elements.length; i < len; i++ ) {
+            for (let i = 0, len = elements.length; i < len; i++) {
                 this.createNav(elements[i]);
             }
         }
@@ -427,10 +461,10 @@ class Vinyl {
     checkStickyNav() {
         var elements = document.querySelectorAll(this.options.stickyMenuPadSelector);
 
-        if ( elements && elements.length ) {
+        if (elements && elements.length) {
             var navs = document.querySelectorAll('.sticky-top');
 
-            if ( navs && navs.length ) {
+            if (navs && navs.length) {
                 elements[0].style.paddingTop = navs[0].offsetHeight + 'px';
             }
 
@@ -441,42 +475,36 @@ class Vinyl {
     secureTargetBlank() {
         var elements = document.querySelectorAll('a[target="_blank"]');
 
-        if ( elements && elements.length ) {
-            for (let i = 0, len = elements.length; i < len; i++ ) {
+        if (elements && elements.length) {
+            for (let i = 0, len = elements.length; i < len; i++) {
+
                 elements[i].setAttribute('rel', 'noopener noreferrer');
+
             }
         }
     }
 
     // set the style height of an elem to that of it's referenced element.
-    // selects elements with heightSelector class.
+    // selects elements with heightSelector class by default.
     // data-height-ref is either the id of the reference elem or empty.
     // empty data-height-ref will explicitly set an elements height to its own
     // current height.
     setDynamicHeights() {
         var elements = document.querySelectorAll(this.options.heightSelector);
 
-        if ( elements && elements.length ) {
-            for ( let i = 0, len = elements.length; i < len; i++ ) {
+        if (elements && elements.length) {
+            for (let i = 0, len = elements.length; i < len; i++) {
                 let reference = elements[i].getAttribute('data-height-ref'),
                     foundReferenceElement;
 
-                if ( reference !== '' && !reference ) {
+                // if no reference found, we use the given element and set its height explicitly.
+                foundReferenceElement = (!reference) ? elements[i] : document.querySelector('#' + reference);
+
+                if (!foundReferenceElement) {
                     continue;
                 }
 
-                if ( reference === '' ) {
-                    foundReferenceElement = [elements[i]];
-                }
-                else {
-                    foundReferenceElement = document.querySelectorAll('#' + reference);
-                }
-
-                if ( !foundReferenceElement || !foundReferenceElement.length) {
-                    continue;
-                }
-
-                VinylUtil.setHeightOnElement(elements[i], foundReferenceElement[0]);
+                VinylUtil.setHeightOnElement(elements[i], foundReferenceElement);
             }
         }
     }
@@ -488,7 +516,7 @@ class Vinyl {
         });
     }
 
-    burgerfy(callback, burgerClassName='hamburgler') {
+    burgerfy(callback, burgerClassName = 'hamburgler') {
         this.burgerDiv = document.createElement('div');
         VinylUtil.addClass(this.burgerDiv, burgerClassName);
         this.burgerDiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 25" class="ham"><rect class="i-line" y="0"  width="30" height="5" /><rect class="i-line" y="10" width="30" height="5" /><rect class="i-line" y="20" width="30" height="5" /></svg>';
@@ -501,7 +529,7 @@ class Vinyl {
     // return true if new lock acquired, otherwise false.
     // useful to ensure a process will not run if it's already running.
     acquireLock(uniqueKey, milliseconds = 1) {
-        if ( (this.checkLock(uniqueKey)) ) {
+        if ((this.checkLock(uniqueKey))) {
             return false;
         }
         this.locks[uniqueKey] = Date.now() + milliseconds;
@@ -515,7 +543,7 @@ class Vinyl {
         }
 
         // if uniqueKey's expiry timestamp is in the past, expire the lock
-        if ( this.locks[uniqueKey] < Date.now() ) {
+        if (this.locks[uniqueKey] < Date.now()) {
             this.clearLock(uniqueKey);
             return false;
         }
@@ -525,7 +553,7 @@ class Vinyl {
 
     //return true if uniqueKey existed and has been deleted, otherwise false
     clearLock(uniqueKey) {
-        if (typeof this.locks[uniqueKey] === 'undefined' ) {
+        if (typeof this.locks[uniqueKey] === 'undefined') {
             return false;
         }
         return delete this.locks[uniqueKey];
@@ -549,6 +577,10 @@ class Vinyl {
     }
 
     closeMobileMenu(target, button) {
+        // attempt to acquire lock, otherwise return
+        if (!(this.acquireLock('MobileMenuAnimation'))) {
+            return false;
+        }
         VinylUtil.addClass(document.body, 'animating');
 
         window.setTimeout(() => {
@@ -565,7 +597,7 @@ class Vinyl {
 
     openMobileMenu(target, button) {
         // attempt to acquire lock, otherwise return
-        if ( !(this.acquireLock('MobileMenuAnimation')) ) {
+        if (!(this.acquireLock('MobileMenuAnimation'))) {
             return false;
         }
         // if already open, close
@@ -601,5 +633,9 @@ class Vinyl {
     }
 }
 
-window.Vinyl = new Vinyl();
-window.PersistentStorageClass = PersistentStorageClass;
+(function (window) {
+    window.VinylUtil = VinylUtil;
+    window.Vinyl = new Vinyl();
+    window.PersistentStorageClass = PersistentStorageClass;
+    window.PersistentStorageClassConsumerInterface = PersistentStorageClassConsumerInterface;
+})(window);
