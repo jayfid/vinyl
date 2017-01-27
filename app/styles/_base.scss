@@ -205,6 +205,14 @@ a[class=""]:visited {
     color: colorGet("blue", "dark");
 }
 
+.nowrap {
+    white-space: nowrap;
+}
+
+.display-block {
+    display: block;
+}
+
 /// grid
 
 .frame {
