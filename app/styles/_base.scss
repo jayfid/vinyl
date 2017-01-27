@@ -26,6 +26,7 @@ html {
         &.img {
             max-width: 100%;
             height: auto;
+            @extend %noselect;
         }
 
         &.exceed-width {
@@ -50,7 +51,7 @@ h5,
 h6 {
     font-weight: $font-weight-bold;
     margin: 0 0 $gap-base;
-    line-height: $line-height-multiple * 1em;
+    line-height: $line-height-multiple * 1rem;
     letter-spacing: 0.01em;
 
     &.border-bottom,
@@ -70,19 +71,22 @@ h6 {
 }
 
 // the correct emfasis on the correct sylabell.
-em {
+em, .bold, strong {
     font-weight: 700;
 }
 
 // strongly emphasize
 strong {
-    font-weight: 700;
     text-decoration: underline;
 }
 
 // alternative to <del>
 .strike {
     text-decoration: line-through;
+}
+
+.small-caps {
+    font-variant: small-caps;;
 }
 
 .font-size-a {
@@ -132,7 +136,7 @@ code {
 }
 
 p {
-    line-height: $line-height-multiple * 1em;
+    line-height: $line-height-multiple * 1rem;
     margin: 0 0 1rem;
 }
 
