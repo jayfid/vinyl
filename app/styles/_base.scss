@@ -40,6 +40,7 @@ html {
 @each $level, $size in $headers {
     #{$level} {
         @include fontSize($size);
+        line-height: calculateRem($size + .2);
     }
 }
 
@@ -51,8 +52,7 @@ h5,
 h6 {
     font-weight: $font-weight-bold;
     margin: 0 0 $gap-base;
-    line-height: $line-height-multiple * 1rem;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.01rem;
 
     &.border-bottom,
     &.title {
@@ -80,6 +80,10 @@ strong {
     text-decoration: underline;
 }
 
+.normal-weight {
+    font-weight: 400;
+}
+
 // alternative to <del>
 .strike {
     text-decoration: line-through;
@@ -90,23 +94,24 @@ strong {
 }
 
 .font-size-a {
-    font-size: 1.1em;
+    font-size: 1.1rem;
+
 }
 
 .font-size-b {
-    font-size: 1.2em;
+    font-size: 1.2rem;
 }
 
 .font-size-c {
-    font-size: 1.3em;
+    font-size: 1.3rem;
 }
 
 .font-size-d {
-    font-size: 1.4em;
+    font-size: 1.4rem;
 }
 
 .font-size-e {
-    font-size: 1.5em;
+    font-size: 1.5rem;
 }
 
 // bowtie for h# elements
@@ -137,7 +142,7 @@ code {
 
 p {
     line-height: $line-height-multiple * 1rem;
-    margin: 0 0 1rem;
+    margin: 0;
 }
 
 // commonly used utility classes
@@ -213,6 +218,14 @@ a[class=""]:visited {
     display: block;
 }
 
+.no-margin {
+  margin: 0;
+}
+   
+.full-width {
+  width: 100%; 
+}
+
 /// grid
 
 .frame {
@@ -265,7 +278,8 @@ a[class=""]:visited {
 }
 
 .lane {
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .row {
@@ -283,13 +297,6 @@ a[class=""]:visited {
         padding-left: 5px;
         padding-right: 5px;
     }
-}
-
-.card {
-    background-color: #f1f1f1;
-    padding: calculateRem(5);
-    margin: calculateRem(5);
-    border: 1px solid #ababab;
 }
 
 // generate utility classes for various margins
@@ -477,22 +484,11 @@ a.msg {
     right: 0;
     height: 100%;
     width: 100%;
-    z-index: $z-index-high;
+    z-index: $z-index-modal - 1;
 }
 
-.overlay-show .overlay-top-level {
-    display: block;
-}
-
-.input {
-    .prefix, .suffix {
-        display: inline-block;
-        vertical-align: middle;
-    }
-}
-
-.overlay {
-    display: none;
+.overlaid-item {
+    display: flex;
     position: fixed;
     height: 100%;
     width: 100%;
@@ -500,40 +496,25 @@ a.msg {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.75);
     transition: opacity 0.1s;
     overflow: hidden;
     z-index: $z-index-modal;
+}
 
-    &.show {
-        display: flex;
+body[data-vinyl-overlay="show"] {
+    .overlay-top-level {
+        display: block;
     }
-
-    & > div:last-child {
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
-        margin: 2rem 1.4rem 1.4rem;
+    .overlay {
+        overflow: hidden;
     }
 }
 
-.show-overlay .overlay {
-    display: flex;
-}
-
-body.show-overlay {
-    overflow: hidden;
-}
-
-.screen {
-    position: absolute;
-    z-index: z-index-mid + 2;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
+.input {
+    .prefix, .suffix {
+        display: inline-block;
+        vertical-align: middle;
+    }
 }
 
 .hide {
@@ -552,7 +533,7 @@ body.show-overlay {
     }
 
     &.show-inline-block {
-        display: inline;
+        display: inline-block;
     }
 }
 
@@ -632,10 +613,8 @@ ul {
 }
 
 @media screen and (max-width: maxBreakpoint()) {
-    .container, .constrain {
-        &.mobile-wall-pad {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
+    .mobile-wall-pad {
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }

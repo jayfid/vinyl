@@ -96,7 +96,7 @@
     }
 }
 
-// print set of utility classes to add top,down,left,right margins
+// print set of utility classes to add top,down,left,right margins and padding
 @mixin margins($limit: 20) {
      @for $index from 1 through $limit{
         $increment: $index * 5;
