@@ -86,8 +86,7 @@ Draggable.prototype.mouseIsUp = function(e, context) {
 
 Draggable.prototype.dragEvent = function(e, context) {
     // prevent dragging background on mobile device.
-
-    if (window.Venn.overlaid) {
+    if (body.getAttribute('data-vinyl-overlay') === 'show') {
         e.preventDefault();
     }
 

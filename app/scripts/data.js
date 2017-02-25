@@ -2,18 +2,20 @@
 
 /**
  **  Persistent Storage Class
- **  Central frontend data broker.
- **  Allows for multiple named modules to globally store and
- **  retrieve data across functions/objects/callbacks.
- **  Only knowledge of the corresponding module and field names
+ **  Global in-browser data store.
+ **  Allows for multiple uniquely named modules to globally store
+ **  and retrieve data across functions/objects/callbacks.
+ **  Only knowledge of the corresponding module and field name
  **  is required to retrieve data.  As computing power is variable,
  **  global storage should be used sparingly, with plans to clear
- **  data when it is no longer useful. Useful for this, are the 
- ** `deleteModule` and `deleteField` methods, which may be used
- **  when exiting functions or destroying objects to free
- **  stored data.
- **  Also allows using HTMLElements as keys for data.
- **  TODO - add parameter checking.
+ **  data when it is no longer useful.
+ **  The `deleteModule` and `deleteField` methods may be used when
+ **  exiting functions or destroying objects.
+ **  Allows using HTMLElements as keys for data.
+ **  Maintains a static incrementor for creating IDs.
+ **
+ **  @TODO - add argument checking.
+ **
  */
 
 function PersistentStorageClass() {
@@ -41,7 +43,9 @@ PersistentStorageClass.prototype.setData = function(moduleName, fieldName, field
     window.PersistentStorage.data[moduleName][fieldName] = fieldData;
 };
 
-
+/**
+ * Retrieve data.  Returns found value or null.
+ */
 PersistentStorageClass.prototype.getData = function(moduleName, fieldName) {
     if (typeof window.PersistentStorage === 'undefined' ||
         typeof window.PersistentStorage.data[moduleName] === 'undefined' ||
@@ -57,12 +61,22 @@ PersistentStorageClass.prototype.getElementId = function(element) {
     return element.getAttribute('data-ps-id');
 };
 
-PersistentStorageClass.prototype.deleteModule = function() {
-  // todo - next
+/**
+ * Deletes global data stored under the supplied moduleName
+ */
+PersistentStorageClass.prototype.deleteModule = function(moduleName) {
+  if (typeof window.PersistentStorage.data[moduleName] !== 'undefined') {
+    delete window.PersistentStorage.data[moduleName];
+  }
+  for (var key in window.PersistentStorage.elements) {
+    if (window.PersistentStorage.elements.hasOwnProperty(key) && key === moduleName) {
+        delete window.PersistentStorage.elements[key];
+    }
+  }
 };
 
-PersistentStorageClass.prototype.deleteModule = function() {
-  // todo - next
+PersistentStorageClass.prototype.deleteField = function() {
+  // todo
 };
 
 PersistentStorageClass.prototype.setElementData = function(element, moduleName, fieldName, fieldData) {
@@ -75,7 +89,7 @@ PersistentStorageClass.prototype.setElementData = function(element, moduleName, 
         }
     }
     if (typeof window.PersistentStorage.elements[identifier] === 'undefined') {
-        window>PersistentStorage.element[identifier] = {};
+        window.PersistentStorage.element[identifier] = {};
     }
     if (typeof window.PersistentStorage.elements[identifier][moduleName] === 'undefined') {
         window.PersistentStorage.elements[identifier][moduleName] = {};
@@ -93,6 +107,10 @@ PersistentStorageClass.prototype.getElementData = function(element, moduleName, 
         return;
     }
     return window.PersistentStorage.elements[identifier][moduleName][fieldName];
+};
+
+PersistentStorageClass.prototype.deleteElementData = function(element, moduleName) {
+  // todo
 };
 
 PersistentStorageClass.prototype.nextID = function() {
