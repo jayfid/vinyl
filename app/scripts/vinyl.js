@@ -7,21 +7,25 @@
  ** Make useful utility functions available.
  */
 
+function VinylInit() {
+    Vinyl.addOverlayToDOM();
+    Vinyl.setDynamicHeights();
+    Vinyl.secureTargetBlank();
+}
+
 function Vinyl(props) {
-    this.addOverlayToDOM();
-    this.setDynamicHeights();
-    this.secureTargetBlank();
+    window.onload = VinylInit;
 }
 
 // add rel attr to _blank links to help mitigate tabnabbing
 Vinyl.prototype.secureTargetBlank = function() {
-    let elements = document.querySelectorAll('a[target="_blank"]');
+    var elements = document.querySelectorAll('a[target="_blank"]');
 
     if (!elements || !elements.length) {
         return;
     }
 
-    for (let i = 0, len = elements.length; i < len; i++) {
+    for (var i = 0, len = elements.length; i < len; i++) {
         elements[i].setAttribute('rel', 'noopener noreferrer');
     }
 };
@@ -38,8 +42,8 @@ Vinyl.prototype.setDynamicHeights = function() {
         return false;
     }
 
-    for (let i = 0, len = elements.length; i < len; i++) {
-        let reference = elements[i].getAttribute('data-height-ref'), foundReferenceElement;
+    for (var i = 0, len = elements.length, reference; i < len; i++) {
+        reference = elements[i].getAttribute('data-height-ref'), foundReferenceElement;
 
         // if no reference found, we use the given element and set its height explicitly.
         foundReferenceElement = (!reference) ? elements[i] : document.querySelector('#' + reference);
@@ -56,15 +60,24 @@ Vinyl.prototype.setDynamicHeights = function() {
 Vinyl.prototype.addOverlayToDOM = function() {
     var overlayDiv = document.createElement('div');
     overlayDiv.className = 'overlay-top-level';
+    overlayDiv.addEventListener('click', function() {
+        if (document.body.getAttribute('data-vinyl-overlay-closable') === 'true') {
+            Vinyl.hideOverlay();
+        }
+    }, true);
     document.body.appendChild(overlayDiv);
 };
 
-Vinyl.prototype.showOverlay = function() {
+Vinyl.prototype.showOverlay = function(clickToClose) {
     document.body.setAttribute('data-vinyl-overlay', 'show');
+    if (clickToClose) {
+        document.body.setAttribute('data-vinyl-overlay-closable', 'true');
+    }
 };
 
 Vinyl.prototype.hideOverlay = function() {
     document.body.setAttribute('data-vinyl-overlay', 'hide');
+    document.body.removeAttribute('data-vinyl-overlay-closable');
 };
 
 (function (window) {

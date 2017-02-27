@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  **  Persistent Storage Class
  **  Global in-browser data store.
@@ -7,14 +5,14 @@
  **  and retrieve data across functions/objects/callbacks.
  **  Only knowledge of the corresponding module and field name
  **  is required to retrieve data.  As computing power is variable,
- **  global storage should be used sparingly, with plans to clear
- **  data when it is no longer useful.
- **  The `deleteModule` and `deleteField` methods may be used when
- **  exiting functions or destroying objects.
+ **  global storage should be used sparingly.
+ **  The `deleteModule` and `deleteField` methods may be used to
+ **  invoke the `delete` operator on the stored data.
  **  Allows using HTMLElements as keys for data.
  **  Maintains a static incrementor for creating IDs.
  **
- **  @TODO - add argument checking.
+ **  @TODO - add argument checking
+ **  @TODO - documentation
  **
  */
 
@@ -30,7 +28,7 @@ function PersistentStorageClass() {
 
 /**
  * Saves global data under publiclly accessible store,
- * retrievable via a module and field name combination.
+ * retrievable later via a module and field name combination.
  * @param {String} moduleName - required
  * @param {String} fieldName - required
  * @param {Mixed} fieldData - required - Any data to save in the global scope.
@@ -45,84 +43,140 @@ PersistentStorageClass.prototype.setData = function(moduleName, fieldName, field
 
 /**
  * Retrieve data.  Returns found value or null.
+ * @param {String} moduleName - required
+ * @param {String} fieldName - required
+ * @param {Mixed} fieldData - required - Any data to save in the global scope.
+ * @return mixed or null
  */
 PersistentStorageClass.prototype.getData = function(moduleName, fieldName) {
     if (typeof window.PersistentStorage === 'undefined' ||
         typeof window.PersistentStorage.data[moduleName] === 'undefined' ||
         typeof window.PersistentStorage.data[moduleName][fieldName] === 'undefined') {
-        
-        console.warn('Call to get data failed.');
+
+        //console.debug('Call to get data failed.');
         return;
     }
     return window.PersistentStorage.data[moduleName][fieldName];
 };
 
+/**
+ * Returns the persistent storage identifier of an element.
+ * @param {HTMLElement} element - required
+ * @return found attribute string or null.
+ */
 PersistentStorageClass.prototype.getElementId = function(element) {
     return element.getAttribute('data-ps-id');
 };
 
 /**
- * Deletes global data stored under the supplied moduleName
+ * Passes all of a module's stored data to the delete operator.
+ * @param {String} moduleName - required
+ * @return null
  */
 PersistentStorageClass.prototype.deleteModule = function(moduleName) {
   if (typeof window.PersistentStorage.data[moduleName] !== 'undefined') {
     delete window.PersistentStorage.data[moduleName];
   }
-  for (var key in window.PersistentStorage.elements) {
-    if (window.PersistentStorage.elements.hasOwnProperty(key) && key === moduleName) {
-        delete window.PersistentStorage.elements[key];
-    }
+  if (typeof window.PersistentStorage.elements[moduleName] !== 'undefined') {
+    delete window.PersistentStorage.elements[moduleName];
   }
 };
 
-PersistentStorageClass.prototype.deleteField = function() {
-  // todo
+/**
+ * Passes the corresponding field to the delete operator.
+ * @param {String} moduleName - required
+ * @param {String} fieldName - required
+ * @return null
+ */
+PersistentStorageClass.prototype.deleteField = function(moduleName, fieldName) {
+  if (typeof window.PersistentStorage.data[moduleName] !== 'undefined') {
+    delete window.PersistentStorage.data[moduleName][fieldName];
+  }
 };
 
-PersistentStorageClass.prototype.setElementData = function(element, moduleName, fieldName, fieldData) {
-    var identifier = element.getAttribute('data-ps-id');
+/**
+ * Store module data, keyed by an DOM element.
+ * @param {HTMLElement} element - required
+ * @param {String} moduleName - required
+ * @param {String} fieldName - required
+ * @param {Mixed} fieldData - required
+ * @return null
+ */
+PersistentStorageClass.prototype.setElementData = function(element, moduleName, fieldData) {
+    var identifier = this.getElementId(element);
     if (!identifier) {
-        this.tagElement(moduleName, element);
-        identifier = this.getElementId(element);
+        identifier = this.tagElement(element, moduleName);
         if (!identifier) {
             throw 'Element that should have an ID does not.';
         }
     }
-    if (typeof window.PersistentStorage.elements[identifier] === 'undefined') {
-        window.PersistentStorage.element[identifier] = {};
-    }
-    if (typeof window.PersistentStorage.elements[identifier][moduleName] === 'undefined') {
-        window.PersistentStorage.elements[identifier][moduleName] = {};
-    }
-    window.PersistentStorage.elements[identifier][moduleName][fieldName] = fieldData;
-};
-
-PersistentStorageClass.prototype.getElementData = function(element, moduleName, fieldName) {
-    var identifier = element.getAttribute();
-    if (!identifier ||
-        typeof window.PersistentStorage === 'undefined' ||
-        typeof window.PersistentStorage.elements[identifier] === 'undefined') {
-
-        console.warn('Call to get element data failed');
-        return;
-    }
-    return window.PersistentStorage.elements[identifier][moduleName][fieldName];
-};
-
-PersistentStorageClass.prototype.deleteElementData = function(element, moduleName) {
-  // todo
-};
-
-PersistentStorageClass.prototype.nextID = function() {
-    return window.PersistentStorage.uniq++;
-};
-
-PersistentStorageClass.prototype.tagElement = function(moduleName, element) {
-    var identifier = this.nextID();
     if (typeof window.PersistentStorage.elements[moduleName] === 'undefined') {
         window.PersistentStorage.elements[moduleName] = {};
     }
+    if (typeof window.PersistentStorage.elements[moduleName][identifier] === 'undefined') {
+        window.PersistentStorage.elements[moduleName][identifier] = {};
+    }
+    window.PersistentStorage.elements[moduleName][identifier] = fieldData;
+};
+
+/**
+ * Get module data, keyed by an DOM element
+ * @param {HTMLElement} element - required
+ * @param {String} moduleName - required
+ * @param {String} moduleName - required
+ * @return found mixed value or null
+ */
+PersistentStorageClass.prototype.getElementData = function(element, moduleName) {
+    var identifier = this.getElementId(element);
+    if (!identifier ||
+        typeof window.PersistentStorage === 'undefined' ||
+        typeof window.PersistentStorage.elements[moduleName] === 'undefined' ||
+        typeof window.PersistentStorage.elements[moduleName][identifier] === 'undefined') {
+
+        //console.debug('Call to get element data failed');
+        return;
+    }
+    return window.PersistentStorage.elements[moduleName][identifier];
+};
+
+/**
+ * Passes stored data to delete operator.
+ * @param {HTMLElement} element - required
+ * @param {String} moduleName - required
+ * @return null
+ */
+PersistentStorageClass.prototype.deleteElementData = function(element, moduleName) {
+    var identifier = this.getElementId(element);
+    if (!identifier ||
+        typeof window.PersistentStorage === 'undefined' ||
+        typeof window.PersistentStorage.elements[moduleName] === 'undefined' ||
+        typeof window.PersistentStorage.elements[moduleName][identifier] === 'undefined') {
+
+        console.debug('Call to delete non-existant element data');
+        return;
+    }
+    delete window.PersistentStorage.elements[identifier][moduleName];
+};
+
+/**
+ * Returns the next consecutive integer from a global counter.
+ * @return string, representing unique ID.
+ */
+PersistentStorageClass.prototype.nextID = function() {
+    var id = window.PersistentStorage.uniq++;
+    return id.toString();
+};
+
+/**
+ * Adds a unique ID to an HTMLElement's dataset.
+ * @param {HTMLElement} element - required
+ * @param {String} moduleName - required
+ * @return unique ID string
+ */
+PersistentStorageClass.prototype.tagElement = function(element, moduleName) {
+    var identifier = this.nextID();
     element.setAttribute('data-ps-id', identifier);
+    return identifier;
 };
 
 window.PersistentStorageClass = new PersistentStorageClass();
