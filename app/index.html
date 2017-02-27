@@ -17,6 +17,14 @@
     <!-- build:css styles/vinyl.css -->
     <link rel="stylesheet" href="/styles/vinyl.css">
     <!-- endbuild -->
+
+    <!-- build:js scripts/vinyl.js -->
+    <script src="scripts/utility.js"></script>
+    <script src="scripts/vinyl.js"></script>
+    <script src="scripts/data.js"></script>
+    <script src="scripts/locks.js"></script>
+    <script src="scripts/draggable.js"></script>
+    <!-- endbuild -->
 </head>
 <body>
 
@@ -44,8 +52,25 @@
                 <h1>Welcome To Vinyl!</h1>
             </div>
         </div>
+        <div class="row">
+            <div class="grid-12">
+                <div class="color-bg-green draggable-example">
+                    <p class="text-center bpad-20 tpad-20 rpad-20 lpad-20 ">Draggable</p>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+<script>
+    function demoEvent(event, container, lastMousePos, currMousePos) {
+        console.log(event);
+    }
+
+    var myDraggableExample = new Draggable({
+        containerSelector: '.draggable-example',
+        callback: demoEvent
+    });
+</script>
 
             </section>
 
@@ -69,9 +94,6 @@
     <!-- bower:js -->
     <!-- endbower -->
     <!-- endbuild -->
-
-    <!-- build:js scripts/vinyl.js -->
-    <script src="/scripts/vinyl.js"></script>
-    <!-- endbuild -->
+    
 </body>
 

@@ -9,8 +9,8 @@
   },
   "eslintConfig": {
     "env": {
-      "es6": true,
-      "node": true,
+      "es6": false,
+      "node": false,
       "browser": true
     },
     "rules": {

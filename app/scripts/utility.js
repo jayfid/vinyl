@@ -62,7 +62,7 @@ VinylUtil.prototype.hasClass = function(element, elemClass) {
         return false;
     }
 
-    for (let i = 0, len = classes.length; i < len; i++) {
+    for (var i = 0, len = classes.length; i < len; i++) {
         if (classes[i] === elemClass) {
             return true;
         }
@@ -86,7 +86,7 @@ VinylUtil.prototype.addClass = function(element, elemClass) {
         return true;
     }
 
-    element.className += ` ${elemClass}`;
+    element.className = element.className + ' ' + elemClass;
 
     return true;
 };
@@ -120,7 +120,7 @@ VinylUtil.prototype.removeClass = function(element, elemClass) {
     var classes = element.className.split(' '),
         preservedClasses = [];
 
-    for (let i = 0, len = classes.length; i < len; i++) {
+    for (var i = 0, len = classes.length; i < len; i++) {
         if (classes[i] !== elemClass) {
             preservedClasses.push(classes[i]);
         }
@@ -212,8 +212,8 @@ VinylUtil.prototype.getParam = function(key) {
         params = search.split('&');
     }
 
-    for (let i = 0, len = params.length; i < len; i++) {
-        let comparisonResult = VinylUtil.compareKeyValuePair(params[i], key);
+    for (var i = 0, len = params.length, comparisonResult; i < len; i++) {
+        comparisonResult = VinylUtil.compareKeyValuePair(params[i], key);
         if (comparisonResult) {
             return comparisonResult;
         }
@@ -261,7 +261,7 @@ VinylUtil.prototype.scrollIntoView = function(elem, position) {
         return;
     }
 
-    var interval = window.setInterval(() => {
+    var interval = window.setInterval( function(){
         if (currentWindowYOffset !== elementWindowYOffset) {
             var offset = 1;
             var distance = Math.abs(currentWindowYOffset - elementWindowYOffset);
@@ -288,7 +288,7 @@ VinylUtil.prototype.scrollIntoView = function(elem, position) {
  */
 VinylUtil.prototype.waitUntilVisible = function(key, elemSelector, callback) {
     var storage = new PersistentStorageClassConsumerInterface();
-    storage.setValue(key, 'waitVisibleInterval', window.setInterval(() => {
+    storage.setValue(key, 'waitVisibleInterval', window.setInterval(function(){
         if (!VinylUtil.checkVisible(document.querySelector(elemSelector))) {
             return;
         }
@@ -346,6 +346,41 @@ VinylUtil.prototype.iOS = function() {
         }
     }
     return false;
+};
+
+/**
+ *
+ */
+VinylUtil.prototype.isSafari = function () {
+    var e = navigator.userAgent.toLowerCase();
+    return e.indexOf('safari') !== -1 && !(e.indexOf('chrome') > -1)
+};
+
+/**
+ *
+ */
+VinylUtil.prototype.getMouseCoordinates = function(mouseEvent) {
+    if ('undefined' !== typeof mouseEvent.pageX && 
+        'undefined' !== typeof mouseEvent.pageY) {
+        
+        return [mouseEvent.pageX, mouseEvent.pageY];
+    }
+    if (mouseEvent.touches && mouseEvent.touches.length) {
+        return [mouseEvent.touches[0].pageX, mouseEvent.touches[0].pageY];
+    }
+    throw 'No coordinates in passed event.';
+};
+
+/**
+ *
+ */
+VinylUtil.prototype.addEvents = function(events, element, listener, useCapture) {
+  if (typeof useCapture === 'undefined') {
+    useCapture = false;
+  }
+  for (var i = 0, len = events.length; i < len; i++) {
+    element.addEventListener(events[i], listener, useCapture);
+  }
 };
 
 (function() {

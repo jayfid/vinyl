@@ -1,121 +1,168 @@
 'use strict';
 
-function Draggable(options) {
+function Draggable(props) {
+    this.start(props);
+}
+
+Draggable.prototype.start = function(props) {
     // the container of the area where mousemoves will be listened for.
-    this.containerSelector = options.containerSelector;
-
-    // a function(container, mousePos) to handle drag events.
-    this.callback = options.callback;
-
-    this.lastMousePos = null;
-
-    var container = document.querySelector('.' + this.containerSelector); //that = this;
-
+    // Ensure that the container is visible and able to receive mouseevents.
+    var container = document.querySelector(props.containerSelector);
     if (!container) {
         throw 'Draggable containerSelector refers to non-existant element.';
     }
+    VinylUtil.addClass(container, 'draggable-initialized');
+    var state = {
+        containerSelector: props.containerSelector,
+        callback: props.callback, // a function(container, mousePos) to handle drag events.
+        lastMousePos: null
+    };
+    this.setData(container, state);
+    // the following global is only used when manually tracking mouse state.
 
+    this.md(false);
     // prevent the annoying picking up of images.
     var images = container.getElementsByTagName('img');
     if (images || images.length) {
-        for (let i = 0, len = images.length; i < len; i++) {
+        for (var i = 0, len = images.length; i < len; i++) {
             images[i].setAttribute('draggable', 'false');
         }
     }
 
-    // listen for dragging or touchmoves.
-    container.addEventListener('mousemove', (function(e) {
-        this.dragEvent(e, this);
-    }).bind(this), true);
-    container.addEventListener('touchmove', (function(e) {
-        this.dragEvent(e, this);
-    }).bind(this), true);
+    VinylUtil.addEvents(
+        ['mousemove', 'touchmove'],
+        container,
+        function(e) {
+            window.Draggable.prototype.dragEvent(e);
+        },
+        true);
+
     container.addEventListener('mousedown', function(e) {
         e.preventDefault();
         return true;
     }, true);
-    document.body.addEventListener('mouseup', (function() {
-        this.reset(this);
-    }).bind(this), true);
-    document.body.addEventListener('touchend', (function() {
-        this.reset(this);
-    }).bind(this), true);
-    document.body.addEventListener('touchcancel', (function() {
-        this.reset(this);
-    }).bind(this), true);
 
-    if (window.VinylUtil.isSafari()) {
-        this.mouseIsDown = false;
-        document.body.addEventListener('mousedown', (function() {
-            this.setMouseDown(true, this);
-        }).bind(this), true);
-        document.body.addEventListener('touchstart', (function() {
-            this.setMouseDown(true, this);
-        }).bind(this), true);
-        document.body.addEventListener('mouseup', (function() {
-            this.setMouseDown(false, this);
-        }).bind(this), true);
-        document.body.addEventListener('touchend', (function() {
-            this.setMouseDown(false, this);
-        }).bind(this), true);
+    VinylUtil.addEvents(
+        ['mouseup', 'touchend', 'touchcancel'],
+        document.body,
+        function() {
+            window.Draggable.prototype.reset(container);
+        },
+        true);
+
+    if (!VinylUtil.isSafari()) {
+        return;
     }
-}
-
-Draggable.prototype.setMouseDown = function(isDown, context) {
-    context.mouseIsDown = isDown;
+    // browser is safari and requires manual click-tracking.
+    VinylUtil.addEvents(
+        ['mousedown', 'touchstart'],
+        document.body ,
+        function() {
+           this.md(true);
+        },
+        true);
+    
+    VinylUtil.addEvents(
+        ['mouseup', 'touchend', 'touchcancel'],
+        document.body,
+        function() {
+            this.md(false);
+        },
+        true);
 };
 
-Draggable.prototype.toString = function() {
-    return this.elementSelector;
+Draggable.prototype.md = function(b) {
+    PersistentStorageClass.setData('draggable-global', 'mouseIsDown', b);
 };
 
-Draggable.prototype.reset = function(context) {
-    context.mouseIsDown = null;
-    context.lastMousePos = null;
+Draggable.prototype.reset = function(container) {
+    this.setData(container, null, 'lastMousePos');
+    this.md(false);
 };
 
-Draggable.prototype.mouseIsUp = function(e, context) {
-     if (window.VinylUtil.isSafari()) {
-        return !context.mouseIsDown;
+Draggable.prototype.mouseIsUp = function(e) {
+     if (VinylUtil.isSafari()) {
+        return !PersistentStorageClass.getData('draggable-global', 'mouseIsDown');
      }
      if (typeof e.buttons !== 'undefined' && e.buttons === 0) {
-         return true;
+        return true;
      }
      return false;
 };
 
-Draggable.prototype.dragEvent = function(e, context) {
+Draggable.prototype.setData = function(container, data, fieldName) {
+    var state = this.getData(container);
+    if (typeof fieldName === 'string') {
+        state[fieldName] = data;
+    }
+    else {
+        state = data;
+    }
+    PersistentStorageClass.setElementData(container, 'Draggable', state);
+};
+
+Draggable.prototype.getData = function(container) {
+    return PersistentStorageClass.getElementData(container, 'Draggable');
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Draggable.prototype.dragEvent = function(e) {
     // prevent dragging background on mobile device.
-    if (body.getAttribute('data-vinyl-overlay') === 'show') {
+    if (document.body.getAttribute('data-vinyl-overlay') === 'show') {
         e.preventDefault();
     }
 
-    var mousePos = window.VinylUtil.getMouseCoordinates(e),
-        container = window.VinylUtil.findParentWithClass(e.target, context.containerSelector);
-
+    var container = VinylUtil.findParentWithClass(e.target, 'draggable-initialized');
     // check that a button is being pressed.
-    if (!container || context.mouseIsUp(e, context)) {
+    if (!container || Draggable.prototype.mouseIsUp(e)) {
         return;
     }
 
-    if (!window.Vinyl.locks.acquireLock(context.selector, 1000) ) {
+    var state = Draggable.prototype.getData(container);
+
+    if (!Vinyl.locks.acquireLock(state.containerSelector, 10000) ) {
         return;
     }
 
-    if (!this.lastMousePos) {
-        this.lastMousePos = mousePos;
-        window.Vinyl.locks.clearLock(context.selector);
+    var state = this.getData(container);
+
+    var mousePos = VinylUtil.getMouseCoordinates(e);
+
+    if (!state.lastMousePos) {
+        this.setData(container, mousePos, 'lastMousePos');
+        Vinyl.locks.clearLock(state.containerSelector);
         return;
     }
 
     try {
-        context.callback(container, mousePos, this.lastMousePos);
+        state.callback(event, container, mousePos, state.lastMousePos);
     }
     catch (error) {
-        // uncaught
+        Vinyl.locks.clearLock(state.containerSelector);
+        throw 'Draggable callback failed';
     }
     finally {
-        this.lastMousePos = mousePos;
+        this.setData(container, mousePos, 'lastMousePos');
     }
-    window.Vinyl.locks.clearLock(context.selector);
+    Vinyl.locks.clearLock(state.containerSelector);
 };
