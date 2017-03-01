@@ -1,5 +1,8 @@
 'use strict';
-
+/**
+ * Allow a callback to be fired while a user is dragging their mouse/finger.
+ * TODO - docs
+ */
 function Draggable(props) {
     this.start(props);
 }
