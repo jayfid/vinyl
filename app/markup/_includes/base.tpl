@@ -24,6 +24,7 @@
     <script src="scripts/data.js"></script>
     <script src="scripts/locks.js"></script>
     <script src="scripts/draggable.js"></script>
+    <script src="scripts/display.js"></script>
     <!-- endbuild -->
 </head>
 <body>
