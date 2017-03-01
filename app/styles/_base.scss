@@ -40,7 +40,6 @@ html {
 @each $level, $size in $headers {
     #{$level} {
         @include fontSize($size);
-        line-height: calculateRem($size + .2);
     }
 }
 
@@ -53,6 +52,7 @@ h6 {
     font-weight: $font-weight-bold;
     margin: 0 0 $gap-base;
     letter-spacing: 0.01rem;
+    line-height: 1.5;
 
     &.border-bottom,
     &.title {
@@ -233,11 +233,11 @@ a[class=""]:visited {
     display: block;
 }
 
-.sliding-pane {
-    position: relative;
-    left: 0;
-    transition: left $duration-menu-slide cubic-bezier(0.59, 0.3, 0.47, 0.96);
-}
+// .sliding-pane {
+//     position: relative;
+//     left: 0;
+//     transition: left $duration-menu-slide cubic-bezier(0.59, 0.3, 0.47, 0.96);
+// }
 
 .constrain,
 .container {
@@ -581,30 +581,29 @@ ul {
 }
 
 // style like a paper letter
-.letter {
-    padding: 1.25rem;
-    background-color: #fff;
-    border: 1px solid #d4d4d4;
-    margin-right: 10%;
-    margin-left: 10%;
-    font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+// .letter {
+//     padding: 1.25rem;
+//     background-color: #fff;
+//     border: 1px solid #d4d4d4;
+//     margin-right: 10%;
+//     margin-left: 10%;
+//     font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
 
-    p {
-        line-height: 1.5rem;
-        font-size: 1.1rem;
-    }
+//     p {
+//         line-height: 1.5rem;
+//         font-size: 1.1rem;
+//     }
 
-    .letter-body {
-        text-indent: 2rem;
+//     .letter-body {
+//         text-indent: 2rem;
 
-        &::first-letter {
-            font-size: 1.4rem;
-        }
-    }
-}
+//         &::first-letter {
+//             font-size: 1.4rem;
+//         }
+//     }
+// }
 
-// we'll implicitly state when the hamburger icon is visible
-@import 'menu';
+//@import 'menu';
 
 @media screen and (min-width: map-get($breakpoints, "milli") * 1px) {
     .desktop-hide {
