@@ -1,5 +1,5 @@
 /**
- * Basic HTML element creation helper.
+ * Basic HTML element creation/injection helper.
  */
 function VinylTemplate() {}
 
