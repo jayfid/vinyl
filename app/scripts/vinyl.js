@@ -4,7 +4,7 @@
  ** Everyday I spend my time... drinking wine... feelin' fine.
  ** @file Vinyl and supporting classes.
  ** Wire up common webpage elements.
- ** Make useful utility functions available.
+ ** Make useful utility functions available as early as possible.
  */
 
 function VinylInit() {
@@ -42,8 +42,8 @@ Vinyl.prototype.setDynamicHeights = function() {
         return false;
     }
 
-    for (var i = 0, len = elements.length, reference; i < len; i++) {
-        reference = elements[i].getAttribute('data-height-ref'), foundReferenceElement;
+    for (var i = 0, len = elements.length, reference, foundReferenceElement; i < len; i++) {
+        reference = elements[i].getAttribute('data-height-ref');
 
         // if no reference found, we use the given element and set its height explicitly.
         foundReferenceElement = (!reference) ? elements[i] : document.querySelector('#' + reference);
@@ -56,6 +56,7 @@ Vinyl.prototype.setDynamicHeights = function() {
     }
     
 };
+
 
 Vinyl.prototype.addOverlayToDOM = function() {
     var overlayDiv = document.createElement('div');
