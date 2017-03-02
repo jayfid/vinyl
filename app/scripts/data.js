@@ -32,7 +32,7 @@ function PersistentStorageClass() {
  * @param {String} moduleName - required
  * @param {String} fieldName - required
  * @param {Mixed} fieldData - required - Any data to save in the global scope.
- * @return null
+ * @returns null
  */
 PersistentStorageClass.prototype.setData = function(moduleName, fieldName, fieldData) {
     if (typeof window.PersistentStorage.data[moduleName] === 'undefined') {
@@ -46,7 +46,7 @@ PersistentStorageClass.prototype.setData = function(moduleName, fieldName, field
  * @param {String} moduleName - required
  * @param {String} fieldName - required
  * @param {Mixed} fieldData - required - Any data to save in the global scope.
- * @return mixed or null
+ * @returns mixed or null
  */
 PersistentStorageClass.prototype.getData = function(moduleName, fieldName) {
     if (typeof window.PersistentStorage === 'undefined' ||
@@ -62,7 +62,7 @@ PersistentStorageClass.prototype.getData = function(moduleName, fieldName) {
 /**
  * Returns the persistent storage identifier of an element.
  * @param {HTMLElement} element - required
- * @return found attribute string or null.
+ * @returns found attribute string or null.
  */
 PersistentStorageClass.prototype.getElementId = function(element) {
     return element.getAttribute('data-ps-id');
@@ -71,7 +71,7 @@ PersistentStorageClass.prototype.getElementId = function(element) {
 /**
  * Passes all of a module's stored data to the delete operator.
  * @param {String} moduleName - required
- * @return null
+ * @returns null
  */
 PersistentStorageClass.prototype.deleteModule = function(moduleName) {
   if (typeof window.PersistentStorage.data[moduleName] !== 'undefined') {
@@ -86,7 +86,7 @@ PersistentStorageClass.prototype.deleteModule = function(moduleName) {
  * Passes the corresponding field to the delete operator.
  * @param {String} moduleName - required
  * @param {String} fieldName - required
- * @return null
+ * @returns null
  */
 PersistentStorageClass.prototype.deleteField = function(moduleName, fieldName) {
   if (typeof window.PersistentStorage.data[moduleName] !== 'undefined') {
@@ -100,7 +100,7 @@ PersistentStorageClass.prototype.deleteField = function(moduleName, fieldName) {
  * @param {String} moduleName - required
  * @param {String} fieldName - required
  * @param {Mixed} fieldData - required
- * @return null
+ * @returns null
  */
 PersistentStorageClass.prototype.setElementData = function(element, moduleName, fieldData) {
     var identifier = this.getElementId(element);
@@ -124,7 +124,7 @@ PersistentStorageClass.prototype.setElementData = function(element, moduleName, 
  * @param {HTMLElement} element - required
  * @param {String} moduleName - required
  * @param {String} moduleName - required
- * @return found mixed value or null
+ * @returns found mixed value or null
  */
 PersistentStorageClass.prototype.getElementData = function(element, moduleName) {
     var identifier = this.getElementId(element);
@@ -143,7 +143,7 @@ PersistentStorageClass.prototype.getElementData = function(element, moduleName) 
  * Passes stored data to delete operator.
  * @param {HTMLElement} element - required
  * @param {String} moduleName - required
- * @return null
+ * @returns null
  */
 PersistentStorageClass.prototype.deleteElementData = function(element, moduleName) {
     var identifier = this.getElementId(element);
@@ -160,7 +160,7 @@ PersistentStorageClass.prototype.deleteElementData = function(element, moduleNam
 
 /**
  * Returns the next consecutive integer from a global counter.
- * @return string, representing unique ID.
+ * @returns string, representing unique ID.
  */
 PersistentStorageClass.prototype.nextID = function() {
     var id = window.PersistentStorage.uniq++;
@@ -171,7 +171,7 @@ PersistentStorageClass.prototype.nextID = function() {
  * Adds a unique ID to an HTMLElement's dataset.
  * @param {HTMLElement} element - required
  * @param {String} moduleName - required
- * @return unique ID string
+ * @returns unique ID string
  */
 PersistentStorageClass.prototype.tagElement = function(element, moduleName) {
     var identifier = this.nextID();

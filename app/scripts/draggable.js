@@ -1,25 +1,12 @@
 'use strict';
 
-function Draggable(props) {
-    this.start(props);
-}
-
-/**
- * Callback for Draggable event.
- * @callback dragCallback
- * @param {Event} event - original fired event
- * @param {HTMLElement} container - draggable element
- * @param {integer[]} mousePos - [x,y] mouse position
- * @param {integer[]} lastMousePos - previous [x,y] mouse position
- */
-
 /**
  * Allow a callback to be fired while a user is dragging their mouse/finger over an element.
  * @param {Object} props
  * @param {string} props.containerSelector - CSS selector
  * @param {dragCallback} props.callback
  */
-Draggable.prototype.start = function(props) {
+function Draggable(props) {
     // the container of the area where mousemoves will be listened for.
     // Ensure that the container is visible and able to receive mouseevents.
     var container = document.querySelector(props.containerSelector);
@@ -47,12 +34,12 @@ Draggable.prototype.start = function(props) {
     VinylUtil.addEvents(
         ['mousemove', 'touchmove'],
         container,
-        function(e) {
+        function (e) {
             window.Draggable.prototype.dragEvent(e);
         },
         true);
 
-    container.addEventListener('mousedown', function(e) {
+    container.addEventListener('mousedown', function (e) {
         e.preventDefault();
         return true;
     }, true);
@@ -60,7 +47,7 @@ Draggable.prototype.start = function(props) {
     VinylUtil.addEvents(
         ['mouseup', 'touchend', 'touchcancel'],
         document.body,
-        function() {
+        function () {
             window.Draggable.prototype.reset(container);
         },
         true);
@@ -71,56 +58,101 @@ Draggable.prototype.start = function(props) {
     // browser is safari and requires manual click-tracking.
     VinylUtil.addEvents(
         ['mousedown', 'touchstart'],
-        document.body ,
-        function() {
-           this.md(true);
+        document.body,
+        function () {
+            this.md(true);
         },
         true);
-    
+
     VinylUtil.addEvents(
         ['mouseup', 'touchend', 'touchcancel'],
         document.body,
-        function() {
+        function () {
             this.md(false);
         },
         true);
+}
+
+/**
+ * Callback for Draggable event.
+ * @callback dragCallback
+ * @param {Event} event - original fired event
+ * @param {HTMLElement} container - draggable element
+ * @param {integer[]} mousePos - [x,y] mouse position
+ * @param {integer[]} lastMousePos - previous [x,y] mouse position
+ */
+
+/*
+function exampleDragCallback(event, container, mousePos, lastMousePos) {
+    if (mousePos[0] > lastMousePos[0]) {
+        console.log('Mouse is moving to the right.');
+    }
+}
+*/
+
+/**
+ * Shorthand manual tracking for a 'mousedown' world state.
+ * @param {boolean} mouseIdDown - 'mouse is down' binary state.
+ */
+Draggable.prototype.md = function (mouseIdDownb) {
+    PersistentStorageClass.setData('draggable-global', 'mouseIsDown', mouseIdDown);
 };
 
-Draggable.prototype.md = function(b) {
-    PersistentStorageClass.setData('draggable-global', 'mouseIsDown', b);
-};
-
-Draggable.prototype.reset = function(container) {
+/**
+ * Reset mouse tracking data.
+ * @param {HTMLElement} container - the draggable container
+ */
+Draggable.prototype.reset = function (container) {
     this.setData(container, null, 'lastMousePos');
     this.md(false);
 };
 
-Draggable.prototype.mouseIsUp = function(e) {
-     if (VinylUtil.isSafari()) {
+/**
+ * Check if mouse is up
+ * @param {Event} e
+ */
+Draggable.prototype.mouseIsUp = function (e) {
+    if (VinylUtil.isSafari()) {
         return !PersistentStorageClass.getData('draggable-global', 'mouseIsDown');
-     }
-     if (typeof e.buttons !== 'undefined' && e.buttons === 0) {
+    }
+    if (typeof e.buttons !== 'undefined' && e.buttons === 0) {
         return true;
-     }
-     return false;
+    }
+    return false;
 };
 
-Draggable.prototype.setData = function(container, data, fieldName) {
+/**
+ * PersistentStorageClass helper function.
+ * Replaced current saved data with passed data argument.
+ * @param {HTMLElement} container
+ * @param {mixed} data - the data to store.
+ * @param {string} [fieldName] - optional fieldName, to only update the passed field.
+ */
+Draggable.prototype.setData = function (container, data, fieldName) {
     var state = this.getData(container);
     if (typeof fieldName === 'string') {
         state[fieldName] = data;
-    }
-    else {
+    } else {
         state = data;
     }
     PersistentStorageClass.setElementData(container, 'Draggable', state);
 };
 
-Draggable.prototype.getData = function(container) {
+/**
+ * PersistentStorageClass helper
+ * returns saved state.
+ * @param {HTMLElement} container - the draggable object
+ * @returns state object, if it exists. Otherwise undefined.
+ */
+Draggable.prototype.getData = function (container) {
     return PersistentStorageClass.getElementData(container, 'Draggable');
 };
 
-Draggable.prototype.dragEvent = function(e) {
+/**
+ * Response to mouse movement
+ * @param {Event} e - mouse event.
+ */
+Draggable.prototype.dragEvent = function (e) {
     // prevent dragging background on mobile device.
     if (document.body.getAttribute('data-vinyl-overlay') === 'show') {
         e.preventDefault();
@@ -134,7 +166,7 @@ Draggable.prototype.dragEvent = function(e) {
 
     var state = Draggable.prototype.getData(container);
 
-    if (!Vinyl.locks.acquireLock(state.containerSelector, 10000) ) {
+    if (!Vinyl.locks.acquireLock(state.containerSelector, 10000)) {
         return;
     }
 
@@ -150,14 +182,12 @@ Draggable.prototype.dragEvent = function(e) {
 
     try {
         state.callback(event, container, mousePos, state.lastMousePos);
-    }
-    catch (error) {
+    } catch (error) {
         Vinyl.locks.clearLock(state.containerSelector);
         console.log(error);
         throw 'Draggable callback failed';
-    }
-    finally {
+    } finally {
         this.setData(container, mousePos, 'lastMousePos');
+        Vinyl.locks.clearLock(state.containerSelector);
     }
-    Vinyl.locks.clearLock(state.containerSelector);
 };
