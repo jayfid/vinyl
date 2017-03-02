@@ -83,3 +83,6 @@ build/
 docs/
 dist/
 .tmp
+
+# Do not track generated html files
+app/*.html

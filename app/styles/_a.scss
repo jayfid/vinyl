@@ -1,0 +1,228 @@
+
+$style-a-border-radius-button: calculateRem(8);
+
+.style-a {
+    .input {
+        position: relative;
+        border-radius: calculateRem(3);
+        border: 1px solid $accent-color;
+        padding-top: calculateRem(10);
+        padding-bottom: calculateRem(10);
+
+        .prefix,
+        .select-style,
+        .suffix,
+        input {
+            display: inline-block;
+            font-size: 1.286rem;
+            vertical-align: middle;
+        }
+
+        .label {
+            font-size: 1rem;
+        }
+
+        .action,
+        .label,
+        .prefix,
+        .suffix {
+            color: $accent-color;
+        }
+
+        .suffix {
+            margin: 0 0 0 0.5rem;
+        }
+
+        .label,
+        .prefix {
+            margin: 0 0.5rem 0 0;
+        }
+
+        .action {
+            cursor: pointer;
+            position: absolute;
+            padding: 0 calculateRem(12);
+            font-size: calculateRem(12);
+            height: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+        }
+    }
+
+    .input-group {
+        .input {
+            border-bottom-width: 0;
+            border-radius: 0;
+
+            &:first-child {
+                border-radius: 3px 3px 0 0;
+            }
+
+            &:last-child {
+                border-radius: 0 0 3px 3px;
+                border-bottom-width: 1px;
+            }
+        }
+    }
+
+    .btn-style-a {
+        width: 100%;
+        border-radius: calculateRem(8);
+        border: 1px solid $accent-color;
+        outline: none;
+        appearance: none;
+        background: $accent-color;
+        color: #fff;
+        text-align: center;
+        line-height: 1.5rem;
+        padding: calculateRem(10);
+        font-size: calculateRem(18);
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        // for iOS safari
+        margin: 0;
+
+        &:hover {
+            background-color: #299485 !important;
+            border-color: #299485;
+            outline: none;
+            appearance: none;
+            box-shadow: none;
+        }
+
+        &:active {
+            background-color: #fff !important;
+            color: $accent-color !important;
+            outline: none;
+            appearance: none;
+            box-shadow: none;
+        }
+
+        &:focus {
+            outline: none;
+            appearance: none;
+            box-shadow: none;
+        }
+    }
+
+    .button-group {
+        button.btn-style-a {
+            border-radius: 0;
+
+            &:not(:first-child) {
+                border-top-color: #1a8374;
+            }
+
+            &:first-child {
+                border-radius: $style-a-border-radius-button $style-a-border-radius-button 0 0;
+            }
+
+            &:last-child {
+                border-radius: 0 0 $style-a-border-radius-button $style-a-border-radius-button;
+                background-color: #30a494;
+            }
+
+            &:only-child {
+                border-radius: $style-a-border-radius-button;
+            }
+        }
+    }
+
+    .select-style {
+        position: relative;
+        display: inline-block;
+
+        .select-style-inner {
+            cursor: pointer;
+            background-color: $accent-color;
+            color: #fff;
+            border: 1px solid $accent-color;
+            border-radius: $style-a-border-radius-button;
+            position: relative;
+            overflow: hidden;
+
+            .down-arrow {
+                fill: #fff;
+            }
+
+            &:hover {
+                background-color: #fff;
+                color: $accent-color;
+
+                .down-arrow {
+                    fill: $accent-color;
+                }
+            }
+
+            .select-style-arrow {
+                margin: 0 1.2rem 0 0;
+                padding: 0.25rem 0;
+            }
+
+            .select-style-value {
+                display: inline-block;
+                padding: 0.25rem 0 0.25rem 0.5rem;
+            }
+
+            .select-style-arrow,
+            .select-style-arrow svg,
+            .select-style-value {
+                vertical-align: middle;
+            }
+        }
+
+        .select-style-options {
+            z-index: $z-index-mid + 1;
+            display: none;
+            background-color: #fff;
+            position: absolute;
+            top: 100%;
+            top: calc(100% - 1px);
+            left: 0;
+            text-align: center;
+            border: 1px solid $accent-color;
+            border-radius: 0 0 $style-a-border-radius-button $style-a-border-radius-button;
+            padding: 0.25rem 0;
+
+            p {
+                background-color: #fff;
+                white-space: nowrap;
+                cursor: pointer;
+                display: block;
+                padding: 0.3rem 4.25rem;
+                margin: 0;
+
+                &:hover {
+                    background-color: $accent-color;
+                    color: #fff;
+                }
+
+                &.select-style-default {
+                    background-color: darken($accent-color, 5%);
+                    color: #fff;
+                }
+            }
+        }
+
+        &.show {
+            .select-style-options {
+                display: block;
+            }
+
+            .select-style-inner {
+                background-color: #fff;
+                color: #000;
+                border-radius: $style-a-border-radius-button $style-a-border-radius-button 0 0;
+
+                .select-style-arrow {
+                    .down-arrow {
+                        fill: #000;
+                    }
+                }
+            }
+        }
+    }
+}
