@@ -83,4 +83,3 @@ Vinyl.prototype.hideOverlay = function() {
 
 (function (window) {
     window.Vinyl = new Vinyl();
-})(window);
