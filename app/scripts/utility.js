@@ -284,18 +284,19 @@ VinylUtil.prototype.scrollIntoView = function(elem, position) {
 };
 
 /**
- * 
+ * Waits for an element to be visible on screen, then executes a callback.
+ * @param {HTMLElement} elemSelector - CSS selector of element to wait to wait for
+ * @param {function} callback
  */
-VinylUtil.prototype.waitUntilVisible = function(key, elemSelector, callback) {
-    var storage = new PersistentStorageClassConsumerInterface();
-    storage.setValue(key, 'waitVisibleInterval', window.setInterval(function(){
+VinylUtil.prototype.waitUntilVisible = function(elemSelector, callback) {
+    var interval = window.setInterval(function(){
         if (!VinylUtil.checkVisible(document.querySelector(elemSelector))) {
             return;
         }
-        window.clearInterval(window.PersistentStorageClass.getValue(key, 'waitVisibleInterval'));
+        window.clearInterval(interval);
         // once element is in view, call callback.
         callback();
-    }), 100);
+    }, 500);
 };
 
 /**
