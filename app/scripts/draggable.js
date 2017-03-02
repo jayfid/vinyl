@@ -1,12 +1,24 @@
 'use strict';
-/**
- * Allow a callback to be fired while a user is dragging their mouse/finger.
- * TODO - docs
- */
+
 function Draggable(props) {
     this.start(props);
 }
 
+/**
+ * Callback for Draggable event.
+ * @callback dragCallback
+ * @param {Event} event - original fired event
+ * @param {HTMLElement} container - draggable element
+ * @param {integer[]} mousePos - [x,y] mouse position
+ * @param {integer[]} lastMousePos - previous [x,y] mouse position
+ */
+
+/**
+ * Allow a callback to be fired while a user is dragging their mouse/finger over an element.
+ * @param {Object} props
+ * @param {string} props.containerSelector - CSS selector
+ * @param {dragCallback} props.callback
+ */
 Draggable.prototype.start = function(props) {
     // the container of the area where mousemoves will be listened for.
     // Ensure that the container is visible and able to receive mouseevents.
@@ -108,27 +120,6 @@ Draggable.prototype.getData = function(container) {
     return PersistentStorageClass.getElementData(container, 'Draggable');
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Draggable.prototype.dragEvent = function(e) {
     // prevent dragging background on mobile device.
     if (document.body.getAttribute('data-vinyl-overlay') === 'show') {
@@ -162,6 +153,7 @@ Draggable.prototype.dragEvent = function(e) {
     }
     catch (error) {
         Vinyl.locks.clearLock(state.containerSelector);
+        console.log(error);
         throw 'Draggable callback failed';
     }
     finally {
