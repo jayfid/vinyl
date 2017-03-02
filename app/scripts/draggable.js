@@ -92,10 +92,10 @@ function exampleDragCallback(event, container, mousePos, lastMousePos) {
 
 /**
  * Shorthand manual tracking for a 'mousedown' world state.
- * @param {boolean} mouseIdDown - 'mouse is down' binary state.
+ * @param {boolean} mouseIsDown - 'mouse is down' binary state.
  */
-Draggable.prototype.md = function (mouseIdDownb) {
-    PersistentStorageClass.setData('draggable-global', 'mouseIsDown', mouseIdDown);
+Draggable.prototype.md = function (mouseIsDown) {
+    PersistentStorageClass.setData('draggable-global', 'mouseIsDown', mouseIsDown);
 };
 
 /**
