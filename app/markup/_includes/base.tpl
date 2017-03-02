@@ -17,6 +17,15 @@
     <!-- build:css styles/vinyl.css -->
     <link rel="stylesheet" href="/styles/vinyl.css">
     <!-- endbuild -->
+
+    <!-- build:js scripts/vinyl.js -->
+    <script src="scripts/utility.js"></script>
+    <script src="scripts/vinyl.js"></script>
+    <script src="scripts/data.js"></script>
+    <script src="scripts/locks.js"></script>
+    <script src="scripts/draggable.js"></script>
+    <script src="scripts/display.js"></script>
+    <!-- endbuild -->
 </head>
 <body>
 
@@ -61,7 +70,4 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:js scripts/vinyl.js -->
-    <script src="/scripts/vinyl.js"></script>
-    <!-- endbuild -->
 </body>
