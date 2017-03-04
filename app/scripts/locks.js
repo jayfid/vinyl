@@ -10,14 +10,17 @@ function VinylLocks() {}
  * @param {Int} duration - required - milliseconds until lock is expired and auto-removed.
  * @return true if new lock acquired, otherwise false.
  */
-VinylLocks.prototype.acquireLock = function(uniqueKey, duration) {
+VinylLocks.prototype.acquireLock = function (uniqueKey, duration) {
+    if (!uniqueKey) {
+        return false;
+    }
     if (!duration) {
         duration = 1;
     }
     if (this.checkLock(uniqueKey)) {
         return false;
     }
-    PersistentStorageClass.setData('VinylLocks', uniqueKey, Date.now() + duration);
+    VS.data.setData('VinylLocks', uniqueKey, Date.now() + duration);
     return true;
 };
 
@@ -26,8 +29,8 @@ VinylLocks.prototype.acquireLock = function(uniqueKey, duration) {
  * @param {String} uniqueKey - required
  * @return true if lock is currently active, otherwise false.
  */
-VinylLocks.prototype.checkLock = function(uniqueKey) {
-    var foundLock = PersistentStorageClass.getData('VinylLocks', uniqueKey);
+VinylLocks.prototype.checkLock = function (uniqueKey) {
+    var foundLock = VS.data.getData('VinylLocks', uniqueKey);
     if (typeof foundLock === 'undefined') {
         return false;
     }
@@ -46,8 +49,8 @@ VinylLocks.prototype.checkLock = function(uniqueKey) {
  * @param {String} uniqueKey - required
  * @return null
  */
-VinylLocks.prototype.clearLock = function(uniqueKey) {
-    PersistentStorageClass.deleteField('VinylLocks', uniqueKey);
+VinylLocks.prototype.clearLock = function (uniqueKey) {
+    VS.data.deleteField('VinylLocks', uniqueKey);
 };
 
-window.Vinyl.locks = new VinylLocks();
+Vinylsiding.prototype.locks = new VinylLocks();

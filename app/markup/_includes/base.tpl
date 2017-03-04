@@ -14,17 +14,19 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:css styles/vinyl.css -->
-    <link rel="stylesheet" href="/styles/vinyl.css">
+    <!-- build:css styles/vinylsiding.css -->
+    <link rel="stylesheet" href="/styles/vinylsiding.css">
     <!-- endbuild -->
 
-    <!-- build:js scripts/vinyl.js -->
+    <!-- build:js scripts/vinylsiding.js -->
+    <script src="scripts/vinylsiding.js"></script>
     <script src="scripts/utility.js"></script>
-    <script src="scripts/vinyl.js"></script>
     <script src="scripts/data.js"></script>
     <script src="scripts/locks.js"></script>
     <script src="scripts/draggable.js"></script>
     <script src="scripts/display.js"></script>
+    <script src="scripts/modal.js"></script>
+    <script src="scripts/invoke.js"></script>
     <!-- endbuild -->
 </head>
 <body>

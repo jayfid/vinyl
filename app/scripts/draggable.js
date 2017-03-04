@@ -13,7 +13,7 @@ function Draggable(props) {
     if (!container) {
         throw 'Draggable containerSelector refers to non-existant element.';
     }
-    VinylUtil.addClass(container, 'draggable-initialized');
+    VS.util.addClass(container, 'draggable-initialized');
     var state = {
         containerSelector: props.containerSelector,
         callback: props.callback, // a function(container, mousePos) to handle drag events.
@@ -31,7 +31,7 @@ function Draggable(props) {
         }
     }
 
-    VinylUtil.addEvents(
+    VS.util.addEvents(
         ['mousemove', 'touchmove'],
         container,
         function (e) {
@@ -44,7 +44,7 @@ function Draggable(props) {
         return true;
     }, true);
 
-    VinylUtil.addEvents(
+    VS.util.addEvents(
         ['mouseup', 'touchend', 'touchcancel'],
         document.body,
         function () {
@@ -52,11 +52,11 @@ function Draggable(props) {
         },
         true);
 
-    if (!VinylUtil.isSafari()) {
+    if (!VS.util.isSafari()) {
         return;
     }
     // browser is safari and requires manual click-tracking.
-    VinylUtil.addEvents(
+    VS.util.addEvents(
         ['mousedown', 'touchstart'],
         document.body,
         function () {
@@ -64,7 +64,7 @@ function Draggable(props) {
         },
         true);
 
-    VinylUtil.addEvents(
+    VS.util.addEvents(
         ['mouseup', 'touchend', 'touchcancel'],
         document.body,
         function () {
@@ -95,7 +95,7 @@ function exampleDragCallback(event, container, mousePos, lastMousePos) {
  * @param {boolean} mouseIsDown - 'mouse is down' binary state.
  */
 Draggable.prototype.md = function (mouseIsDown) {
-    PersistentStorageClass.setData('draggable-global', 'mouseIsDown', mouseIsDown);
+    VS.data.setData('draggable-global', 'mouseIsDown', mouseIsDown);
 };
 
 /**
@@ -112,8 +112,8 @@ Draggable.prototype.reset = function (container) {
  * @param {Event} e
  */
 Draggable.prototype.mouseIsUp = function (e) {
-    if (VinylUtil.isSafari()) {
-        return !PersistentStorageClass.getData('draggable-global', 'mouseIsDown');
+    if (VS.util.isSafari()) {
+        return !VS.data.getData('draggable-global', 'mouseIsDown');
     }
     if (typeof e.buttons !== 'undefined' && e.buttons === 0) {
         return true;
@@ -135,7 +135,7 @@ Draggable.prototype.setData = function (container, data, fieldName) {
     } else {
         state = data;
     }
-    PersistentStorageClass.setElementData(container, 'Draggable', state);
+    VS.data.setElementData(container, 'Draggable', state);
 };
 
 /**
@@ -145,7 +145,7 @@ Draggable.prototype.setData = function (container, data, fieldName) {
  * @returns state object, if it exists. Otherwise undefined.
  */
 Draggable.prototype.getData = function (container) {
-    return PersistentStorageClass.getElementData(container, 'Draggable');
+    return VS.data.getElementData(container, 'Draggable');
 };
 
 /**
@@ -158,7 +158,7 @@ Draggable.prototype.dragEvent = function (e) {
         e.preventDefault();
     }
 
-    var container = VinylUtil.findParentWithClass(e.target, 'draggable-initialized');
+    var container = VS.util.findParentWithClass(e.target, 'draggable-initialized');
     // check that a button is being pressed.
     if (!container || Draggable.prototype.mouseIsUp(e)) {
         return;
@@ -166,28 +166,28 @@ Draggable.prototype.dragEvent = function (e) {
 
     var state = Draggable.prototype.getData(container);
 
-    if (!Vinyl.locks.acquireLock(state.containerSelector, 10000)) {
+    if (!VS.locks.acquireLock(state.containerSelector, 10000)) {
         return;
     }
 
     var state = this.getData(container);
 
-    var mousePos = VinylUtil.getMouseCoordinates(e);
+    var mousePos = VS.util.getMouseCoordinates(e);
 
     if (!state.lastMousePos) {
         this.setData(container, mousePos, 'lastMousePos');
-        Vinyl.locks.clearLock(state.containerSelector);
+        VS.locks.clearLock(state.containerSelector);
         return;
     }
 
     try {
         state.callback(event, container, mousePos, state.lastMousePos);
     } catch (error) {
-        Vinyl.locks.clearLock(state.containerSelector);
+        VS.locks.clearLock(state.containerSelector);
         console.log(error);
         throw 'Draggable callback failed';
     } finally {
         this.setData(container, mousePos, 'lastMousePos');
-        Vinyl.locks.clearLock(state.containerSelector);
+        VS.locks.clearLock(state.containerSelector);
     }
 };

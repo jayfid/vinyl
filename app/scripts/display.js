@@ -10,7 +10,7 @@ function VinylTemplate() {}
  * @param {String[]|HTMLElement[]} [content] - @see this.setInnerHTML
  * @returns {HTMLElement}
  */
-VinylTemplate.prototype.createElement = function(type, options, content) {
+VinylTemplate.prototype.createElement = function (type, options, content) {
     var elem = document.createElement(type);
     if (typeof options === 'undefined') {
         options = {};
@@ -37,7 +37,7 @@ VinylTemplate.prototype.createElement = function(type, options, content) {
  * @param {HTMLElement[]} elemList - Content containers.
  * @param {String[]|HTMLElement[]} content - Content to place in containers.
  */
-VinylTemplate.prototype.setInnerHTML = function(elemList, content){
+VinylTemplate.prototype.setInnerHTML = function (elemList, content) {
     if (!elemList || !elemList.length) {
         throw 'SetInnerHTML expects NodeList';
     }
@@ -48,12 +48,11 @@ VinylTemplate.prototype.setInnerHTML = function(elemList, content){
                 break;
             case 'object':
                 this.emptyElement(elemList[i]);
-                if (Array.isArray(content)){
+                if (Array.isArray(content)) {
                     for (var j = 0, jlen = content.length; j < jlen; j++) {
                         elemList[i].appendChild(content[j]);
                     }
-                }
-                else {
+                } else {
                     elemList[i].appendChild(content);
                 }
                 break;
@@ -67,10 +66,10 @@ VinylTemplate.prototype.setInnerHTML = function(elemList, content){
  * Remove all html children of elem
  * @param {HTMLElement} elem
  */
-VinylTemplate.prototype.emptyElement = function(elem) {
+VinylTemplate.prototype.emptyElement = function (elem) {
     while (elem.firstChild) {
         elem.removeChild(elem.firstChild);
     }
 };
 
-window.Template = new VinylTemplate();
+Vinylsiding.prototype.template = new VinylTemplate();

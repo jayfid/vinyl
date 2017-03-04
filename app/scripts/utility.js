@@ -31,10 +31,10 @@ VinylUtil.prototype.toggleClass = function (element, elemClass) {
     if (!element || !elemClass) {
         return false;
     }
-    if (VinylUtil.hasClass(element, elemClass)) {
-        return VinylUtil.removeClass(element, elemClass);
+    if (this.hasClass(element, elemClass)) {
+        return this.removeClass(element, elemClass);
     } else {
-        return VinylUtil.addClass(element, elemClass);
+        return this.addClass(element, elemClass);
     }
 };
 
@@ -83,7 +83,7 @@ VinylUtil.prototype.addClass = function (element, elemClass) {
         return false;
     }
 
-    if (VinylUtil.hasClass(element, elemClass)) {
+    if (this.hasClass(element, elemClass)) {
         return true;
     }
 
@@ -114,7 +114,7 @@ VinylUtil.prototype.removeClass = function (element, elemClass) {
         return false;
     }
 
-    if (!VinylUtil.hasClass(element, elemClass)) {
+    if (!this.hasClass(element, elemClass)) {
         return false;
     }
 
@@ -149,7 +149,7 @@ VinylUtil.prototype.findParentWithClass = function (element, elemClass, limit) {
             return false;
         }
 
-        if (VinylUtil.hasClass(element, elemClass)) {
+        if (this.hasClass(element, elemClass)) {
             found = element;
         } else {
             element = element.parentNode;
@@ -216,7 +216,7 @@ VinylUtil.prototype.getParam = function (key) {
     }
 
     for (var i = 0, len = params.length, comparisonResult; i < len; i++) {
-        comparisonResult = VinylUtil.compareKeyValuePair(params[i], key);
+        comparisonResult = this.compareKeyValuePair(params[i], key);
         if (comparisonResult) {
             return comparisonResult;
         }
@@ -259,7 +259,7 @@ VinylUtil.prototype.scrollIntoView = function (elem, position) {
         elementWindowYOffset;
     switch (position) {
         case 'bottom':
-            var elemY = VinylUtil.getPosition(elem).y + currentWindowYOffset,
+            var elemY = this.getPosition(elem).y + currentWindowYOffset,
                 elemHeight = elem.offsetHeight,
                 elemBottomPixel = elemY + elemHeight,
                 extraSpacePixels = 30,
@@ -268,7 +268,7 @@ VinylUtil.prototype.scrollIntoView = function (elem, position) {
             elementWindowYOffset = (calculatedOffset >= 0) ? calculatedOffset : 0;
             break;
         case 'top':
-            elementWindowYOffset = VinylUtil.getPosition(elem).y;
+            elementWindowYOffset = this.getPosition(elem).y;
             break;
         default:
             throw 'Invalid position.';
@@ -309,7 +309,7 @@ VinylUtil.prototype.scrollIntoView = function (elem, position) {
  */
 VinylUtil.prototype.waitUntilVisible = function (elemSelector, callback) {
     var interval = window.setInterval(function () {
-        if (!VinylUtil.checkVisible(document.querySelector(elemSelector))) {
+        if (!this.checkVisible(document.querySelector(elemSelector))) {
             return;
         }
         window.clearInterval(interval);
@@ -422,6 +422,4 @@ VinylUtil.prototype.addEvents = function (events, element, callback, useCapture)
     }
 };
 
-(function () {
-    window.VinylUtil = new VinylUtil();
-})();
+Vinylsiding.prototype.util = new VinylUtil();
