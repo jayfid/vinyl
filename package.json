@@ -2,7 +2,7 @@
   "name": "vinylsiding",
   "version": "1.0.0",
   "description": "CSS/JS Skeleton",
-  "main": "index.html",
+  "main": "dist/scripts/vinylsiding.js",
   "private": false,
   "engines": {
     "node": ">=0.12.0"
