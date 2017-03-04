@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +11,6 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="/bower_components/normalize-css/normalize.css">
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -29,47 +29,32 @@
     <script src="scripts/invoke.js"></script>
     <!-- endbuild -->
 </head>
+
 <body>
-
     <div class="frame">
-        <div class="compensate-fixed-menu desktop-hide"></div>
+        <header class="tpad-20 bpad-20 divide-bottom bpush-40" id="header-bar">
+            <div class="container mobile-wall-pad">
+                <nav class="nav-main">
+                    <a class="color-text-blue" href="/" class="link-row-1">Home</a>
+                    <a class="color-text-blue" href="/ui.html">UI</a>
+                    <a class="color-text-blue" href="/modal.html">Modal</a>
+                </nav>
+            </div>
+        </header>
+        <section id="content" class="bpush-100">
+            @@include('@@main')
+        </section>
 
-        <div class="sliding-pane">
-
-            <header class="tpad-20 bpad-20 color-bg-blue sticky-top" id="header-bar">
-                <div class="container mobile-wall-pad set-height" data-height-ref="">
-                    <nav class="nav-main collapsible-nav">
-                        <div class="set-height color-bg-white desktop-hide" data-height-ref="header-bar"></div>
-                        <a class="link" href="/" class="link-row-1">HOME</a>
-                        <a class="link" href="/ui.html">UI</a>
-                        <a class="link" href="/">TEST #1</a>
-                        <a class="link" href="/">TEST #2</a>
-                    </nav>
-                </div>
-            </header>
-            <section id="content">
-                @@include('@@main')
-            </section>
-
-            <footer>
-                <section class="container mobile-wall-pad">
-                    <div class="row">
-                        <div class="grid-12">
-                            <h2>Footer</h2>
-                            <address></address>
-                            <small class="copyright">&copy; 20XX Light Industries</small>
-                        </div>
+        <footer>
+            <section class="container mobile-wall-pad">
+                <div class="row">
+                    <div class="grid-12">
+                        <h2>Footer</h2>
+                        <address></address>
+                        <small class="copyright">&copy; 20XX Light Industries</small>
                     </div>
-                </section>
-            </footer>
-
-        </div> <!-- sliding-pane -->
-
-    </div> <!-- frame -->
-
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <!-- endbower -->
-    <!-- endbuild -->
-
+                </div>
+            </section>
+        </footer>
+    </div><!-- frame -->
 </body>
