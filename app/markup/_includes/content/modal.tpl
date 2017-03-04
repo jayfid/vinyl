@@ -9,7 +9,6 @@
 </section>
 <script>
     var modalExample = new VinylModal({
-        selectors: ['.modal-open'],
-        
+        triggerSelector: ['.modal-open']
     });
 </script>

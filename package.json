@@ -1,7 +1,7 @@
 {
-  "name": "vinylSiding",
+  "name": "vinylsiding",
   "version": "1.0.0",
-  "description": "CSS Framework",
+  "description": "CSS/JS Skeleton",
   "main": "index.html",
   "private": true,
   "engines": {
