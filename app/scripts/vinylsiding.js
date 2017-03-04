@@ -1,24 +1,20 @@
 'use strict';
 
 /**
- ** Everyday I spend my time... drinking wine... feelin' fine.
- ** @file Vinyl and supporting classes.
+ ** @file Vinylsiding Class
  ** Wire up common webpage elements.
  ** Make useful utility functions available as early as possible.
  */
-
-function VinylInit() {
-    Vinyl.addOverlayToDOM();
-    Vinyl.setDynamicHeights();
-    Vinyl.secureTargetBlank();
-}
-
-function Vinyl(props) {
-    window.onload = VinylInit;
+function Vinylsiding(props) {
+    window.onload = function () {
+        Vinylsiding.prototype.addOverlayToDOM();
+        Vinylsiding.prototype.setDynamicHeights();
+        Vinylsiding.prototype.secureTargetBlank();
+    };
 }
 
 // add rel attr to _blank links to help mitigate tabnabbing
-Vinyl.prototype.secureTargetBlank = function() {
+Vinylsiding.prototype.secureTargetBlank = function () {
     var elements = document.querySelectorAll('a[target="_blank"]');
 
     if (!elements || !elements.length) {
@@ -35,7 +31,7 @@ Vinyl.prototype.secureTargetBlank = function() {
 // data-height-ref is either the id of the reference elem or empty.
 // empty data-height-ref will explicitly set an elements height to its own
 // current height.
-Vinyl.prototype.setDynamicHeights = function() {
+Vinylsiding.prototype.setDynamicHeights = function () {
     var elements = document.querySelectorAll('.set-height');
 
     if (!elements || !elements.length) {
@@ -51,36 +47,29 @@ Vinyl.prototype.setDynamicHeights = function() {
         if (!foundReferenceElement) {
             continue;
         }
-
-        VinylUtil.setHeightOnElement(elements[i], foundReferenceElement);
+        this.util.setHeightOnElement(elements[i], foundReferenceElement);
     }
-    
 };
 
-
-Vinyl.prototype.addOverlayToDOM = function() {
+Vinylsiding.prototype.addOverlayToDOM = function () {
     var overlayDiv = document.createElement('div');
     overlayDiv.className = 'overlay-top-level';
-    overlayDiv.addEventListener('click', function() {
+    overlayDiv.addEventListener('click', function () {
         if (document.body.getAttribute('data-vinyl-overlay-closable') === 'true') {
-            Vinyl.hideOverlay();
+            Vinylsiding.prototype.hideOverlay();
         }
     }, true);
     document.body.appendChild(overlayDiv);
 };
 
-Vinyl.prototype.showOverlay = function(clickToClose) {
+Vinylsiding.prototype.showOverlay = function (clickToClose) {
     document.body.setAttribute('data-vinyl-overlay', 'show');
     if (clickToClose) {
         document.body.setAttribute('data-vinyl-overlay-closable', 'true');
     }
 };
 
-Vinyl.prototype.hideOverlay = function() {
+Vinylsiding.prototype.hideOverlay = function () {
     document.body.setAttribute('data-vinyl-overlay', 'hide');
     document.body.removeAttribute('data-vinyl-overlay-closable');
 };
-
-(function (window) {
-    window.Vinyl = new Vinyl();
-})();

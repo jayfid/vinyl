@@ -34,7 +34,7 @@ function PersistentStorageClass() {
  * @param {Mixed} fieldData - required - Any data to save in the global scope.
  * @returns null
  */
-PersistentStorageClass.prototype.setData = function(moduleName, fieldName, fieldData) {
+PersistentStorageClass.prototype.setData = function (moduleName, fieldName, fieldData) {
     if (typeof window.PersistentStorage.data[moduleName] === 'undefined') {
         window.PersistentStorage.data[moduleName] = {};
     }
@@ -48,7 +48,7 @@ PersistentStorageClass.prototype.setData = function(moduleName, fieldName, field
  * @param {Mixed} fieldData - required - Any data to save in the global scope.
  * @returns mixed or null
  */
-PersistentStorageClass.prototype.getData = function(moduleName, fieldName) {
+PersistentStorageClass.prototype.getData = function (moduleName, fieldName) {
     if (typeof window.PersistentStorage === 'undefined' ||
         typeof window.PersistentStorage.data[moduleName] === 'undefined' ||
         typeof window.PersistentStorage.data[moduleName][fieldName] === 'undefined') {
@@ -64,7 +64,7 @@ PersistentStorageClass.prototype.getData = function(moduleName, fieldName) {
  * @param {HTMLElement} element - required
  * @returns found attribute string or null.
  */
-PersistentStorageClass.prototype.getElementId = function(element) {
+PersistentStorageClass.prototype.getElementId = function (element) {
     return element.getAttribute('data-ps-id');
 };
 
@@ -73,13 +73,13 @@ PersistentStorageClass.prototype.getElementId = function(element) {
  * @param {String} moduleName - required
  * @returns null
  */
-PersistentStorageClass.prototype.deleteModule = function(moduleName) {
-  if (typeof window.PersistentStorage.data[moduleName] !== 'undefined') {
-    delete window.PersistentStorage.data[moduleName];
-  }
-  if (typeof window.PersistentStorage.elements[moduleName] !== 'undefined') {
-    delete window.PersistentStorage.elements[moduleName];
-  }
+PersistentStorageClass.prototype.deleteModule = function (moduleName) {
+    if (typeof window.PersistentStorage.data[moduleName] !== 'undefined') {
+        delete window.PersistentStorage.data[moduleName];
+    }
+    if (typeof window.PersistentStorage.elements[moduleName] !== 'undefined') {
+        delete window.PersistentStorage.elements[moduleName];
+    }
 };
 
 /**
@@ -88,10 +88,10 @@ PersistentStorageClass.prototype.deleteModule = function(moduleName) {
  * @param {String} fieldName - required
  * @returns null
  */
-PersistentStorageClass.prototype.deleteField = function(moduleName, fieldName) {
-  if (typeof window.PersistentStorage.data[moduleName] !== 'undefined') {
-    delete window.PersistentStorage.data[moduleName][fieldName];
-  }
+PersistentStorageClass.prototype.deleteField = function (moduleName, fieldName) {
+    if (typeof window.PersistentStorage.data[moduleName] !== 'undefined') {
+        delete window.PersistentStorage.data[moduleName][fieldName];
+    }
 };
 
 /**
@@ -102,7 +102,7 @@ PersistentStorageClass.prototype.deleteField = function(moduleName, fieldName) {
  * @param {Mixed} fieldData - required
  * @returns null
  */
-PersistentStorageClass.prototype.setElementData = function(element, moduleName, fieldData) {
+PersistentStorageClass.prototype.setElementData = function (element, moduleName, fieldData) {
     var identifier = this.getElementId(element);
     if (!identifier) {
         identifier = this.tagElement(element, moduleName);
@@ -126,7 +126,7 @@ PersistentStorageClass.prototype.setElementData = function(element, moduleName, 
  * @param {String} moduleName - required
  * @returns found mixed value or null
  */
-PersistentStorageClass.prototype.getElementData = function(element, moduleName) {
+PersistentStorageClass.prototype.getElementData = function (element, moduleName) {
     var identifier = this.getElementId(element);
     if (!identifier ||
         typeof window.PersistentStorage === 'undefined' ||
@@ -145,7 +145,7 @@ PersistentStorageClass.prototype.getElementData = function(element, moduleName) 
  * @param {String} moduleName - required
  * @returns null
  */
-PersistentStorageClass.prototype.deleteElementData = function(element, moduleName) {
+PersistentStorageClass.prototype.deleteElementData = function (element, moduleName) {
     var identifier = this.getElementId(element);
     if (!identifier ||
         typeof window.PersistentStorage === 'undefined' ||
@@ -162,7 +162,7 @@ PersistentStorageClass.prototype.deleteElementData = function(element, moduleNam
  * Returns the next consecutive integer from a global counter.
  * @returns string, representing unique ID.
  */
-PersistentStorageClass.prototype.nextID = function() {
+PersistentStorageClass.prototype.nextID = function () {
     var id = window.PersistentStorage.uniq++;
     return id.toString();
 };
@@ -173,10 +173,10 @@ PersistentStorageClass.prototype.nextID = function() {
  * @param {String} moduleName - required
  * @returns unique ID string
  */
-PersistentStorageClass.prototype.tagElement = function(element, moduleName) {
+PersistentStorageClass.prototype.tagElement = function (element, moduleName) {
     var identifier = this.nextID();
     element.setAttribute('data-ps-id', identifier);
     return identifier;
 };
 
-window.PersistentStorageClass = new PersistentStorageClass();
+Vinylsiding.prototype.data = new PersistentStorageClass();
