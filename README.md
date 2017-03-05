@@ -12,8 +12,13 @@ Open Source license TBD.
 tbd
 
 ## Installation
-Include in head of html.
-tbd
+Include in head of html.  
+`<link rel="stylesheet" src="https://unpkg.com/vinylsiding/dist/styles/vinylsiding.css">`  
+and  
+`<script src="https://unpkg.com/vinylsiding/dist/scripts/vinylsiding.js"></script>`  
+
+also available via npm `npm install vinylsiding`
+
 
 ## Tooling
 Vinyl Siding uses [Gulp](http://gulpjs.com/) for common tasks.
