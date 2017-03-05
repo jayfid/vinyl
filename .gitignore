@@ -81,8 +81,12 @@ build/
 .tscache
 *.swp
 docs/
-dist/
 .tmp
 
 # Do not track generated html files
 app/*.html
+
+# Include some dist files for npm/unpkg access
+dist/*.html
+dist/favicon*
+dist/images/

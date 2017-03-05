@@ -9,7 +9,7 @@ $color-body-bg             : #fff;
 
 // It's rather handy having a palette of colors to work off of.  Each group
 // of complientary colors can be reused to enforce consistency and save time.
-// To store this logically, we maintain a "palette of palettes" (take that, dig)
+// To store this logically, we maintain a "palette of palettes"
 
 $palette                   : ( 'black': #000, 'white': #fff, 'red': #d34c4c, 'orange': #ea9847, 'yellow': #f9ed5f, 'green': #55e046, 'darkgreen': #32ad25, 'blue': #3a9ef9, 'indigo': #904cf2, 'violet': #eb59ef );
 
@@ -44,7 +44,7 @@ $font-size-base            : $font-base-value * 1px;
 $font-size-header          : $font-base-value;
 
 $font-family-sans          : "Helvetica Neue", helvetica, arial, sans-serif;
-// Modified from https://css-tricks.com/snippets/css/font-stacks/
+// @credit Modified from https://css-tricks.com/snippets/css/font-stacks/
 $font-family-serif         : Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
 $font-family-code          : "Nimbus Mono L", Monaco, "Courier New", Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", Courier, monospace;
 

@@ -1,9 +1,9 @@
 {
-  "name": "vinylSiding",
-  "version": "1.0.0",
-  "description": "CSS Framework",
-  "main": "index.html",
-  "private": true,
+  "name": "vinylsiding",
+  "version": "1.0.1",
+  "description": "CSS/JS Skeleton",
+  "main": "dist/scripts/vinylsiding.js",
+  "private": false,
   "engines": {
     "node": ">=0.12.0"
   },
