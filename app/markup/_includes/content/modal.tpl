@@ -5,10 +5,14 @@
                 <p>Lorem ipsum dolor sit <span class="color-text-blue modal-open">amet nunc.</span></p>
             </div>
         </div>
+        <div class="visibly-hidden modal-content">
+            <h1>HELLO WORLD!</h1>
+        </div>
     </div>
 </section>
 <script>
     var modalExample = new VinylModal({
-        triggerSelector: ['.modal-open']
+        triggerSelector: ['.modal-open'],
+        contentSelector: '.modal-content'
     });
 </script>

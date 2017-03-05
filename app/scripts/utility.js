@@ -223,7 +223,7 @@ VinylUtil.prototype.getParam = function (key) {
     }
 
     return false;
-}
+};
 
 /**
  * Check whether a GET param has the given key
@@ -385,7 +385,7 @@ VinylUtil.prototype.iOS = function () {
  */
 VinylUtil.prototype.isSafari = function () {
     var e = navigator.userAgent.toLowerCase();
-    return e.indexOf('safari') !== -1 && !(e.indexOf('chrome') > -1)
+    return e.indexOf('safari') !== -1 && !(e.indexOf('chrome') > -1);
 };
 
 /**
