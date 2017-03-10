@@ -50,3 +50,29 @@ Vinylsiding.prototype.setDynamicHeights = function () {
         this.util.setHeightOnElement(elements[i], foundReferenceElement);
     }
 };
+
+// todo - here http://codepen.io/jmperez/pen/yYjPER
+
+/**
+ * Lazy load images in a graceful manner.
+ */
+Vinylsiding.prototype.lazyLoad = function () {
+    var ref, imgs = document.querySelectorAll('img.l-load');
+    if (!imgs.length) {
+        return false;
+    }
+    for (var i = 0, len = imgs.length, preloadedImage = Template.createElement('img'); i < len; i++) {
+        if (!imgs[i].hasAttribute('data-l-load')) {
+            continue;
+        }
+        ref = imgs[i].getAttribute('data-l-load');
+        if (!ref.trim()) {
+            continue;
+        }
+        preloadedImage.src = ref;
+        preloadedImage.onload = function() {
+            imgs[i].src = preloadedImage.src;
+        }
+        imgs[i].src = preloadedImage.src;
+    }
+};

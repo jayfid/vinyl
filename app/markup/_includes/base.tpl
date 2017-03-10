@@ -32,12 +32,13 @@
 
 <body>
     <div class="frame">
-        <header class="tpad-20 bpad-20 divide-bottom bpush-40" id="header-bar">
+        <header class="tpad-20 bpad-20 border-bottom bpush-40" id="header-bar">
             <div class="container mobile-wall-pad">
                 <nav class="nav-main">
-                    <a class="color-text-blue" href="/" class="link-row-1">Home</a>
-                    <a class="color-text-blue" href="/ui.html">UI</a>
-                    <a class="color-text-blue" href="/modal.html">Modal</a>
+                    <a class="color-text-blue rpad-20" href="/">Home</a>
+                    <a class="color-text-blue rpad-20" href="/ui.html">UI</a>
+                    <a class="color-text-blue rpad-20" href="/modal.html">Modal</a>
+                    <a class="color-text-blue"         href="/images.html">Images</a>
                 </nav>
             </div>
         </header>
@@ -45,7 +46,7 @@
             @@include('@@main')
         </section>
 
-        <footer>
+        <footer class="text-center border-top tpad-30">
             <section class="container mobile-wall-pad">
                 <div class="row">
                     <div class="grid-12">

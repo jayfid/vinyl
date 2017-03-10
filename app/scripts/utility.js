@@ -356,6 +356,16 @@ VinylUtil.prototype.checkVisible = function (element) {
 };
 
 /**
+ * Check if mouse click occured within coordinates of element.
+ * @param {MouseEvent} mouseEvent
+ * @param {HTMLElement} element
+ */
+// VinylUtil.prototype.isOver = function(mouseEvent, element) {
+//     var coordinates = this.getMouseCoordinates(mouseEvent);
+//     console.log(coordinates);
+// };
+
+/**
  * Check if device is likely iOS
  * @credit adapted from - http://stackoverflow.com/a/9039885
  * @returns {Boolean}

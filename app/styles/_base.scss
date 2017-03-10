@@ -49,15 +49,11 @@ h3,
 h4,
 h5,
 h6 {
+    display: block;
+    width: 100%;
     font-weight: $font-weight-bold;
     margin: 0 0 $gap-base;
     letter-spacing: 0.01em;
-
-    &.border-bottom,
-    &.title {
-        border-bottom: 1px solid;
-        text-transform: uppercase;
-    }
 
     &.heading {
         text-indent: 1rem;
@@ -79,6 +75,10 @@ strong {
     text-decoration: underline;
 }
 
+.uppercase {
+    text-transform: uppercase;
+}
+
 .normal-weight {
     font-weight: 400;
 }
@@ -86,14 +86,6 @@ strong {
 // alternative to <del>
 .strike {
     text-decoration: line-through;
-}
-
-.divide-bottom {
-    border-bottom: 1px solid;
-}
-
-.divide-right {
-    border-right: 1px solid;
 }
 
 .small-caps {
@@ -157,7 +149,6 @@ p {
     padding: 5px 0;
     background-color: #DCDCDC;
     text-align: center;
-    border-radius: 3px;
 }
 
 .text-left {
@@ -360,11 +351,17 @@ input[type=text]::-ms-clear {
     }
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 // nothing to see here
 input.incognito {
     background: transparent !important;
     border: none !important;
     appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
     outline: none !important;
 }
 
@@ -372,19 +369,15 @@ input.incognito {
 
 .msg {
     display: block;
+    border: 1px solid;
+    padding: 1.25rem;
+    background-color: colorGet("white", "base");
 
-    p {
-        border-radius: 3px;
-        border: 1px solid;
-        padding: 1.25rem;
-        background-color: colorGet("white", "base");
-    }
-
-    .plain {
+    &.plain {
         color: $text-color-default;
     }
 
-    &.notice p {
+    &.notice {
         border-color: colorGet("orange", "base");
         color: colorGet("orange", "dark");
 
@@ -393,7 +386,7 @@ input.incognito {
         }
     }
 
-    &.error p {
+    &.error {
         border-color: colorGet("red", "base");
         color: colorGet("red", "dark");
 
@@ -402,7 +395,7 @@ input.incognito {
         }
     }
 
-    &.info p {
+    &.info {
         border-color: colorGet("blue", "base");
         color: colorGet("blue", "dark");
 
@@ -411,7 +404,7 @@ input.incognito {
         }
     }
 
-    &.success p {
+    &.success {
         border-color: colorGet("darkgreen", "base");
         color: colorGet("darkgreen", "dark");
 
@@ -422,17 +415,43 @@ input.incognito {
 }
 
 a.msg {
+    text-decoration: none;
+
     &:hover p {
         background-color: colorGet("xxlight", "grey");
     }
 }
 
+.bordered {
+    border: 1px solid;
+}
+
 .border-bottom {
-    border-bottom-width: 1px;
+    border-bottom: 1px solid;
 }
 
 .border-top {
-    border-top-width: 1px;
+    border-top: 1px solid;
+}
+
+.border-right {
+    border-right: 1px solid;
+}
+
+.border-left {
+    border-left: 1px solid;
+}
+
+.border-radius-3 {
+    border-radius: 3px;
+}
+
+.border-radius-5 {
+    border-radius: 5px;
+}
+
+.border-radius-8 {
+    border-radius: 8px;
 }
 
 ::-webkit-input-placeholder {
@@ -493,15 +512,16 @@ a.msg {
 .overlaid-item {
     display: flex;
     position: fixed;
-    height: 100%;
     width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    transition: opacity 0.1s;
+    overflow: auto;
     overflow: hidden;
     z-index: $z-index-modal;
+    //pointer-events: none;
 }
 
 body[data-vinyl-overlay="show"] {
