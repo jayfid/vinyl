@@ -1,46 +1,69 @@
-/// typography
-
+ /// typography
 // set a root font size for use with em/rem units
 // default: 14px
 html {
-    font-size: $font-size-base;
+	font-size: $font-size-base;
 }
 
 // let all elements have an implicit font family.  especially useful when
 // embedding iframes.
 body {
-    background-color: $color-body-bg;
-    font-family: $font-family-base;
-    margin: 0;
-
-    * {
-        font-family: inherit;
-        box-sizing: border-box;
-    }
+	background-color: $color-body-bg;
+	font-family: $font-family-base;
+	margin: 0;
+	* {
+		font-family: inherit;
+		box-sizing: border-box;
+	}
 }
 
 // handle images overflowing content
 // with a backup class to override the constraint
 html {
-    img {
-        &.img {
-            max-width: 100%;
-            height: auto;
-            @extend %noselect;
-        }
+	img {
+		&.img {
+			max-width: 100%;
+			height: auto;
+			@extend %noselect;
+		}
+		&.exceed-width {
+			max-width: initial;
+		}
+	}
+}
 
-        &.exceed-width {
-            max-width: initial;
-        }
-    }
+.vinyl-lazyloader {
+	background-color: #f6f6f6;
+	background-size: cover;
+	background-repeat: no-repeat;
+	position: relative;
+	overflow: hidden;
+	img {
+		position: absolute;
+		opacity: 0;
+		top: 0;
+		left: 0;
+		width: 100%;
+		transition: opacity .5s linear;
+		transition: .5s filter linear;
+		&.loaded {
+			opacity: 1;
+		}
+	}
+}
+
+.blurry {
+	filter: blur(10px);
+	/* this is needed so Safari keeps sharp edges */
+	transform: scale(1);
 }
 
 // set a fairly arbitrary heading styles.  assuming this will be
 // overwritten in local css in most projects.
 @each $level, $size in $headers {
-    #{$level} {
-        @include fontSize($size);
-    }
+	#{$level} {
+		@include fontSize($size);
+	}
 }
 
 h1,
@@ -49,571 +72,536 @@ h3,
 h4,
 h5,
 h6 {
-    display: block;
-    width: 100%;
-    font-weight: $font-weight-bold;
-    margin: 0 0 $gap-base;
-    letter-spacing: 0.01em;
-
-    &.heading {
-        text-indent: 1rem;
-        border-color: #B7B7B7;
-        background-color: #EFEFEF;
-        border-width: 1px 0;
-        border-style: solid;
-        padding: 10px 0;
-    }
+	display: block;
+	width: 100%;
+	font-weight: $font-weight-bold;
+	margin: 0 0 $gap-base;
+	letter-spacing: 0.01em;
+	&.heading {
+		text-indent: 1rem;
+		border-color: #B7B7B7;
+		background-color: #EFEFEF;
+		border-width: 1px 0;
+		border-style: solid;
+		padding: 10px 0;
+	}
 }
 
 // the correct emfasis on the correct sylabell.
-em, .bold, strong {
-    font-weight: 700;
+em,
+.bold,
+strong {
+	font-weight: 700;
 }
 
 // strongly emphasize
 strong {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 .uppercase {
-    text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 .normal-weight {
-    font-weight: 400;
+	font-weight: 400;
 }
 
 // alternative to <del>
 .strike {
-    text-decoration: line-through;
+	text-decoration: line-through;
 }
 
 .small-caps {
-    font-variant: small-caps;
+	font-variant: small-caps;
 }
 
 .font-size-a {
-    font-size: 1.1rem;
+	font-size: 1.1rem;
 }
 
 .font-size-b {
-    font-size: 1.2rem;
+	font-size: 1.2rem;
 }
 
 .font-size-c {
-    font-size: 1.3rem;
+	font-size: 1.3rem;
 }
 
 .font-size-d {
-    font-size: 1.4rem;
+	font-size: 1.4rem;
 }
 
 .font-size-e {
-    font-size: 1.5rem;
+	font-size: 1.5rem;
 }
 
 // bowtie for h# elements
 .fancy-dan::after {
-    height: 0;
-    border-bottom: calculateRem(3) solid #e36d6e;
-    display: block;
-    width: calculateRem(50);
-    padding-top: calculateRem(3);
-    margin: 0 auto;
-    content: "";
-    line-height: 0;
+	height: 0;
+	border-bottom: calculateRem(3) solid #e36d6e;
+	display: block;
+	width: calculateRem(50);
+	padding-top: calculateRem(3);
+	margin: 0 auto;
+	content: "";
+	line-height: 0;
 }
 
 // dribbblefied near-black text block with large line-height
 .display-text {
-    font-size: 1rem;
-    line-height: 2.4rem;
-    color: #232323;
+	font-size: 1rem;
+	line-height: 2.4rem;
+	color: #232323;
 }
 
 // 1000101
 .code-text,
 code {
-    font-family: $font-family-code;
-    white-space: pre;
+	font-family: $font-family-code;
+	white-space: pre;
 }
 
 p {
-    line-height: $line-height-multiple * 1rem;
-    margin: 0;
+	width: 100%;
+	line-height: $line-height-multiple * 1rem;
+	margin: 0;
 }
 
 // commonly used utility classes
 // may want to prefix these to prevent overlap with other contrib CSS
 .example-text {
-    padding: 5px 0;
-    background-color: #DCDCDC;
-    text-align: center;
+	padding: 5px 0;
+	background-color: #DCDCDC;
+	text-align: center;
 }
 
 .text-left {
-    text-align: left;
+	text-align: left;
 }
 
 .text-center {
-    text-align: center;
+	text-align: center;
 }
 
 .text-right {
-    text-align: right;
+	text-align: right;
 }
 
 .left {
-    float: left;
+	float: left;
 }
 
 .right {
-    float: right;
+	float: right;
 }
 
 .lean {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .hidden {
-    display: none !important;
+	display: none !important;
 }
 
 .noselect {
-    @extend %noselect;
+	@extend %noselect;
 }
 
 .clearfix {
-    @extend %clearfix;
+	@extend %clearfix;
 }
 
 // https://www.w3.org/TR/html5/text-level-semantics.html#the-small-element.
 // "<small> is suitable for disclaimers, caveats,
 // legal restrictions, or copyrights"
 small.copyright {
-    @include fontSize(12);
+	@include fontSize(12);
 }
 
 /// color
-
 // print colors for default palette
 @include colors;
-
 a:not([class]),
 a:not([class]):visited,
 a[class=""],
 a[class=""]:visited {
-    color: colorGet("blue", "dark");
+	color: colorGet("blue", "dark");
 }
 
 .nowrap {
-    white-space: nowrap;
+	white-space: nowrap;
 }
 
 .display-block {
-    display: block;
+	display: block;
 }
 
 .no-margin {
-  margin: 0;
+	margin: 0;
 }
-   
+
 .full-width {
-  width: 100%; 
+	width: 100%;
 }
 
 /// grid
-
 .frame {
-    position: relative;
-    display: block;
+	position: relative;
+	display: block;
 }
 
 .constrain,
 .container {
-    max-width: maxBreakpoint();
-    margin: auto;
-
-    &.fullscreen {
-        max-width: initial;
-    }
+	max-width: maxBreakpoint();
+	margin: auto;
+	&.fullscreen {
+		max-width: initial;
+	}
 }
 
 .box {
-    text-align: center;
-    overflow: hidden;
+	text-align: center;
+	overflow: hidden;
 }
 
 // vertically center children of an element
 .flex-vcenter {
-    display: flex;
-    box-align: center;
-    flex-align: center;
-    align-items: center;
+	display: flex;
+	box-align: center;
+	flex-align: center;
+	align-items: center;
 }
 
 // horizontally center children of a flex element
 .flex-hcenter {
-    justify-content: center;
+	justify-content: center;
 }
 
 .cont {
-    position: relative;
-    max-width: 100%;
-    overflow: hidden;
+	position: relative;
+	max-width: 100%;
+	overflow: hidden;
 }
 
 .no-overflow {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .lane {
-    margin-left: auto;
-    margin-right: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .row {
-    &.flex {
-        display: flex;
-    }
-
-    &.vcenter {
-        align-items: center;
-        justify-content: center;
-    }
-
-    & > div[class^="grid-"] > .inner {
-        height: 100%;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
+	&.flex {
+		display: flex;
+	}
+	&.vcenter {
+		align-items: center;
+		justify-content: center;
+	}
+	&>div[class^="grid-"]>.inner {
+		height: 100%;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
 }
 
 // generate utility classes for various margins
 @include margins;
-
 // generate classes for various widths
 @include alleys;
-
 @include boxes($col-count, "all-");
-
 @media screen and (max-width: (map-get($breakpoints, "milli") - 1) * 1px) {
-    @include boxes($col-count, "tablet-");
-    .mobile-hide {
-        display: none;
-    }
+	@include boxes($col-count, "tablet-");
+	.mobile-hide {
+		display: none;
+	}
 }
 
 // default: 768px
 @media screen and (min-width: map-get($breakpoints, "milli") * 1px) {
-    // generate grid classes
-    @include boxes;
-
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-
-        &.desktop-reverse {
-            flex-direction: row-reverse;
-        }
-    }
+	// generate grid classes
+	@include boxes;
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+		&.desktop-reverse {
+			flex-direction: row-reverse;
+		}
+	}
 }
 
 // default: 1188
 @media screen and (min-width: (map-get($breakpoints, "deci") + $scrollbar-width) * 1px) {
-    .row {
-        margin-left: 0;
-        margin-right: 0;
-    }
+	.row {
+		margin-left: 0;
+		margin-right: 0;
+	}
 }
 
 /// form elements
-
 // hide microsoft's "clear" button on text input fields
 input[type=text]::-ms-clear {
-    display: none;
+	display: none;
 }
 
 // generate button colors
 @each $flavor, $colors in $btn-flavors {
-    @include btn($flavor, map-get($colors, "border"), map-get($colors, "bg"), map-get($colors, "text"));
+	@include btn($flavor, map-get($colors, "border"), map-get($colors, "bg"), map-get($colors, "text"));
 }
 
 .btn {
-    cursor: pointer;
-    text-decoration: none;
-    border-style: solid;
-    outline: none;
-
-    &:disabled {
-        cursor: default;
-    }
+	cursor: pointer;
+	text-decoration: none;
+	border-style: solid;
+	outline: none;
+	&:disabled {
+		cursor: default;
+	}
 }
 
 .clickable {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 // nothing to see here
 input.incognito {
-    background: transparent !important;
-    border: none !important;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    outline: none !important;
+	background: transparent !important;
+	border: none !important;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	outline: none !important;
 }
 
 /// message and alert widget
-
 .msg {
-    display: block;
-    border: 1px solid;
-    padding: 1.25rem;
-    background-color: colorGet("white", "base");
-
-    &.plain {
-        color: $text-color-default;
-    }
-
-    &.notice {
-        border-color: colorGet("orange", "base");
-        color: colorGet("orange", "dark");
-
-        a {
-            color: darken(colorGet("orange", "base"), 20%);
-        }
-    }
-
-    &.error {
-        border-color: colorGet("red", "base");
-        color: colorGet("red", "dark");
-
-        a {
-            color: darken(colorGet("red", "dark"), 20%);
-        }
-    }
-
-    &.info {
-        border-color: colorGet("blue", "base");
-        color: colorGet("blue", "dark");
-
-        a {
-            color: darken(colorGet("blue", "dark"), 20%);
-        }
-    }
-
-    &.success {
-        border-color: colorGet("darkgreen", "base");
-        color: colorGet("darkgreen", "dark");
-
-        a {
-            color: darken(colorGet("darkgreen", "dark"), 20%);
-        }
-    }
+	display: block;
+	border: 1px solid;
+	padding: 1.25rem;
+	background-color: colorGet("white", "base");
+	&.plain {
+		color: $text-color-default;
+	}
+	&.notice {
+		border-color: colorGet("orange", "base");
+		color: colorGet("orange", "dark");
+		a {
+			color: darken(colorGet("orange", "base"), 20%);
+		}
+	}
+	&.error {
+		border-color: colorGet("red", "base");
+		color: colorGet("red", "dark");
+		a {
+			color: darken(colorGet("red", "dark"), 20%);
+		}
+	}
+	&.info {
+		border-color: colorGet("blue", "base");
+		color: colorGet("blue", "dark");
+		a {
+			color: darken(colorGet("blue", "dark"), 20%);
+		}
+	}
+	&.success {
+		border-color: colorGet("darkgreen", "base");
+		color: colorGet("darkgreen", "dark");
+		a {
+			color: darken(colorGet("darkgreen", "dark"), 20%);
+		}
+	}
 }
 
 a.msg {
-    text-decoration: none;
-
-    &:hover p {
-        background-color: colorGet("xxlight", "grey");
-    }
+	text-decoration: none;
+	&:hover p {
+		background-color: colorGet("xxlight", "grey");
+	}
 }
 
 .bordered {
-    border: 1px solid;
+	border: 1px solid;
 }
 
 .border-bottom {
-    border-bottom: 1px solid;
+	border-bottom: 1px solid;
 }
 
 .border-top {
-    border-top: 1px solid;
+	border-top: 1px solid;
 }
 
 .border-right {
-    border-right: 1px solid;
+	border-right: 1px solid;
 }
 
 .border-left {
-    border-left: 1px solid;
+	border-left: 1px solid;
 }
 
 .border-radius-3 {
-    border-radius: 3px;
+	border-radius: 3px;
 }
 
 .border-radius-5 {
-    border-radius: 5px;
+	border-radius: 5px;
 }
 
 .border-radius-8 {
-    border-radius: 8px;
+	border-radius: 8px;
 }
 
-::-webkit-input-placeholder {
-    color: $placeholder-color;
+ ::-webkit-input-placeholder {
+	color: $placeholder-color;
 }
 
-:-moz-placeholder {
-    /* Firefox 18- */
-    color: $placeholder-color;
+ :-moz-placeholder {
+	/* Firefox 18- */
+	color: $placeholder-color;
 }
 
-::-moz-placeholder {
-    /* Firefox 19+ */
-    color: $placeholder-color;
+ ::-moz-placeholder {
+	/* Firefox 19+ */
+	color: $placeholder-color;
 }
 
-:-ms-input-placeholder {
-    color: $placeholder-color;
+ :-ms-input-placeholder {
+	color: $placeholder-color;
 }
 
 *:disabled {
-    color: $placeholder-color-disabled;
-
-    &::-webkit-input-placeholder {
-        color: $placeholder-color-disabled;
-    }
-
-    &:-moz-placeholder {
-        /* Firefox 18- */
-        color: $placeholder-color-disabled;
-    }
-
-    &::-moz-placeholder {
-        /* Firefox 19+ */
-        color: $placeholder-color-disabled;
-    }
-
-    &:-ms-input-placeholder {
-        color: $placeholder-color-disabled;
-    }
+	color: $placeholder-color-disabled;
+	&::-webkit-input-placeholder {
+		color: $placeholder-color-disabled;
+	}
+	&:-moz-placeholder {
+		/* Firefox 18- */
+		color: $placeholder-color-disabled;
+	}
+	&::-moz-placeholder {
+		/* Firefox 19+ */
+		color: $placeholder-color-disabled;
+	}
+	&:-ms-input-placeholder {
+		color: $placeholder-color-disabled;
+	}
 }
 
 /// overlay
-
 .overlay-top-level {
-    display: none;
-    background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    z-index: $z-index-modal - 1;
+	display: none;
+	background-color: rgba(0, 0, 0, 0.6);
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	z-index: $z-index-modal - 1;
 }
 
 .overlaid-item {
-    display: flex;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: auto;
-    overflow: hidden;
-    z-index: $z-index-modal;
-    //pointer-events: none;
+	display: flex;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: auto;
+	overflow: hidden;
+	z-index: $z-index-modal;
+	//pointer-events: none;
 }
 
 body[data-vinyl-overlay="show"] {
-    .overlay-top-level {
-        display: block;
-    }
-    .overlay {
-        overflow: hidden;
-    }
+	.overlay-top-level {
+		display: block;
+	}
+	.overlay {
+		overflow: hidden;
+	}
 }
 
 .input {
-    .prefix, .suffix {
-        display: inline-block;
-        vertical-align: middle;
-    }
+	.prefix,
+	.suffix {
+		display: inline-block;
+		vertical-align: middle;
+	}
 }
 
 .hide {
-    display: none;
-
-    &.show-block {
-        display: block;
-    }
-
-    &.show-flex {
-        display: flex;
-    }
-
-    &.show-inline {
-        display: inline;
-    }
-
-    &.show-inline-block {
-        display: inline-block;
-    }
+	display: none;
+	&.show-block {
+		display: block;
+	}
+	&.show-flex {
+		display: flex;
+	}
+	&.show-inline {
+		display: inline;
+	}
+	&.show-inline-block {
+		display: inline-block;
+	}
 }
 
 /// table
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
-
-    td,
-    tr {
-        vertical-align: top;
-
-        p {
-            margin-bottom: 0;
-        }
-    }
+	border-collapse: collapse;
+	border-spacing: 0;
+	td,
+	tr {
+		vertical-align: top;
+		p {
+			margin-bottom: 0;
+		}
+	}
 }
 
 // lists
 ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    li {
-        line-height: 1.3rem;
-    }
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	li {
+		line-height: 1.3rem;
+	}
 }
 
 .input-group {
-    display: inline-table;
-
-    .input {
-        width: 100%;
-    }
-
-    .input, .input-submit {
-        display: table-cell;
-    }
-
-    textarea {
-        width: 100%;
-        padding: 1rem;
-    }
+	display: inline-table;
+	.input {
+		width: 100%;
+	}
+	.input,
+	.input-submit {
+		display: table-cell;
+	}
+	textarea {
+		width: 100%;
+		padding: 1rem;
+	}
 }
 
 @media screen and (min-width: map-get($breakpoints, "milli") * 1px) {
-    .desktop-hide {
-        display: none;
-    }
+	.desktop-hide {
+		display: none;
+	}
 }
 
 @media screen and (max-width: maxBreakpoint()) {
-    .mobile-wall-pad {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+	.mobile-wall-pad {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
 }
 
 @import 'menu';

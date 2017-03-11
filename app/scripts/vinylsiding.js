@@ -10,6 +10,7 @@ function Vinylsiding(props) {
         Vinylsiding.prototype.setDynamicHeights();
         Vinylsiding.prototype.secureTargetBlank();
         Vinylsiding.prototype.modal.prototype.addOverlayToDOM();
+        Vinylsiding.prototype.lazyLoad();
     };
 }
 
@@ -57,22 +58,31 @@ Vinylsiding.prototype.setDynamicHeights = function () {
  * Lazy load images in a graceful manner.
  */
 Vinylsiding.prototype.lazyLoad = function () {
-    var ref, imgs = document.querySelectorAll('img.l-load');
-    if (!imgs.length) {
-        return false;
+    var lazyLoaders = document.querySelectorAll('.vinyl-lazyloader');
+    if (!lazyLoaders.length) {
+        console.debug('returning with no elements');
+        return;
     }
-    for (var i = 0, len = imgs.length, preloadedImage = Template.createElement('img'); i < len; i++) {
-        if (!imgs[i].hasAttribute('data-l-load')) {
-            continue;
-        }
-        ref = imgs[i].getAttribute('data-l-load');
-        if (!ref.trim()) {
-            continue;
-        }
-        preloadedImage.src = ref;
-        preloadedImage.onload = function() {
-            imgs[i].src = preloadedImage.src;
-        }
-        imgs[i].src = preloadedImage.src;
+    for (var i = 0, len = lazyLoaders.length, container, previewImage, tempImageSmall, tempImageLarge; i < len; i++) {
+        container = lazyLoaders[0],
+            previewImage = container.querySelector('.base-image');
+
+        // 1: load small image and show it
+        tempImageSmall = new Image();
+        tempImageSmall.onload = function () {
+            console.log(previewImage);
+            VS.util.addClass(previewImage, 'loaded');
+            VS.util.removeClass(previewImage, 'blurry');
+        };
+        tempImageSmall.src = previewImage.src;
+
+        // 2: load large image
+        tempImageLarge = new Image();
+        tempImageLarge.onload = function () {
+            tempImageLarge.classList.add('loaded');
+        };
+        tempImageLarge.src = previewImage.dataset.vimageLarge;
+
+        container.appendChild(tempImageLarge);
     }
 };
