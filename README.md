@@ -13,9 +13,9 @@ tbd
 
 ## Installation
 Include in head of html.  
-`<link rel="stylesheet" src="https://unpkg.com/vinylsiding/dist/styles/vinylsiding.css">`  
+`<link rel="stylesheet" href="https://unpkg.com/vinylsiding/dist/styles/vinylsiding.css">`  
 and  
-`<script src="https://unpkg.com/vinylsiding/dist/scripts/vinylsiding.js"></script>`  
+`<script href="https://unpkg.com/vinylsiding/dist/scripts/vinylsiding.js"></script>`  
 
 also available via npm `npm install vinylsiding`
 
