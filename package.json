@@ -22,7 +22,8 @@
   },
   "scripts": {
     "test": "npm run test-app",
-    "test-app": "mocha --compilers js:babel-core/register"
+    "test-app": "mocha --compilers js:babel-core/register",
+    "start": "gulp serve"
   },
   "repository": {
     "type": "git",

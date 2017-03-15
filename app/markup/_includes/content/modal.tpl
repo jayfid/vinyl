@@ -2,7 +2,11 @@
     <div class="container mobile-wall-pad">
         <div class="row flex-hcenter">
             <div class="grid-6 text-center">
-                <p><span class="tpad-10 bpad-10 rpad-30 lpad-30 color-text-blue modal-open clickable btn">Open Modal</span></p>
+                <p class="vmodal-trigger" 
+                    data-vmodal-content=".modal-content"
+                    data-vmodal-dismiss=".close"
+                    data-vmodal-click="false"
+                     ><span class="tpad-10 bpad-10 rpad-30 lpad-30 color-text-blue clickable btn">Open Modal</span></p>
             </div>
         </div>
         <div class="hidden modal-content row flex-hcenter">
@@ -14,11 +18,3 @@
         </div>
     </div>
 </section>
-<script>
-    var modalExample = new VS.modal({
-        triggerSelector: '.modal-open',
-        contentSelector: '.modal-content',
-        hideSelector: 'close',
-        clickToClose: true
-    });
-</script>

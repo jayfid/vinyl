@@ -1,5 +1,5 @@
 'use strict';
-
+/* global VS */
 /**
  * Allow a callback to be fired while a user is dragging their mouse/finger over an element.
  * @param {Object} props
@@ -170,8 +170,6 @@ Draggable.prototype.dragEvent = function (e) {
         return;
     }
 
-    var state = this.getData(container);
-
     var mousePos = VS.util.getMouseCoordinates(e);
 
     if (!state.lastMousePos) {
@@ -184,7 +182,8 @@ Draggable.prototype.dragEvent = function (e) {
         state.callback(event, container, mousePos, state.lastMousePos);
     } catch (error) {
         VS.locks.clearLock(state.containerSelector);
-        console.log(error);
+        /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+        console.error(error);
         throw 'Draggable callback failed';
     } finally {
         this.setData(container, mousePos, 'lastMousePos');

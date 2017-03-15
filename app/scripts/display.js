@@ -1,3 +1,4 @@
+/* global Vinylsiding */
 /**
  * Basic HTML element creation/injection helper.
  */
@@ -43,21 +44,21 @@ VinylTemplate.prototype.setInnerHTML = function (elemList, content) {
     }
     for (var i = 0, len = elemList.length; i < len; i++) {
         switch (typeof content) {
-            case 'string':
-                elemList[i].textContent = content;
-                break;
-            case 'object':
-                this.emptyElement(elemList[i]);
-                if (Array.isArray(content)) {
-                    for (var j = 0, jlen = content.length; j < jlen; j++) {
-                        elemList[i].appendChild(content[j]);
-                    }
-                } else {
-                    elemList[i].appendChild(content);
+        case 'string':
+            elemList[i].textContent = content;
+            break;
+        case 'object':
+            this.emptyElement(elemList[i]);
+            if (Array.isArray(content)) {
+                for (var j = 0, jlen = content.length; j < jlen; j++) {
+                    elemList[i].appendChild(content[j]);
                 }
-                break;
-            default:
-                throw 'Unsupported content type in VinylTemplate.setInnerHTML';
+            } else {
+                elemList[i].appendChild(content);
+            }
+            break;
+        default:
+            throw 'Unsupported content type in VinylTemplate.setInnerHTML';
         }
     }
 };

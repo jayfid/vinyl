@@ -15,7 +15,7 @@
  **  @TODO - documentation
  **
  */
-
+/* global Vinylsiding */
 function PersistentStorageClass() {
     if (typeof window.PersistentStorage === 'undefined') {
         window.PersistentStorage = {
@@ -151,8 +151,8 @@ PersistentStorageClass.prototype.deleteElementData = function (element, moduleNa
         typeof window.PersistentStorage === 'undefined' ||
         typeof window.PersistentStorage.elements[moduleName] === 'undefined' ||
         typeof window.PersistentStorage.elements[moduleName][identifier] === 'undefined') {
-
-        console.debug('Call to delete non-existant element data');
+        /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+        console.warn('Call to delete non-existant element data');
         return;
     }
     delete window.PersistentStorage.elements[identifier][moduleName];
@@ -173,10 +173,11 @@ PersistentStorageClass.prototype.nextID = function () {
  * @param {String} moduleName - required
  * @returns unique ID string
  */
-PersistentStorageClass.prototype.tagElement = function (element, moduleName) {
+PersistentStorageClass.prototype.tagElement = function (element) {
     var identifier = this.nextID();
     element.setAttribute('data-ps-id', identifier);
     return identifier;
 };
 
+/* global Vinylsiding */
 Vinylsiding.prototype.data = new PersistentStorageClass();

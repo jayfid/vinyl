@@ -1,7 +1,7 @@
 /**
  ** Commonly needed stateless utility functions.
  */
-
+/* global VS, Vinylsiding */
 function VinylUtil() {
     return this;
 }
@@ -41,10 +41,15 @@ VinylUtil.prototype.toggleClass = function (element, elemClass) {
 /**
  * Match elemClass against element's classes.
  * @param  {Element} element - DOM element.
- * @param  {String} elemClass - Class name to match.
+ * @param  {String} elemClass - Class name to match. Can include leading '.'
  * @return {Boolean} True if element has class, otherwise false.
  */
 VinylUtil.prototype.hasClass = function (element, elemClass) {
+    // remove any leading . for convenience.
+    if (elemClass.charAt( 0 ) === '.') {
+        elemClass = elemClass.substr(1);
+    }
+
     if (typeof element.className !== 'string') {
         return false;
     }
@@ -258,20 +263,20 @@ VinylUtil.prototype.scrollIntoView = function (elem, position) {
         (document.documentElement.clientTop || 0),
         elementWindowYOffset;
     switch (position) {
-        case 'bottom':
-            var elemY = this.getPosition(elem).y + currentWindowYOffset,
-                elemHeight = elem.offsetHeight,
-                elemBottomPixel = elemY + elemHeight,
-                extraSpacePixels = 30,
-                windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
-                calculatedOffset = elemBottomPixel - windowHeight + extraSpacePixels;
-            elementWindowYOffset = (calculatedOffset >= 0) ? calculatedOffset : 0;
-            break;
-        case 'top':
-            elementWindowYOffset = this.getPosition(elem).y;
-            break;
-        default:
-            throw 'Invalid position.';
+    case 'bottom':
+        var elemY = this.getPosition(elem).y + currentWindowYOffset,
+            elemHeight = elem.offsetHeight,
+            elemBottomPixel = elemY + elemHeight,
+            extraSpacePixels = 30,
+            windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+            calculatedOffset = elemBottomPixel - windowHeight + extraSpacePixels;
+        elementWindowYOffset = (calculatedOffset >= 0) ? calculatedOffset : 0;
+        break;
+    case 'top':
+        elementWindowYOffset = this.getPosition(elem).y;
+        break;
+    default:
+        throw 'Invalid position.';
     }
 
     var initialWindowYOffset = currentWindowYOffset;
@@ -309,7 +314,7 @@ VinylUtil.prototype.scrollIntoView = function (elem, position) {
  */
 VinylUtil.prototype.waitUntilVisible = function (elemSelector, callback) {
     var interval = window.setInterval(function () {
-        if (!this.checkVisible(document.querySelector(elemSelector))) {
+        if (!VS.util.checkVisible(document.querySelector(elemSelector))) {
             return;
         }
         window.clearInterval(interval);

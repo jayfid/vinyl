@@ -1,15 +1,16 @@
 'use strict';
-
+/* globals VS */
 /**
  ** @file Vinylsiding Class
  ** Wire up common webpage elements.
  ** Make useful utility functions available as early as possible.
  */
-function Vinylsiding(props) {
+function Vinylsiding() {
     window.onload = function () {
         Vinylsiding.prototype.setDynamicHeights();
         Vinylsiding.prototype.secureTargetBlank();
-        Vinylsiding.prototype.modal.prototype.addOverlayToDOM();
+        Vinylsiding.prototype.modal.attachBodyListener();
+        Vinylsiding.prototype.modal.addOverlayToDOM();
         Vinylsiding.prototype.lazyLoad();
     };
 }
@@ -60,7 +61,6 @@ Vinylsiding.prototype.setDynamicHeights = function () {
 Vinylsiding.prototype.lazyLoad = function () {
     var lazyLoaders = document.querySelectorAll('.vinyl-lazyloader');
     if (!lazyLoaders.length) {
-        console.debug('returning with no elements');
         return;
     }
     for (var i = 0, len = lazyLoaders.length, container, previewImage, tempImageSmall, tempImageLarge; i < len; i++) {
@@ -70,7 +70,6 @@ Vinylsiding.prototype.lazyLoad = function () {
         // 1: load small image and show it
         tempImageSmall = new Image();
         tempImageSmall.onload = function () {
-            console.log(previewImage);
             VS.util.addClass(previewImage, 'loaded');
             VS.util.removeClass(previewImage, 'blurry');
         };

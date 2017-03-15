@@ -1,4 +1,5 @@
 'use strict';
+/* global VS, Vinylsiding */
 /**
  ** Acquire, check, and free named locks.
  */

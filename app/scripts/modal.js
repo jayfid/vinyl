@@ -1,5 +1,5 @@
 'use strict';
-
+/* global VS, Vinylsiding */
 /**
  * Modal content helper.
  * Appends overlay div to body.
@@ -14,45 +14,42 @@
  * @param {string} props.triggerSelector - CSS selector of modal open link
  * @param {string} props.contentSelector - CSS selector of modal content container
  * @param {string} props.hideSelector - CSS selector of modal close link
- * @param {function} [props.openCallback] - Custom callback to run after being clicked
  * @param {boolean} [props.clickToClose=true] - Whether a click to the modal overlay closes the overlay
  */
-function VinylModal(props) {
-    props.clickToClose = (typeof props.clickToClose === 'boolean') ? props.clickToClose : true;
+function VinylModal() {
+    return this;
+}
 
-    var triggerElement = document.querySelector(props.triggerSelector);
-    if (!triggerElement) {
-        throw 'Modal trigger element not found.';
-    }
+VinylModal.prototype.attachBodyListener = function () {
+    document.body.addEventListener('click', function (e) {
+        var args = {},
+            element = VS.util.findParentWithClass(e.target, 'vmodal-trigger');
 
-    var contentContainer = document.querySelector(props.contentSelector);
-    if (!contentContainer) {
-        throw 'Modal content element not found.';
-    }
+        if (!element) {
+            return;
+        }
 
-    // tag content with close link selector
-    contentContainer.setAttribute('data-vmodal-close', props.hideSelector);
-    VS.util.addClass(contentContainer, 'modal-content');
+        for (var key in element.dataset) {
+            if (key.slice(0, 6) === 'vmodal') {
+                args[key] = element.dataset[key];
+            }
+        }
 
-    // tag open link with content selector and clickclose status
-    triggerElement.setAttribute('data-vmodal-content', props.contentSelector);
-    triggerElement.setAttribute('data-vmodal-clickclose', props.clickToClose.toString());
-    VS.util.addClass(triggerElement, 'modal-trigger');
-
-    if (typeof props.openCallBack === 'function') {
-        triggerElement.addEventListener('click', props.openCallBack);
-    } else {
-        triggerElement.addEventListener('click', VinylModal.prototype.handleOpenClick);
-    }
+        VS.modal.handleOpenClick(args);
+    }, true);
 };
 
 /**
  * Onetime insert of 
  */
 VinylModal.prototype.addOverlayToDOM = function () {
+    var className = 'overlay-top-level';
+    var existingOverlay = document.querySelector('.' + className);
+    if (existingOverlay) {
+        return;
+    }
     var overlayDiv = document.createElement('div');
-    overlayDiv.className = 'overlay-top-level';
-    //overlayDiv.addEventListener('click', this.handleContentClick);
+    overlayDiv.className = className;
     document.onkeydown = function (e) {
         e = e || window.event;
         var isEscape = false;
@@ -62,7 +59,7 @@ VinylModal.prototype.addOverlayToDOM = function () {
             isEscape = (e.keyCode == 27);
         }
         if (isEscape && document.body.getAttribute('data-vinyl-overlay-closable') === 'true') {
-            VS.modal.prototype.hideOverlay();
+            VS.modal.hideOverlay();
         }
     };
     document.body.appendChild(overlayDiv);
@@ -70,9 +67,9 @@ VinylModal.prototype.addOverlayToDOM = function () {
 
 VinylModal.prototype.handleClickableClick = function (e) {
     e.stopPropagation();
-    var contentContainer = VS.util.findParentWithClass(e.target, 'modal-content');
+    var contentContainer = VS.util.findParentWithClass(e.target, 'overlaid-item');
     if (!contentContainer) {
-        return VS.modal.prototype.hideOverlay();
+        return VS.modal.hideOverlay();
     }
 
     var closeSelector = contentContainer.getAttribute('data-vmodal-close');
@@ -80,18 +77,14 @@ VinylModal.prototype.handleClickableClick = function (e) {
         return;
     }
     if (VS.util.hasClass(e.target, closeSelector)) {
-        return VS.modal.prototype.hideOverlay();
+        return VS.modal.hideOverlay();
     }
 
 };
 
-VinylModal.prototype.handleOpenClick = function (e) {
-    var element = VS.util.findParentWithClass(e.target, 'modal-trigger');
-    if (!element) {
-        return;
-    }
-    VinylModal.prototype.showOverlay( (element.getAttribute('data-vmodal-clickclose') === 'true') );
-    VinylModal.prototype.showContent(element.getAttribute('data-vmodal-content'));
+VinylModal.prototype.handleOpenClick = function (props) {
+    VS.modal.showOverlay((props.vmodalClick === 'true' || props.vmodalClick === true));
+    VS.modal.showContent(props);
 };
 
 VinylModal.prototype.handleCloseClick = function (e) {
@@ -99,12 +92,12 @@ VinylModal.prototype.handleCloseClick = function (e) {
     if (!isClickable) {
         var clickToClose = (document.body.getAttribute('data-vinyl-overlay-closable') === 'true');
         if (clickToClose) {
-            return VS.modal.prototype.hideOverlay();
+            return VS.modal.hideOverlay();
         }
         return;
     }
 
-    VS.modal.prototype.handleClickableClick(e);
+    VS.modal.handleClickableClick(e);
 };
 
 VinylModal.prototype.showOverlay = function (clickToClose) {
@@ -120,14 +113,15 @@ VinylModal.prototype.hideOverlay = function () {
     //throw 'op';
     document.body.setAttribute('data-vinyl-overlay', 'hide');
     document.body.removeAttribute('data-vinyl-overlay-closable');
-    VinylModal.prototype.hideContent();
+    VS.modal.hideContent();
 };
 
-VinylModal.prototype.showContent = function (selector) {
-    var contentContainer = document.querySelector(selector);
+VinylModal.prototype.showContent = function (props) {
+    var contentContainer = document.querySelector(props.vmodalContent);
     VS.util.addClass(contentContainer, 'overlaid-item');
     VS.util.removeClass(contentContainer, 'hidden');
-    contentContainer.addEventListener('click', VS.modal.prototype.handleCloseClick);
+    contentContainer.setAttribute('data-vmodal-close', props.vmodalDismiss);
+    contentContainer.addEventListener('click', VS.modal.handleCloseClick);
 };
 
 VinylModal.prototype.hideContent = function () {
@@ -137,7 +131,7 @@ VinylModal.prototype.hideContent = function () {
     }
     VS.util.addClass(contentContainer, 'hidden');
     VS.util.removeClass(contentContainer, 'overlaid-item');
-    contentContainer.removeEventListener('click', VS.modal.prototype.handleCloseClick);
+    contentContainer.removeEventListener('click', VS.modal.handleCloseClick);
 };
 
-Vinylsiding.prototype.modal = VinylModal;
+Vinylsiding.prototype.modal = new VinylModal();
