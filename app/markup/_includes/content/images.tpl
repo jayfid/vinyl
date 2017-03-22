@@ -17,5 +17,13 @@
                 <div style="padding-bottom: 33.7%"></div>
             </div>
         </div>
+
+        <div class="grid-12 text-center">
+            <div class="vinyl-lazyloader">
+                <img src="/images/glasses-3370-19-899-303jpg.jpg" data-vimage-large="/images/glasses-3370-90-899-303jpg.jpg" class="base-image blurry"
+                />
+                <div style="padding-bottom: 33.7%"></div>
+            </div>
+        </div>
     </div>
 </div>

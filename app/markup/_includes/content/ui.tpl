@@ -1,16 +1,8 @@
-<section id="alternating">
+<section id="alternating" class="mobile-wall-pad bpush-60">
     <h4 class="title">Alternating Rows</h4>
     @@include('snippet/alternating.tpl')
 </section>
-<section id="palette" class="no-overflow">
-    <h4 class="title">Palette</h4>
-    <div class="cont">
-        <div class="row flex">
-            @@include('snippet/palette.tpl')
-        </div>
-    </div>
-</section>
-<section id="messages">
+<section id="messages" class="mobile-wall-pad container">
     <h4 class="title">Messages</h4>
     @@include('snippet/messages.tpl')
 </section>

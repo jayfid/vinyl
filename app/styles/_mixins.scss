@@ -88,7 +88,7 @@
 // print a list of containing divs in incremental widths of ~ 100px
 // vertical content bars. occasionally useful
 @mixin alleys($col-count: $col-count) {
-     @for $index from 1 through $col-count{
+     @for $index from 1 through $col-count {
         .alley-#{$index}00 {
             max-width: 100%;
             width    : calculateRem($index * 100);

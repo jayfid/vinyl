@@ -63,25 +63,28 @@ Vinylsiding.prototype.lazyLoad = function () {
     if (!lazyLoaders.length) {
         return;
     }
-    for (var i = 0, len = lazyLoaders.length, container, previewImage, tempImageSmall, tempImageLarge; i < len; i++) {
-        container = lazyLoaders[0],
-            previewImage = container.querySelector('.base-image');
-
-        // 1: load small image and show it
-        tempImageSmall = new Image();
-        tempImageSmall.onload = function () {
-            VS.util.addClass(previewImage, 'loaded');
-            VS.util.removeClass(previewImage, 'blurry');
-        };
-        tempImageSmall.src = previewImage.src;
-
-        // 2: load large image
-        tempImageLarge = new Image();
-        tempImageLarge.onload = function () {
-            tempImageLarge.classList.add('loaded');
-        };
-        tempImageLarge.src = previewImage.dataset.vimageLarge;
-
-        container.appendChild(tempImageLarge);
+    for (var i = 0, len = lazyLoaders.length; i < len; i++) {
+        lazyLoadImage(lazyLoaders[i]);
     }
 };
+
+function lazyLoadImage(container) {
+    var previewImage = container.querySelector('.base-image'),
+        smallImage = new Image(),
+        largeImage = new Image();
+    // 1: load small image and show it
+
+    smallImage.onload = function () {
+        VS.util.addClass(previewImage, 'loaded');
+        VS.util.removeClass(previewImage, 'blurry');
+    };
+    smallImage.src = previewImage.src;
+
+    // 2: load large image
+    largeImage.onload = function () {
+        this.classList.add('loaded');
+    };
+    largeImage.src = previewImage.dataset.vimageLarge;
+
+    container.appendChild(largeImage);
+}

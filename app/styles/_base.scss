@@ -60,7 +60,8 @@ html {
 
 // set a fairly arbitrary heading styles.  assuming this will be
 // overwritten in local css in most projects.
-@each $level, $size in $headers {
+@each $level,
+$size in $headers {
 	#{$level} {
 		@include fontSize($size);
 	}
@@ -223,6 +224,7 @@ small.copyright {
 /// color
 // print colors for default palette
 @include colors;
+
 a:not([class]),
 a:not([class]):visited,
 a[class=""],
@@ -307,6 +309,9 @@ a[class=""]:visited {
 		padding-left: 5px;
 		padding-right: 5px;
 	}
+	&.nowrap {
+		flex-wrap: nowrap;
+	}
 }
 
 // generate utility classes for various margins
@@ -349,7 +354,8 @@ input[type=text]::-ms-clear {
 }
 
 // generate button colors
-@each $flavor, $colors in $btn-flavors {
+@each $flavor,
+$colors in $btn-flavors {
 	@include btn($flavor, map-get($colors, "border"), map-get($colors, "bg"), map-get($colors, "text"));
 }
 
@@ -408,7 +414,7 @@ input.incognito {
 		}
 	}
 	&.success {
-		border-color: colorGet("darkgreen", "base");
+		border-color: colorGet("green", "base");
 		color: colorGet("darkgreen", "dark");
 		a {
 			color: darken(colorGet("darkgreen", "dark"), 20%);
@@ -455,21 +461,21 @@ a.msg {
 	border-radius: 8px;
 }
 
- ::-webkit-input-placeholder {
+::-webkit-input-placeholder {
 	color: $placeholder-color;
 }
 
- :-moz-placeholder {
+:-moz-placeholder {
 	/* Firefox 18- */
 	color: $placeholder-color;
 }
 
- ::-moz-placeholder {
+::-moz-placeholder {
 	/* Firefox 19+ */
 	color: $placeholder-color;
 }
 
- :-ms-input-placeholder {
+:-ms-input-placeholder {
 	color: $placeholder-color;
 }
 
@@ -604,4 +610,4 @@ ul {
 	}
 }
 
-@import 'menu';
+//@import 'menu';

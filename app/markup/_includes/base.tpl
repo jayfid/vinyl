@@ -38,6 +38,7 @@
                     <a class="color-text-blue rpad-20" href="/">Home</a>
                     <a class="color-text-blue rpad-20" href="/ui.html">UI</a>
                     <a class="color-text-blue rpad-20" href="/modal.html">Modal</a>
+                    <a class="color-text-blue rpad-20" href="/draggable.html">Draggable</a>
                     <a class="color-text-blue"         href="/images.html">Images</a>
                 </nav>
             </div>
