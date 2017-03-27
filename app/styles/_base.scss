@@ -44,18 +44,18 @@ html {
 		top: 0;
 		left: 0;
 		width: 100%;
-		transition: opacity .5s linear;
-		transition: .5s filter linear;
+		transition: opacity .5s linear, filter .5s linear;
+
 		&.loaded {
 			opacity: 1;
 		}
 	}
-}
 
-.blurry {
-	filter: blur(10px);
-	/* this is needed so Safari keeps sharp edges */
-	transform: scale(1);
+	.blurry {
+		filter: blur(10px);
+		/* this is needed so Safari keeps sharp edges */
+		transform: scale(1);
+	}
 }
 
 // set a fairly arbitrary heading styles.  assuming this will be
@@ -152,7 +152,7 @@ strong {
 // dribbblefied near-black text block with large line-height
 .display-text {
 	font-size: 1rem;
-	line-height: 2.4rem;
+	line-height: 240%;
 	color: #232323;
 }
 
@@ -165,7 +165,7 @@ code {
 
 p {
 	width: 100%;
-	line-height: $line-height-multiple * 1rem;
+	line-height: $default-line-height-percent;
 	margin: 0;
 }
 
@@ -578,7 +578,7 @@ ul {
 	padding: 0;
 	list-style: none;
 	li {
-		line-height: 1.3rem;
+		line-height: $default-line-height-percent;
 	}
 }
 

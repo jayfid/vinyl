@@ -58,7 +58,7 @@ $font-weight-light: 300;
 $font-weight-base: 400;
 $font-weight-bold: 700;
 $font-weight-xtra-bold: 900;
-$line-height-multiple: 1.25;
+$default-line-height-percent: 125%;
 $headers: ( "h1": $font-size-header * 2.25, "h2": $font-size-header * 2, "h3": $font-size-header * 1.75, "h4": $font-size-header * 1.5, "h5": $font-size-header * 1.25, "h6": $font-size-header);
 $text-color-default: map-get($palette, 'black');
 /// button vars
