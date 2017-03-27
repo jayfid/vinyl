@@ -1,6 +1,6 @@
 {
   "name": "vinylsiding",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "CSS/JS Skeleton",
   "main": "dist/scripts/vinylsiding.js",
   "private": false,
