@@ -44,7 +44,7 @@ html {
 		top: 0;
 		left: 0;
 		width: 100%;
-		transition: opacity .5s linear, filter .5s linear;
+		transition: opacity .2s linear, filter .1s linear;
 
 		&.loaded {
 			opacity: 1;
@@ -52,7 +52,7 @@ html {
 	}
 
 	.blurry {
-		filter: blur(10px);
+		filter: blur(3px);
 		/* this is needed so Safari keeps sharp edges */
 		transform: scale(1);
 	}
