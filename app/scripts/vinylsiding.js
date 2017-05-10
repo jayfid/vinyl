@@ -75,14 +75,15 @@ function lazyLoadImage(container) {
     // 1: load small image and show it
 
     smallImage.onload = function () {
-        VS.util.addClass(previewImage, 'loaded');
+        //VS.util.addClass(previewImage, 'loaded');
         VS.util.removeClass(previewImage, 'blurry');
     };
     smallImage.src = previewImage.src;
 
     // 2: load large image
+    largeImage.className = 'loading';
     largeImage.onload = function () {
-        this.classList.add('loaded');
+        VS.util.removeClass(largeImage, 'loading');
     };
     largeImage.src = previewImage.dataset.vimageLarge;
 

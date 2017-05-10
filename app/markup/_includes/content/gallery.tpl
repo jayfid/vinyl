@@ -13,89 +13,14 @@
                 </ul>
             </div>
             <div class="grid-8 text-center">
-                <img src="a" />
+                <div class="product-gallery">
+                    <div class="product-gallery-thumbs"></div>
+                    <div class="product-gallery-main"></div>
+                </div>
             </div>
-            <div class="grid-4">
-                <p>Zoom hover target</p>
+            <div class="grid-4 text-center">
+                <p>Column 2</p>
             </div>
         </div>
     </div>
 </section>
-
-<!-- build:js scripts/productgallery.js -->
-<script src="scripts/productgallery.js"></script>
-<!-- endbuild -->
-
-<script>
-    var config = {
-        'containerSelector': '.product-gallery'
-    };
-    var data = {
-        "galleries": [ // A gallery defines a list of content.
-            {
-                "id": "square",
-                "content": { // A list of named references to media objects.
-                    "wide": "wide-square",
-                    "square": "square-square",
-                    "tall": "tall-square"
-                },
-            },
-            {
-                "id": "circle",
-                "content": { // A list of named references to media objects.
-                    "wide": "wide-circle",
-                    "square": "square-circle",
-                    "tall": "tall-circle"
-                },
-            }
-
-        ],
-        "media": [ // Gallery view reference media by ID
-            {// circle's images
-                "id": "square-circle",
-                "alt": "alt text",
-                "type": "image",
-                "lowres": "https://assets.newpointdesigns.com/productimagegallery/sample/square-circle.png",
-                "hd": "https://assets.newpointdesigns.com/productimagegallery/sample/square-circle.png"
-            },
-            {
-                "id": "tall-circle",
-                "alt": "alt text",
-                "type": "image",
-                "lowres": "https://assets.newpointdesigns.com/productimagegallery/sample/tall-circle.png",
-                "hd": "https://assets.newpointdesigns.com/productimagegallery/sample/tall-circle.png"
-            },
-            {
-                "id": "wide-circle",
-                "alt": "alt text",
-                "type": "image",
-                "lowres": "https://assets.newpointdesigns.com/productimagegallery/sample/wide-circle.png",
-                "hd": "https://assets.newpointdesigns.com/productimagegallery/sample/wide-circle.png"
-            },
-
-            {// square's images
-                "id": "square-square",
-                "alt": "alt text",
-                "type": "image",
-                "lowres": "https://assets.newpointdesigns.com/productimagegallery/sample/square-square.png",
-                "hd": "https://assets.newpointdesigns.com/productimagegallery/sample/square-square.png"
-            },
-            {
-                "id": "tall-square",
-                "alt": "alt text",
-                "type": "image",
-                "lowres": "https://assets.newpointdesigns.com/productimagegallery/sample/tall-square.png",
-                "hd": "https://assets.newpointdesigns.com/productimagegallery/sample/tall-square.png"
-            },
-            {
-                "id": "wide-square",
-                "alt": "alt text",
-                "type": "image",
-                "lowres": "https://assets.newpointdesigns.com/productimagegallery/sample/wide-square.png",
-                "hd": "https://assets.newpointdesigns.com/productimagegallery/sample/wide-square.png"
-            }
-        ],
-        "defaultGallery": "square"
-    };
-
-</script>
