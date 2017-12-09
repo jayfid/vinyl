@@ -1,57 +1,35 @@
- /// generic config
+/// generic config
 $debug: false !default;
-/// color vars
-/// palettes of palettes
-$color-body-bg: #fff;
-// It's rather handy having a palette of colors to work off of.  Each group
-// of complientary colors can be reused to enforce consistency and save time.
-// To store this logically, we maintain a "palette of palettes"
-$palette: ( 'black': #000, 'white': #fff, 'red': #d34c4c, 'orange': #ea9847, 'yellow': #f9ed5f, 'green': #32ad25, 'blue': #3a9ef9);
 
-$palette-dark: ( 'red': #a53535, 'orange': #cc803b, 'yellow': #e2d156, 'green': #0fd30f, 'darkgreen': #298a1f, 'blue': #3d63df, 'indigo': #602cc4, 'violet': #bc2ac4);
-$greys: ( 'xxlight': #f5f5f5, 'xlight': #d3d3d3, 'light': #a5a5a5, 'xmedium': #5b5b5b, 'medium': #333, 'blue': #2a3438, 'darkblue': #171c1e);
-$metapalette: ( 'base': $palette, 'dark': $palette-dark, 'grey': $greys);
+/// color vars
+$color-body-bg: #fff;
 $placeholder-color: #454545;
 $placeholder-color-disabled: #999;
 $accent-color: #29bba6;
-/// media vars
+
+// It's handy having a palette of colors to work off of.  Each group
+// of complientary colors can be reused to enforce consistency and save time.
+// To store this logically, we maintain a 'palette of palettes'
+$palette: ( 'black': #000, 'white': #fff, 'red': #d34c4c, 'orange': #ea9847, 'yellow': #f9ed5f, 'green': #32ad25, 'blue': #3a9ef9);
+$palette-dark: ( 'red': #a53535, 'orange': #cc803b, 'yellow': #e2d156, 'green': #0fd30f, 'darkgreen': #298a1f, 'blue': #3d63df, 'indigo': #602cc4, 'violet': #bc2ac4);
+$greys: ( 'xxlight': #f5f5f5, 'xlight': #d3d3d3, 'light': #a5a5a5, 'xmedium': #5b5b5b, 'medium': #333, 'blue': #2a3438, 'darkblue': #171c1e);
+/// palettes of palettes
+$metapalette: ( 'base': $palette, 'dark': $palette-dark, 'grey': $greys);
+
 /// grid vars
 $gap-base: 2rem;
 $col-count: 12;
-$breakpoints: ( "yocto": 0, "atto": 360, "nano": 408, "milli": 768, "centi": 924, "deci": 1188);
+
+/// media vars
+$breakpoints: ( 'yocto': 0, 'atto': 360, 'nano': 408, 'milli': 768, 'centi': 924, 'deci': 1188);
 $scrollbar-width: 17;
+
 /// typography vars
 $font-base-value: 14;
 $font-size-base: $font-base-value * 1px;
 $font-size-header: $font-base-value;
-$font-family-sans: "Helvetica Neue",
-helvetica,
-arial,
-sans-serif;
-// @credit Modified from https://css-tricks.com/snippets/css/font-stacks/
-$font-family-serif: Constantia,
-"Lucida Bright",
-Lucidabright,
-"Lucida Serif",
-Lucida,
-"DejaVu Serif",
-"Bitstream Vera Serif",
-"Liberation Serif",
-Georgia,
-serif;
-$font-family-code: "Nimbus Mono L",
-Monaco,
-"Courier New",
-Consolas,
-"Andale Mono WT",
-"Andale Mono",
-"Lucida Console",
-"Lucida Sans Typewriter",
-"DejaVu Sans Mono",
-"Bitstream Vera Sans Mono",
-"Liberation Mono",
-Courier,
-monospace;
+$font-family-sans: 'Helvetica Neue', helvetica, arial, sans-serif; // @credit Modified from https://css-tricks.com/snippets/css/font-stacks/ $font-family-serif: Constantia, 'Lucida Bright', Lucidabright, 'Lucida Serif', Lucida, 'DejaVu Serif', 'Bitstream Vera Serif', 'Liberation Serif', Georgia, serif;
+$font-family-code: 'Nimbus Mono L', Monaco, 'Courier New', Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', Courier, monospace;
 $font-family-base: $font-family-sans;
 $font-weight-xtra-light: 200;
 $font-weight-light: 300;
@@ -59,21 +37,21 @@ $font-weight-base: 400;
 $font-weight-bold: 700;
 $font-weight-xtra-bold: 900;
 $default-line-height-percent: 125%;
-$headers: ( "h1": $font-size-header * 2.25, "h2": $font-size-header * 2, "h3": $font-size-header * 1.75, "h4": $font-size-header * 1.5, "h5": $font-size-header * 1.25, "h6": $font-size-header);
+$headers: ( 'h1': $font-size-header * 2.25, 'h2': $font-size-header * 2, 'h3': $font-size-header * 1.75, 'h4': $font-size-header * 1.5, 'h5': $font-size-header * 1.25, 'h6': $font-size-header);
+$heading-border-color: #b7b7b7;
+$heading-background-color: #efefef;
 $text-color-default: map-get($palette, 'black');
+
 /// button vars
 $btn-radius: 5;
-$btn-flavors: (
-/* "std": ("border": {color}, "bg": {color}, "text": {color}) */
 
-"std": ("border": 'black', "bg": 'white', "text": 'black'));
-/// message and alert vars
+// 'std': ('border': {color}, 'bg': {color}, 'text': {color})
+
+$btn-flavors: ( 'std': ('border': 'black', 'bg': 'white', 'text': 'black'));
 ////
-/// Intended usage: elem1 {z-index: $z-index-mid} elem-over-elem1 {z-index: $z-index-mid + 1}
+/// Intended usage: .elem1 {z-index: $z-index-mid} .elem-over-elem1 {z-index: $z-index-mid + 1}
 ////
 $z-index-base: 1;
 $z-index-mid: 10;
 $z-index-high: 100;
 $z-index-modal: 1000;
-/// animations
-$duration-menu-slide: 300ms;
