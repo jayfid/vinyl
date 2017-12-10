@@ -4,19 +4,6 @@
   "description": "CSS/JS Stepstool",
   "main": "dist/scripts/vinylsiding.js",
   "private": false,
-  "eslintConfig": {
-    "env": {
-      "es6": false,
-      "node": false,
-      "browser": true
-    },
-    "rules": {
-      "quotes": [
-        2,
-        "single"
-      ]
-    }
-  },
   "scripts": {
     "test": "npm run test-app"
   },
@@ -29,7 +16,10 @@
   "homepage": "https://github.com/jayfid/vinyl#readme",
   "dependencies": {},
   "devDependencies": {
+    "autoprefixer": "^7.2.2",
+    "clean-css": "^4.1.9",
     "node-sass": "^4.7.2",
+    "postcss": "^6.0.14",
     "rimraf": "^2.6.2",
     "uglify-js": "^3.2.1"
   }
