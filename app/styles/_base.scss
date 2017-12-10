@@ -36,7 +36,7 @@ html {
 }
 
 .vinyl-lazyloader {
-    background-color: #f6f6f6;
+    background-color: $lazyloader-bg-color;
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
@@ -49,6 +49,7 @@ html {
         left: 0;
         width: 100%;
         transition: opacity .2s linear, filter .1s linear;
+
         &.loading {
             opacity: 0;
         }
@@ -63,8 +64,7 @@ html {
 
 // set a fairly arbitrary heading styles.  assuming this will be
 // overwritten in local css in most projects.
-@each $level,
-$size in $headers {
+@each $level, $size in $headers {
     #{$level} {
         @include font-size($size);
     }
@@ -141,22 +141,24 @@ strong {
 }
 
 // bowtie for h# elements
-.fancy-dan::after {
-    height: 0;
-    border-bottom: calculate-rem(3) solid #e36d6e;
-    display: block;
-    width: calculate-rem(50);
-    padding-top: calculate-rem(3);
-    margin: 0 auto;
-    content: "";
-    line-height: 0;
+.fancy-dan {
+    &::after {
+        height: 0;
+        border-bottom: calculate-rem(3) solid color-get('orange');
+        display: block;
+        width: calculate-rem(50);
+        padding-top: calculate-rem(3);
+        margin: 0 auto;
+        content: '';
+        line-height: 0;
+    }
 }
 
 // dribbblefied near-black text block with large line-height
 .display-text {
     font-size: 1rem;
     line-height: 240%;
-    color: #232323;
+    color: $minimum-dark-text-color;
 }
 
 // 1000101
@@ -176,7 +178,7 @@ p {
 // may want to prefix these to prevent overlap with other contrib CSS
 .example-text {
     padding: 5px 0;
-    background-color: #DCDCDC;
+    background-color: color-get('xlight', 'grey');
     text-align: center;
 }
 
@@ -206,7 +208,7 @@ p {
 }
 
 .hidden {
-    display: none !important;
+    display: none;
 }
 
 .noselect {
@@ -218,10 +220,12 @@ p {
 }
 
 // https://www.w3.org/TR/html5/text-level-semantics.html#the-small-element.
-// "<small> is suitable for disclaimers, caveats,
-// legal restrictions, or copyrights"
-small.copyright {
-    @include font-size(12);
+// '<small> is suitable for disclaimers, caveats,
+// legal restrictions, or copyrights'
+small {
+    .copyright {
+        @include font-size(12);
+    }
 }
 
 /// color
@@ -230,9 +234,9 @@ small.copyright {
 
 a:not([class]),
 a:not([class]):visited,
-a[class=""],
-a[class=""]:visited {
-    color: color-get("blue", "dark");
+a[class=''],
+a[class='']:visited {
+    color: color-get('blue', 'dark');
 }
 
 .nowrap {
@@ -259,8 +263,9 @@ a[class=""]:visited {
 
 .constrain,
 .container {
-    max-width: maxBreakpoint();
+    max-width: max-breakpoint();
     margin: auto;
+
     &.fullscreen {
         max-width: initial;
     }
@@ -274,8 +279,6 @@ a[class=""]:visited {
 // vertically center children of an element
 .flex-vcenter {
     display: flex;
-    box-align: center;
-    flex-align: center;
     align-items: center;
 }
 
@@ -303,15 +306,18 @@ a[class=""]:visited {
     &.flex {
         display: flex;
     }
+
     &.vcenter {
         align-items: center;
         justify-content: center;
     }
-    &>div[class^="grid-"]>.inner {
+
+    & > div[class^='grid-'] > .inner {
         height: 100%;
         padding-left: 5px;
         padding-right: 5px;
     }
+
     &.nowrap {
         flex-wrap: nowrap;
     }
@@ -321,21 +327,24 @@ a[class=""]:visited {
 @include margins;
 // generate classes for various widths
 @include alleys;
-@include boxes($col-count, "all-");
-@media screen and (max-width: (map-get($breakpoints, "milli") - 1) * 1px) {
-    @include boxes($col-count, "tablet-");
+@include boxes($col-count, 'all-');
+@media screen and (max-width: (map-get($breakpoints, 'milli') - 1) * 1px) {
+    @include boxes($col-count, 'tablet-');
+
     .mobile-hide {
         display: none;
     }
 }
 
 // default: 768px
-@media screen and (min-width: map-get($breakpoints, "milli") * 1px) {
+@media screen and (min-width: map-get($breakpoints, 'milli') * 1px) {
     // generate grid classes
     @include boxes;
+
     .row {
         display: flex;
         flex-wrap: wrap;
+
         &.desktop-reverse {
             flex-direction: row-reverse;
         }
@@ -343,7 +352,7 @@ a[class=""]:visited {
 }
 
 // default: 1188
-@media screen and (min-width: (map-get($breakpoints, "deci") + $scrollbar-width) * 1px) {
+@media screen and (min-width: (map-get($breakpoints, 'deci') + $scrollbar-width) * 1px) {
     .row {
         margin-left: 0;
         margin-right: 0;
@@ -351,15 +360,14 @@ a[class=""]:visited {
 }
 
 /// form elements
-// hide microsoft's "clear" button on text input fields
-input[type=text]::-ms-clear {
+// hide microsoft's 'clear' button on text input fields
+input[type='text'].noclear::-ms-clear {
     display: none;
 }
 
 // generate button colors
-@each $flavor,
-$colors in $btn-flavors {
-    @include btn($flavor, map-get($colors, "border"), map-get($colors, "bg"), map-get($colors, "text"));
+@each $flavor, $colors in $btn-flavors {
+    @include btn($flavor, map-get($colors, 'border'), map-get($colors, 'bg'), map-get($colors, 'text'));
 }
 
 .btn {
@@ -367,6 +375,7 @@ $colors in $btn-flavors {
     text-decoration: none;
     border-style: solid;
     outline: none;
+
     &:disabled {
         cursor: default;
     }
@@ -378,12 +387,9 @@ $colors in $btn-flavors {
 
 // nothing to see here
 input.incognito {
-    background: transparent !important;
-    border: none !important;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    outline: none !important;
+    background: transparent;
+    border: 0;
+    outline: none;
 }
 
 /// message and alert widget
@@ -391,44 +397,54 @@ input.incognito {
     display: block;
     border: 1px solid;
     padding: 1.25rem;
-    background-color: color-get("white", "base");
+    background-color: color-get('white', 'base');
+
     &.plain {
         color: $text-color-default;
     }
+
     &.notice {
-        border-color: color-get("orange", "base");
-        color: color-get("orange", "dark");
+        border-color: color-get('orange', 'base');
+        color: color-get('orange', 'dark');
+
         a {
-            color: darken(color-get("orange", "base"), 20%);
+            color: darken(color-get('orange', 'base'), 20%);
         }
     }
+
     &.error {
-        border-color: color-get("red", "base");
-        color: color-get("red", "dark");
+        border-color: color-get('red', 'base');
+        color: color-get('red', 'dark');
+
         a {
-            color: darken(color-get("red", "dark"), 20%);
+            color: darken(color-get('red', 'dark'), 20%);
         }
     }
+
     &.info {
-        border-color: color-get("blue", "base");
-        color: color-get("blue", "dark");
+        border-color: color-get('blue', 'base');
+        color: color-get('blue', 'dark');
+
         a {
-            color: darken(color-get("blue", "dark"), 20%);
+            color: darken(color-get('blue', 'dark'), 20%);
         }
     }
+
     &.success {
-        border-color: color-get("green", "base");
-        color: color-get("darkgreen", "dark");
+        border-color: color-get('green', 'base');
+        color: color-get('darkgreen', 'dark');
+
         a {
-            color: darken(color-get("darkgreen", "dark"), 20%);
+            color: darken(color-get('darkgreen', 'dark'), 20%);
         }
     }
 }
 
 a.msg {
     text-decoration: none;
+
     &:hover p {
-        background-color: color-get("xxlight", "grey");
+        background-color: color-get('xxlight', 'grey');
     }
 }
 
@@ -464,38 +480,14 @@ a.msg {
     border-radius: 8px;
 }
 
-::-webkit-input-placeholder {
-    color: $placeholder-color;
-}
-
-:-moz-placeholder {
-    /* Firefox 18- */
-    color: $placeholder-color;
-}
-
-::-moz-placeholder {
-    /* Firefox 19+ */
-    color: $placeholder-color;
-}
-
-:-ms-input-placeholder {
+::placeholder {
     color: $placeholder-color;
 }
 
 *:disabled {
     color: $placeholder-color-disabled;
-    &::-webkit-input-placeholder {
-        color: $placeholder-color-disabled;
-    }
-    &:-moz-placeholder {
-        /* Firefox 18- */
-        color: $placeholder-color-disabled;
-    }
-    &::-moz-placeholder {
-        /* Firefox 19+ */
-        color: $placeholder-color-disabled;
-    }
-    &:-ms-input-placeholder {
+
+    &::placeholder {
         color: $placeholder-color-disabled;
     }
 }
@@ -503,7 +495,7 @@ a.msg {
 /// overlay
 .overlay-top-level {
     display: none;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: $overlay-bg-color;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -523,16 +515,15 @@ a.msg {
     left: 0;
     right: 0;
     bottom: 0;
-    overflow: auto;
     overflow: hidden;
     z-index: $z-index-modal;
-    //pointer-events: none;
 }
 
-body[data-vinyl-overlay="show"] {
+body[data-vinyl-overlay='show'] {
     .overlay-top-level {
         display: block;
     }
+
     .overlay {
         overflow: hidden;
     }
@@ -548,15 +539,19 @@ body[data-vinyl-overlay="show"] {
 
 .hide {
     display: none;
+
     &.show-block {
         display: block;
     }
+
     &.show-flex {
         display: flex;
     }
+
     &.show-inline {
         display: inline;
     }
+
     &.show-inline-block {
         display: inline-block;
     }
@@ -566,9 +561,11 @@ body[data-vinyl-overlay="show"] {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+
     td,
     tr {
         vertical-align: top;
+
         p {
             margin-bottom: 0;
         }
@@ -580,6 +577,7 @@ ul {
     margin: 0;
     padding: 0;
     list-style: none;
+
     li {
         line-height: $default-line-height-percent;
     }
@@ -587,13 +585,16 @@ ul {
 
 .input-group {
     display: inline-table;
+
     .input {
         width: 100%;
     }
+
     .input,
     .input-submit {
         display: table-cell;
     }
+
     textarea {
         width: 100%;
         padding: 1rem;
@@ -605,7 +606,7 @@ ul {
     width: auto;
     vertical-align: top;
     max-height: 108px;
-    border:1px solid #000;
+    border: 1px solid color-get('black');
     opacity: .7;
     cursor: pointer;
 
@@ -614,13 +615,13 @@ ul {
     }
 }
 
-@media screen and (min-width: map-get($breakpoints, "milli") * 1px) {
+@media screen and (min-width: map-get($breakpoints, 'milli') * 1px) {
     .desktop-hide {
         display: none;
     }
 }
 
-@media screen and (max-width: maxBreakpoint()) {
+@media screen and (max-width: max-breakpoint()) {
     .mobile-wall-pad {
         padding-left: 20px;
         padding-right: 20px;

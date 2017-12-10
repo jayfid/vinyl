@@ -10,12 +10,12 @@ $accent-color: #29bba6;
 // It's handy having a palette of colors to work off of.  Each group
 // of complientary colors can be reused to enforce consistency and save time.
 // To store this logically, we maintain a 'palette of palettes'
-$palette: ( 'black': #000, 'white': #fff, 'red': #d34c4c, 'orange': #ea9847, 'yellow': #f9ed5f, 'green': #32ad25, 'blue': #3a9ef9);
+$palette: ( 'black': #000, 'white': #fff, 'red': #d34c4c, 'orange': #e36d6e, 'yellow': #f9ed5f, 'green': #32ad25, 'blue': #3a9ef9);
 $palette-dark: ( 'red': #a53535, 'orange': #cc803b, 'yellow': #e2d156, 'green': #0fd30f, 'darkgreen': #298a1f, 'blue': #3d63df, 'indigo': #602cc4, 'violet': #bc2ac4);
-$greys: ( 'xxlight': #f5f5f5, 'xlight': #d3d3d3, 'light': #a5a5a5, 'xmedium': #5b5b5b, 'medium': #333, 'blue': #2a3438, 'darkblue': #171c1e);
+$greys: ( 'xxlight': #f5f5f5, 'xlight': #dcdcdc, 'light': #a5a5a5, 'xmedium': #5b5b5b, 'medium': #333, 'blue': #2a3438, 'darkblue': #171c1e);
 /// palettes of palettes
 $metapalette: ( 'base': $palette, 'dark': $palette-dark, 'grey': $greys);
-
+$color: #e36d6e;
 /// grid vars
 $gap-base: 2rem;
 $col-count: 12;
@@ -41,6 +41,7 @@ $headers: ( 'h1': $font-size-header * 2.25, 'h2': $font-size-header * 2, 'h3': $
 $heading-border-color: #b7b7b7;
 $heading-background-color: #efefef;
 $text-color-default: map-get($palette, 'black');
+$minimum-dark-text-color: #232323;
 
 /// button vars
 $btn-radius: 5;
@@ -55,3 +56,6 @@ $z-index-base: 1;
 $z-index-mid: 10;
 $z-index-high: 100;
 $z-index-modal: 1000;
+
+$lazyloader-bg-color: #f6f6f6;
+$overlay-bg-color: rgba(0, 0, 0, .6);
