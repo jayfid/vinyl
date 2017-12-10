@@ -66,7 +66,7 @@ html {
 @each $level,
 $size in $headers {
     #{$level} {
-        @include fontSize($size);
+        @include font-size($size);
     }
 }
 
@@ -143,10 +143,10 @@ strong {
 // bowtie for h# elements
 .fancy-dan::after {
     height: 0;
-    border-bottom: calculateRem(3) solid #e36d6e;
+    border-bottom: calculate-rem(3) solid #e36d6e;
     display: block;
-    width: calculateRem(50);
-    padding-top: calculateRem(3);
+    width: calculate-rem(50);
+    padding-top: calculate-rem(3);
     margin: 0 auto;
     content: "";
     line-height: 0;
@@ -221,7 +221,7 @@ p {
 // "<small> is suitable for disclaimers, caveats,
 // legal restrictions, or copyrights"
 small.copyright {
-    @include fontSize(12);
+    @include font-size(12);
 }
 
 /// color
@@ -232,7 +232,7 @@ a:not([class]),
 a:not([class]):visited,
 a[class=""],
 a[class=""]:visited {
-    color: colorGet("blue", "dark");
+    color: color-get("blue", "dark");
 }
 
 .nowrap {
@@ -390,36 +390,36 @@ input.incognito {
     display: block;
     border: 1px solid;
     padding: 1.25rem;
-    background-color: colorGet("white", "base");
+    background-color: color-get("white", "base");
     &.plain {
         color: $text-color-default;
     }
     &.notice {
-        border-color: colorGet("orange", "base");
-        color: colorGet("orange", "dark");
+        border-color: color-get("orange", "base");
+        color: color-get("orange", "dark");
         a {
-            color: darken(colorGet("orange", "base"), 20%);
+            color: darken(color-get("orange", "base"), 20%);
         }
     }
     &.error {
-        border-color: colorGet("red", "base");
-        color: colorGet("red", "dark");
+        border-color: color-get("red", "base");
+        color: color-get("red", "dark");
         a {
-            color: darken(colorGet("red", "dark"), 20%);
+            color: darken(color-get("red", "dark"), 20%);
         }
     }
     &.info {
-        border-color: colorGet("blue", "base");
-        color: colorGet("blue", "dark");
+        border-color: color-get("blue", "base");
+        color: color-get("blue", "dark");
         a {
-            color: darken(colorGet("blue", "dark"), 20%);
+            color: darken(color-get("blue", "dark"), 20%);
         }
     }
     &.success {
-        border-color: colorGet("green", "base");
-        color: colorGet("darkgreen", "dark");
+        border-color: color-get("green", "base");
+        color: color-get("darkgreen", "dark");
         a {
-            color: darken(colorGet("darkgreen", "dark"), 20%);
+            color: darken(color-get("darkgreen", "dark"), 20%);
         }
     }
 }
@@ -427,7 +427,7 @@ input.incognito {
 a.msg {
     text-decoration: none;
     &:hover p {
-        background-color: colorGet("xxlight", "grey");
+        background-color: color-get("xxlight", "grey");
     }
 }
 

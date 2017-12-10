@@ -3,29 +3,23 @@
 const sass = require('node-sass');
 const uglify = require('uglify-js');
 const fs = require('fs');
+const rimraf = require('rimraf');
 
-const APP_DIR = 'app/';
+const BASE_DIR = fs.realpathSync(__dirname + '/../') + '/';
+const APP_DIR = `${BASE_DIR}app/`;
 const SASS_DIR = `${APP_DIR}styles/`;
 const JS_DIR = `${APP_DIR}scripts/`;
-const BUILD_DIR = 'build/';
+const BUILD_DIR = `${BASE_DIR}web/`;
 const PROJECT_NAME = 'vinylsiding';
 const PROJECT_VERSION = '1.0';
 
 class Builder
 {
-    constructor() {
-        // todo
-    }
-
     start() {
-        this.buildHtml();
+        rimraf(`${BUILD_DIR}css`, (result) => {
+            console.log(result);
+        });
         this.buildSass();
-        this.buildJs();
-        this.buildAssets();
-    }
-
-    buildHtml() {
-        // todo
     }
 
     buildSass() {
@@ -34,12 +28,32 @@ class Builder
         sass.render({
             file: `${SASS_DIR}vinylsiding.scss`,
             includeDir: SASS_DIR,
-            outFile: `${BUILD_DIR}/css/${PROJECT_NAME}_${PROJECT_VERSION}.css`,
-            outputStyle: 'compressed',
+            outFile: `${BUILD_DIR}css/${PROJECT_NAME}_${PROJECT_VERSION}.css`,
+            outputStyle: 'expanded',
             sourceMap: true
         },
         function(err, result) {
-            console.log(result)
+            const write_dir = `${BUILD_DIR}css/`;
+            const file_name = `${PROJECT_NAME}_${PROJECT_VERSION}`;
+            const file_path = `${write_dir}${file_name}.css`;
+            const output_map_path = `${write_dir}${file_name}.css.map`;
+            if (err) {
+                console.error(err);
+                return err;
+            }
+            if (!fs.existsSync(write_dir)){
+                fs.mkdirSync(write_dir);
+            }
+
+            fs.writeFile(file_path, result.css.toString('utf8'), {}, function (err) {
+                if (err) throw err;
+                console.log(`Saved ${file_path}`);
+            });
+
+            fs.writeFile(output_map_path, result.map.toString('utf8'), {}, function (err) {
+                if (err) throw err;
+                console.log(`Saved ${output_map_path}`);
+            });
         });
         // todo: autoprefixer
     }
@@ -54,10 +68,6 @@ class Builder
         });
         console.log(result.code); // minified output
         console.log(result.map);  // source map
-    }
-
-    buildAssets() {
-
     }
 }
 
