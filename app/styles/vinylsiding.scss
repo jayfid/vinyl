@@ -8,6 +8,6 @@
 @import 'base';
 @if $debug {
     html * {
-        outline: 1px color-get('red') solid !important;
+        outline: 1px color-get('red', 'base') solid !important;
     }
 }

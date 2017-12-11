@@ -144,7 +144,7 @@ strong {
 .fancy-dan {
     &::after {
         height: 0;
-        border-bottom: calculate-rem(3) solid color-get('orange');
+        border-bottom: calculate-rem(3) solid color-get('orange', 'base');
         display: block;
         width: calculate-rem(50);
         padding-top: calculate-rem(3);
@@ -606,7 +606,7 @@ ul {
     width: auto;
     vertical-align: top;
     max-height: 108px;
-    border: 1px solid color-get('black');
+    border: 1px solid color-get('black', 'base');
     opacity: .7;
     cursor: pointer;
 

@@ -5,7 +5,10 @@
   "main": "dist/scripts/vinylsiding.js",
   "private": false,
   "scripts": {
-    "test": "npm run test-app"
+    "test": "npm run test-app",
+    "serve": "node bin/server.js",
+    "build": "node bin/build.js",
+    "watch": "npm-watch"
   },
   "repository": {
     "type": "git",
@@ -17,11 +20,23 @@
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^7.2.2",
+    "browser-sync": "^2.18.13",
     "clean-css": "^4.1.9",
     "node-sass": "^4.7.2",
+    "npm-watch": "^0.3.0",
     "postcss": "^6.0.14",
     "rimraf": "^2.6.2",
     "sass-lint": "^1.12.1",
     "uglify-js": "^3.2.2"
+  },
+  "watch": {
+    "build": {
+      "patterns": ["app/scripts", "app/styles"],
+      "extensions": "js",
+      "ignore": "",
+      "quiet": true,
+      "legacyWatch": true,
+      "delay": 0
+    }
   }
 }

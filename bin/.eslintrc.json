@@ -15,13 +15,7 @@
         "block-spacing": ["error", "always"],
         "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
         "camelcase": ["off", { "properties": "never" }],
-        "comma-dangle": ["error", {
-          "arrays": "never",
-          "objects": "never",
-          "imports": "never",
-          "exports": "never",
-          "functions": "never"
-        }],
+        "comma-dangle": "error",
         "comma-spacing": ["error", { "before": false, "after": true }],
         "comma-style": ["error", "last"],
         "constructor-super": "error",

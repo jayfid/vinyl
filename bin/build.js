@@ -19,30 +19,31 @@ const PROJECT_VERSION = '1.0';
 class Builder {
     start() {
         rimraf(`${BUILD_DIR}css`, (result) => {
-            console.log(result);
+            console.log('Starting SASS');
+            this.buildSass(`${BUILD_DIR}css/`, `${PROJECT_NAME}_${PROJECT_VERSION}`);
         });
-        this.buildSass();
+        rimraf(`${BUILD_DIR}js`, (result) => {
+            console.log('Starting JS');
+            this.buildJs(`${BUILD_DIR}js/`, `${PROJECT_NAME}_${PROJECT_VERSION}`);
+        });
     }
 
-    buildSass() {
+    buildSass(write_dir, file_name) {
         // todo
         // @see https://github.com/sass/node-sass
         sass.render({
             file: `${SASS_DIR}vinylsiding.scss`,
             includeDir: SASS_DIR,
-            outFile: `${BUILD_DIR}css/${PROJECT_NAME}_${PROJECT_VERSION}.css`,
+            outFile: `${write_dir}/${file_name}.css`,
             outputStyle: 'expanded',
             sourceMap: true
         },
         function(err, result) {
-            const write_dir = `${BUILD_DIR}css/`;
-            const file_name = `${PROJECT_NAME}_${PROJECT_VERSION}`;
+            if (err) throw err;
+
             const file_path = `${write_dir}${file_name}.css`;
             const output_map_path = `${write_dir}${file_name}.css.map`;
-            if (err) {
-                console.error(err);
-                return err;
-            }
+
             if (!fs.existsSync(write_dir)) {
                 fs.mkdirSync(write_dir);
             }
@@ -69,21 +70,36 @@ class Builder {
                 fs.writeFile(`${write_dir}${file_name}.min.css`, minified_css.styles, {}, (err) => {
                     if (err) throw err;
                     console.log(`Saved ${write_dir}${file_name}.min.css`);
+                    console.log('Finished SASS');
                 });
             });
         });
     }
 
-    buildJs() {
+    buildJs(write_dir, file_name) {
+        const file_path = `${write_dir}${file_name}.js`;
+        const output_map_path = `${write_dir}${file_name}.js.map`;
+
         const file_contents = fs.readFileSync(`${JS_DIR}vinylsiding.js`);
-        const result = uglify.minify(file_contents, {
+        const result = uglify.minify(file_contents.toString(), {
             sourceMap: {
-                filename: 'out.js',
-                url: 'out.js.map'
+                filename: file_name,
+                url: `/js/${file_name}.js.map`
             }
         });
-        console.log(result.code); // minified output
-        console.log(result.map);
+
+        if (!fs.existsSync(write_dir)) {
+            fs.mkdirSync(write_dir);
+        }
+        fs.writeFile(`${write_dir}${file_name}.js`, result.code, {}, (err) => {
+            if (err) throw err;
+            console.log(`Saved ${write_dir}${file_name}.js`);
+            fs.writeFile(`${write_dir}${file_name}.js.map`, result.map, {}, (err) => {
+                if (err) throw err;
+                console.log(`Saved ${write_dir}${file_name}.js.map`);
+                console.log('Finished JS');
+            });
+        });
     }
 }
 

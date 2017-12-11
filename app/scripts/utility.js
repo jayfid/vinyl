@@ -46,7 +46,7 @@ VinylUtil.prototype.toggleClass = function (element, elemClass) {
  */
 VinylUtil.prototype.hasClass = function (element, elemClass) {
     // remove any leading . for convenience.
-    if (elemClass.charAt( 0 ) === '.') {
+    if (elemClass.charAt(0) === '.') {
         elemClass = elemClass.substr(1);
     }
 
@@ -263,20 +263,20 @@ VinylUtil.prototype.scrollIntoView = function (elem, position) {
         (document.documentElement.clientTop || 0),
         elementWindowYOffset;
     switch (position) {
-    case 'bottom':
-        var elemY = this.getPosition(elem).y + currentWindowYOffset,
-            elemHeight = elem.offsetHeight,
-            elemBottomPixel = elemY + elemHeight,
-            extraSpacePixels = 30,
-            windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
-            calculatedOffset = elemBottomPixel - windowHeight + extraSpacePixels;
-        elementWindowYOffset = (calculatedOffset >= 0) ? calculatedOffset : 0;
-        break;
-    case 'top':
-        elementWindowYOffset = this.getPosition(elem).y;
-        break;
-    default:
-        throw 'Invalid position.';
+        case 'bottom':
+            var elemY = this.getPosition(elem).y + currentWindowYOffset,
+                elemHeight = elem.offsetHeight,
+                elemBottomPixel = elemY + elemHeight,
+                extraSpacePixels = 30,
+                windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+                calculatedOffset = elemBottomPixel - windowHeight + extraSpacePixels;
+            elementWindowYOffset = (calculatedOffset >= 0) ? calculatedOffset : 0;
+            break;
+        case 'top':
+            elementWindowYOffset = this.getPosition(elem).y;
+            break;
+        default:
+            throw 'Invalid position.';
     }
 
     var initialWindowYOffset = currentWindowYOffset;
@@ -437,4 +437,10 @@ VinylUtil.prototype.addEvents = function (events, element, callback, useCapture)
     }
 };
 
-Vinylsiding.prototype.util = new VinylUtil();
+// Vinylsiding.prototype.util = new VinylUtil();
+var define = define || false;
+if (define) {
+    define("Utility", ["Vinylsiding"], function (Vinylsiding) {
+        Vinylsiding.addModule('util', new VinylUtil());
+    });
+}

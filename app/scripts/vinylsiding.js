@@ -1,5 +1,4 @@
 'use strict';
-/* globals VS */
 /**
  ** @file Vinylsiding Class
  ** Wire up common webpage elements.
@@ -9,11 +8,36 @@ function Vinylsiding() {
     window.onload = function () {
         Vinylsiding.prototype.setDynamicHeights();
         Vinylsiding.prototype.secureTargetBlank();
-        Vinylsiding.prototype.modal.attachBodyListener();
-        Vinylsiding.prototype.modal.addOverlayToDOM();
+        // Vinylsiding.prototype.modal.attachBodyListener();
+        // Vinylsiding.prototype.modal.addOverlayToDOM();
         Vinylsiding.prototype.lazyLoad();
     };
+    this.modules = {};
 }
+
+Vinylsiding.prototype.addModule = function(module_name, module) {
+    this.modules[module_name] = module;
+    if (typeof(module.beforeLoad) == 'function') {
+        module.beforeLoad(this);
+    }
+    return true;
+};
+
+Vinylsiding.prototype.callModule = function (module_name, method_name, args) {
+    if (!this.modules.hasOwnProperty(module_name)) {
+        throw new Error('');
+    }
+
+    if (!this.modules[module_name].hasOwnProperty(method_name)) {
+        throw new Error('');
+    }
+
+    if (typeof(this.modules[module_name][method_name]) != 'function') {
+        throw new Error('');
+    }
+
+    return this.modules[module_name][method_name](args);
+};
 
 // add rel attr to _blank links to help mitigate tabnabbing
 Vinylsiding.prototype.secureTargetBlank = function () {
@@ -73,19 +97,25 @@ function lazyLoadImage(container) {
         smallImage = new Image(),
         largeImage = new Image();
     // 1: load small image and show it
-
     smallImage.onload = function () {
-        //VS.util.addClass(previewImage, 'loaded');
-        VS.util.removeClass(previewImage, 'blurry');
+        // VS.util.removeClass(previewImage, 'blurry');
     };
     smallImage.src = previewImage.src;
 
     // 2: load large image
     largeImage.className = 'loading';
     largeImage.onload = function () {
-        VS.util.removeClass(largeImage, 'loading');
+        // VS.util.removeClass(largeImage, 'loading');
     };
     largeImage.src = previewImage.dataset.vimageLarge;
 
     container.appendChild(largeImage);
+}
+
+var define = define || false;
+if (define) {
+    define('Vinylsiding',
+    function () {
+        return new Vinylsiding();
+    });
 }
