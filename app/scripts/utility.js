@@ -1,7 +1,7 @@
 /**
  ** Commonly needed stateless utility functions.
  */
-/* global VS, Vinylsiding */
+
 function VinylUtil() {
     return this;
 }
@@ -314,7 +314,7 @@ VinylUtil.prototype.scrollIntoView = function (elem, position) {
  */
 VinylUtil.prototype.waitUntilVisible = function (elemSelector, callback) {
     var interval = window.setInterval(function () {
-        if (!VS.util.checkVisible(document.querySelector(elemSelector))) {
+        if (!checkVisible(document.querySelector(elemSelector))) {
             return;
         }
         window.clearInterval(interval);
@@ -351,14 +351,15 @@ VinylUtil.prototype.getPosition = function (element) {
  * @param {HTMLElement} element
  * @returns {Boolean} true if element on screen, otherwise false.
  */
-VinylUtil.prototype.checkVisible = function (element) {
+function checkVisible(element) {
     if (!element) {
         throw 'Invalid Element';
     }
     var rect = element.getBoundingClientRect();
     var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
     return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
-};
+}
+VinylUtil.prototype.checkVisible = checkVisible;
 
 /**
  * Check if mouse click occured within coordinates of element.
@@ -437,10 +438,10 @@ VinylUtil.prototype.addEvents = function (events, element, callback, useCapture)
     }
 };
 
-// Vinylsiding.prototype.util = new VinylUtil();
 var define = define || false;
 if (define) {
-    define("Utility", ["Vinylsiding"], function (Vinylsiding) {
-        Vinylsiding.addModule('util', new VinylUtil());
+    define("Utility", function () {
+        // Vinylsiding.addModule('util', new VinylUtil());
+        return new VinylUtil();
     });
 }

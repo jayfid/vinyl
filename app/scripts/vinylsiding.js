@@ -4,7 +4,8 @@
  ** Wire up common webpage elements.
  ** Make useful utility functions available as early as possible.
  */
-function Vinylsiding() {
+function Vinylsiding(Utility) {
+    this.util = Utility;
     window.onload = function () {
         Vinylsiding.prototype.setDynamicHeights();
         Vinylsiding.prototype.secureTargetBlank();
@@ -98,14 +99,14 @@ function lazyLoadImage(container) {
         largeImage = new Image();
     // 1: load small image and show it
     smallImage.onload = function () {
-        // VS.util.removeClass(previewImage, 'blurry');
+        Vinylsiding.util.removeClass(previewImage, 'blurry');
     };
     smallImage.src = previewImage.src;
 
     // 2: load large image
     largeImage.className = 'loading';
     largeImage.onload = function () {
-        // VS.util.removeClass(largeImage, 'loading');
+        Vinylsiding.util.removeClass(largeImage, 'loading');
     };
     largeImage.src = previewImage.dataset.vimageLarge;
 
@@ -115,7 +116,8 @@ function lazyLoadImage(container) {
 var define = define || false;
 if (define) {
     define('Vinylsiding',
-    function () {
-        return new Vinylsiding();
+    ["Utility"],
+    function (Utility) {
+        return new Vinylsiding(Utility);
     });
 }
