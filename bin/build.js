@@ -18,14 +18,14 @@ const PROJECT_VERSION = '1.0';
 class Builder {
     static start() {
         const args = process.argv.slice(2);
-        if (args.indexOf('css') !== false) {
+        if (args.indexOf('css') !== -1) {
             // eslint-disable-next-line no-console
             console.log(`Deleting directory ${BUILD_DIR}css`);
             rimraf(`${BUILD_DIR}css`, () => {
                 Builder.buildSass();
             });
         }
-        if (args.indexOf('js') !== false) {
+        if (args.indexOf('js') !== -1) {
             // eslint-disable-next-line no-console
             console.log('Deleting js directory.');
             rimraf(`${BUILD_DIR}js`, () => {
@@ -44,6 +44,7 @@ class Builder {
         const prefixedCSSFile = `${writeDir}${fileName}.prefixed.css`;
         const sourceFile = `${SASS_DIR}vinylsiding.scss`;
         const SASSoutputStyle = 'expanded';
+        const minifiedFileName = `${writeDir}${fileName}.min.css`;
 
         // eslint-disable-next-line no-console
         console.log('Starting SASS');
@@ -72,26 +73,30 @@ class Builder {
                 console.log(`Saved ${outputMapPath}`);
             });
 
-            postcss([autoprefixer]).process(result.css).then((postResult) => {
-                result.warnings().forEach((warn) => {
-                    // eslint-disable-next-line no-console
-                    console.warn(warn.toString());
-                });
-                fs.writeFile(prefixedCSSFile, postResult.css, {}, (err3) => {
-                    if (err3) throw err3;
-                    // eslint-disable-next-line no-console
-                    console.log(`Saved ${prefixedCSSFile}`);
-                });
-                const minifiedCss = new CleanCSS({}).minify(result.css);
-                fs.writeFile(`${writeDir}${fileName}.min.css`, minifiedCss.styles, {}, (err4) => {
-                    if (err4) throw err4;
+            postcss([autoprefixer])
+                .process(result.css)
+                .then((postResult) => {
+                    postResult.warnings().forEach((warn) => {
+                        // eslint-disable-next-line no-console
+                        console.warn(warn.toString());
+                    });
+                    fs.writeFile(prefixedCSSFile, postResult.css, {}, (err3) => {
+                        if (err3) throw err3;
+                        // eslint-disable-next-line no-console
+                        console.log(`Saved ${prefixedCSSFile}`);
 
-                    // eslint-disable-next-line no-console
-                    console.log(`Saved ${writeDir}${fileName}.min.css`);
-                    // eslint-disable-next-line no-console
-                    console.log('Finished SASS');
+                        const minifiedCss = new CleanCSS({}).minify(postResult.css);
+                        fs.writeFile(minifiedFileName, minifiedCss.styles, {}, (err4) => {
+                            if (err4) throw err4;
+
+                            // eslint-disable-next-line no-console
+                            console.log(`Saved ${writeDir}${fileName}.min.css`);
+
+                            // eslint-disable-next-line no-console
+                            console.log('Finished SASS');
+                        });
+                    });
                 });
-            });
         });
     }
 
@@ -100,7 +105,6 @@ class Builder {
         const fileName = `${PROJECT_NAME}_${PROJECT_VERSION}`;
         const filePath = `${writeDir}${fileName}.js`;
         const outputMapPath = `${filePath}.map`;
-
         const fileContents = fs.readFileSync(`${JS_DIR}${PROJECT_NAME}.js`);
         // eslint-disable-next-line no-console
         console.log('Starting JS');
@@ -111,7 +115,7 @@ class Builder {
                 url: `/js/${fileName}.js.map`,
             },
         });
-
+        // return;
         if (!fs.existsSync(writeDir)) {
             fs.mkdirSync(writeDir);
         }
