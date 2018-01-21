@@ -1,15 +1,13 @@
 {
   "name": "vinylsiding",
-  "version": "1.0.7",
+  "version": "0.0.2",
   "description": "CSS/JS Stepstool",
-  "main": "dist/scripts/vinylsiding.js",
+  "main": "web/js/vinylsiding.js",
   "private": false,
   "scripts": {
     "test": "npm run test-app",
-    "serve": "node bin/server.js",
-    "build": "node bin/build.js css js",
-    "build:css": "node bin/build.js css",
-    "build:js": "node bin/build.js js",
+    "serve": "node bin/serve.js",
+    "build": "node bin/build-script.js css js",
     "watch": "npm-watch"
   },
   "repository": {
@@ -20,19 +18,17 @@
   "license": "ISC",
   "homepage": "https://github.com/jayfid/vinyl#readme",
   "dependencies": {
+    "autoprefixer": "^7.2.5",
+    "clean-css": "^4.1.9",
     "node-sass": "^4.7.2",
-    "postcss": "^6.0.14",
+    "postcss": "^6.0.16",
     "rimraf": "^2.6.2",
     "sass-lint": "^1.12.1",
-    "uglify-js": "^3.2.2",
-     "autoprefixer": "^7.2.3",
-     "clean-css": "^4.1.9"
+    "uglify-js": "^3.3.7"
   },
   "devDependencies": {
-
-    "browser-sync": "^2.21.0",
-
-    "eslint": "^4.13.1",
+    "browser-sync": "^2.23.5",
+    "eslint": "^4.15.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",

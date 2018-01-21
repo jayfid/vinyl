@@ -13,24 +13,28 @@ const SASS_DIR = `${APP_DIR}styles/`;
 const JS_DIR = `${APP_DIR}scripts/`;
 const BUILD_DIR = `${BASE_DIR}web/`;
 const PROJECT_NAME = 'vinylsiding';
-const PROJECT_VERSION = '1.0';
+const PROJECT_VERSION = '0.0.2';
 
 class Builder {
-    static start() {
+    static start(cb = null, buildCss = false, buildJs = false) {
         const args = process.argv.slice(2);
-        if (args.indexOf('css') !== -1) {
+        if (buildCss || args.indexOf('css') !== -1) {
             // eslint-disable-next-line no-console
             console.log(`Deleting directory ${BUILD_DIR}css`);
             rimraf(`${BUILD_DIR}css`, () => {
                 Builder.buildSass();
             });
         }
-        if (args.indexOf('js') !== -1) {
+        if (buildJs || args.indexOf('js') !== -1) {
             // eslint-disable-next-line no-console
             console.log('Deleting js directory.');
             rimraf(`${BUILD_DIR}js`, () => {
                 Builder.buildJs();
             });
+        }
+
+        if (cb) {
+            cb();
         }
     }
 
@@ -137,4 +141,4 @@ class Builder {
     }
 }
 
-Builder.start();
+module.exports = Builder;
