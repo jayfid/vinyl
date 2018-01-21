@@ -1,10 +1,12 @@
 'use strict';
+
+import Utility from './utility';
 /**
  ** @file Vinylsiding Class
  ** Wire up common webpage elements.
  ** Make useful utility functions available as early as possible.
  */
-function Vinylsiding(Utility) {
+function Vinylsiding() {
     this.util = Utility;
     window.onload = function () {
         Vinylsiding.prototype.setDynamicHeights();

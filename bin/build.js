@@ -1,10 +1,11 @@
 const sass = require('node-sass');
-const uglify = require('uglify-js');
 const fs = require('fs');
 const rimraf = require('rimraf');
 const autoprefixer = require('autoprefixer');
 const postcss = require('postcss');
 const CleanCSS = require('clean-css');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const webpack = require('webpack');
 
 const BASE_PATH_NO_TRAILING_SLASH = fs.realpathSync(`${__dirname}/../`);
 const BASE_DIR = `${BASE_PATH_NO_TRAILING_SLASH}/`;
@@ -17,28 +18,39 @@ const PROJECT_VERSION = '0.0.2';
 
 class Builder {
     static start(cb = null, buildCss = false, buildJs = false) {
+        const flags = {
+            cssDone: false,
+            jsDone: false,
+        };
         const args = process.argv.slice(2);
         if (buildCss || args.indexOf('css') !== -1) {
             // eslint-disable-next-line no-console
             console.log(`Deleting directory ${BUILD_DIR}css`);
             rimraf(`${BUILD_DIR}css`, () => {
-                Builder.buildSass();
+                Builder.buildSass(() => {
+                    flags.cssDone = true;
+                });
             });
         }
         if (buildJs || args.indexOf('js') !== -1) {
             // eslint-disable-next-line no-console
-            console.log('Deleting js directory.');
+            console.log(`Deleting ${BUILD_DIR}js`);
             rimraf(`${BUILD_DIR}js`, () => {
-                Builder.buildJs();
+                Builder.buildJs(() => {
+                    flags.jsDone = true;
+                });
             });
         }
-
-        if (cb) {
-            cb();
+        while (flags.cssDone || flags.jsDone) {
+            // do nothing
         }
+        if (cb) {
+            return cb();
+        }
+        return null;
     }
 
-    static buildSass() {
+    static buildSass(cb = null) {
         // @see https://github.com/sass/node-sass
 
         const writeDir = `${BUILD_DIR}css/`;
@@ -98,45 +110,55 @@ class Builder {
 
                             // eslint-disable-next-line no-console
                             console.log('Finished SASS');
+                            if (cb) {
+                                return cb();
+                            }
+                            return null;
                         });
                     });
                 });
         });
     }
 
-    static buildJs() {
+    static buildJs(cb = null) {
+        const sourceFile = `${JS_DIR}${PROJECT_NAME}.js`;
         const writeDir = `${BUILD_DIR}js/`;
-        const fileName = `${PROJECT_NAME}_${PROJECT_VERSION}`;
-        const filePath = `${writeDir}${fileName}.js`;
-        const outputMapPath = `${filePath}.map`;
-        const fileContents = fs.readFileSync(`${JS_DIR}${PROJECT_NAME}.js`);
+        const fileName = `${PROJECT_NAME}_${PROJECT_VERSION}.js`;
+        const filePath = `${writeDir}${fileName}`;
+        const mapFileName = `${fileName}.map`;
+        const mapFilePath = `${writeDir}${mapFileName}`;
+
         // eslint-disable-next-line no-console
         console.log('Starting JS');
 
-        const result = uglify.minify(fileContents.toString(), {
-            sourceMap: {
-                filename: fileName,
-                url: `/js/${fileName}.js.map`,
-            },
-        });
-        // return;
         if (!fs.existsSync(writeDir)) {
             fs.mkdirSync(writeDir);
         }
 
-        fs.writeFile(filePath, result.code, {}, (err) => {
-            if (err) throw err;
+        webpack({
+            // Configuration Object
+            entry: sourceFile,
+            output: {
+                path: writeDir,
+                filename: fileName,
+                sourceMapFilename: mapFileName,
+            },
+            devtool: 'source-map',
+        }, (err, stats) => {
+            if (err || stats.hasErrors()) {
+                throw err;
+            }
 
             // eslint-disable-next-line no-console
             console.log(`Saved ${filePath}`);
-
-            fs.writeFile(outputMapPath, result.map, {}, (err1) => {
-                if (err1) throw err1;
-                // eslint-disable-next-line no-console
-                console.log(`Saved ${outputMapPath}`);
-                // eslint-disable-next-line no-console
-                console.log('Finished JS');
-            });
+            // eslint-disable-next-line no-console
+            console.log(`Saved ${mapFilePath}`);
+            // eslint-disable-next-line no-console
+            console.log('Finished JS');
+            if (cb) {
+                return cb();
+            }
+            return null;
         });
     }
 }
