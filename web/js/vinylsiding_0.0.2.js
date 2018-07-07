@@ -1,3 +1,207 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utility__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utility___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__utility__);
+
+
+
+/**
+ ** @file Vinylsiding Class
+ ** Wire up common webpage elements.
+ ** Make useful utility functions available as early as possible.
+ */
+function Vinylsiding() {
+    this.util = __WEBPACK_IMPORTED_MODULE_0__utility___default.a;
+    window.onload = function () {
+        Vinylsiding.prototype.setDynamicHeights();
+        Vinylsiding.prototype.secureTargetBlank();
+        // Vinylsiding.prototype.modal.attachBodyListener();
+        // Vinylsiding.prototype.modal.addOverlayToDOM();
+        Vinylsiding.prototype.lazyLoad();
+    };
+    this.modules = {};
+}
+
+Vinylsiding.prototype.addModule = function(module_name, module) {
+    this.modules[module_name] = module;
+    if (typeof(module.beforeLoad) == 'function') {
+        module.beforeLoad(this);
+    }
+    return true;
+};
+
+Vinylsiding.prototype.callModule = function (module_name, method_name, args) {
+    if (!this.modules.hasOwnProperty(module_name)) {
+        throw new Error('');
+    }
+
+    if (!this.modules[module_name].hasOwnProperty(method_name)) {
+        throw new Error('');
+    }
+
+    if (typeof(this.modules[module_name][method_name]) != 'function') {
+        throw new Error('');
+    }
+
+    return this.modules[module_name][method_name](args);
+};
+
+// add rel attr to _blank links to help mitigate tabnabbing
+Vinylsiding.prototype.secureTargetBlank = function () {
+    var elements = document.querySelectorAll('a[target="_blank"]');
+
+    if (!elements || !elements.length) {
+        return;
+    }
+
+    for (var i = 0, len = elements.length; i < len; i++) {
+        elements[i].setAttribute('rel', 'noopener noreferrer');
+    }
+};
+
+// set the style height of an elem to that of it's referenced element.
+// selects elements with heightSelector class by default.
+// data-height-ref is either the id of the reference elem or empty.
+// empty data-height-ref will explicitly set an elements height to its own
+// current height.
+Vinylsiding.prototype.setDynamicHeights = function () {
+    var elements = document.querySelectorAll('.set-height');
+
+    if (!elements || !elements.length) {
+        return false;
+    }
+
+    for (var i = 0, len = elements.length, reference, foundReferenceElement; i < len; i++) {
+        reference = elements[i].getAttribute('data-height-ref');
+
+        // if no reference found, we use the given element and set its height explicitly.
+        foundReferenceElement = (!reference) ? elements[i] : document.querySelector('#' + reference);
+
+        if (!foundReferenceElement) {
+            continue;
+        }
+        this.util.setHeightOnElement(elements[i], foundReferenceElement);
+    }
+};
+
+// todo - here http://codepen.io/jmperez/pen/yYjPER
+
+/**
+ * Lazy load images in a graceful manner.
+ */
+Vinylsiding.prototype.lazyLoad = function () {
+    var lazyLoaders = document.querySelectorAll('.vinyl-lazyloader');
+    if (!lazyLoaders.length) {
+        return;
+    }
+    for (var i = 0, len = lazyLoaders.length; i < len; i++) {
+        lazyLoadImage(lazyLoaders[i]);
+    }
+};
+
+function lazyLoadImage(container) {
+    var previewImage = container.querySelector('.base-image'),
+        smallImage = new Image(),
+        largeImage = new Image();
+    // 1: load small image and show it
+    smallImage.onload = function () {
+        Vinylsiding.util.removeClass(previewImage, 'blurry');
+    };
+    smallImage.src = previewImage.src;
+
+    // 2: load large image
+    largeImage.className = 'loading';
+    largeImage.onload = function () {
+        Vinylsiding.util.removeClass(largeImage, 'loading');
+    };
+    largeImage.src = previewImage.dataset.vimageLarge;
+
+    container.appendChild(largeImage);
+}
+
+var define = define || false;
+if (define) {
+    define('Vinylsiding',
+    ["Utility"],
+    function (Utility) {
+        return new Vinylsiding(Utility);
+    });
+}
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
 /**
  ** Commonly needed stateless utility functions.
  */
@@ -439,3 +643,8 @@ class Utility {
 }
 
 module.exports = Utility;
+
+
+/***/ })
+/******/ ]);
+//# sourceMappingURL=vinylsiding_0.0.2.js.map
