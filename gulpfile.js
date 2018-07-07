@@ -79,7 +79,7 @@ gulp.task('lint:test', function () {
     .pipe(gulp.dest('test/spec/**/*.js'));
 });
 
-gulp.task('html', ['styles', 'scripts'], function () {
+gulp.task('html', function () {
     return gulp.src('app/*.html')
         .pipe($.useref({
             searchPath: ['.tmp', 'app', '.']
@@ -95,7 +95,7 @@ gulp.task('html', ['styles', 'scripts'], function () {
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('markup', [], function () {
+gulp.task('markup', function () {
     return gulp.src('app/markup/*.html')
         .pipe($.if('*.html', fileinclude({
             basepath: 'app/markup/_includes/'
@@ -128,7 +128,7 @@ gulp.task('extras', function () {
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist', 'app/*.html']));
 
-gulp.task('serve', ['styles', 'scripts'], function () {
+gulp.task('serve', ['markup', 'html', 'styles', 'scripts'], function () {
     browserSync({
         notify: false,
         port: 9000,
@@ -190,7 +190,7 @@ gulp.task('wiredep', function () {
         .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['markup', 'lint', 'html', 'images', 'extras'], function () {
+gulp.task('build', ['markup', 'lint', 'styles', 'scripts', 'html', 'images', 'extras'], function () {
     return gulp.src('dist/**/*').pipe($.size({
         title: 'build',
         gzip: true

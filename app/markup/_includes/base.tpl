@@ -60,4 +60,9 @@
             </section>
         </footer>
     </div><!-- frame -->
+    <script data-main="plugins/main" src="plugins/require.js"></script>
+
+    @@if (main === 'content/gallery.tpl') {
+        @@include('content/gallery_script.tpl')
+    }
 </body>
