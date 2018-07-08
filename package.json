@@ -27,6 +27,8 @@
     "uglify-js": "^3.4.3"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-loader": "^7.1.5",
     "browser-sync": "^2.24.5",
     "eslint": "^5.0.1",
     "eslint-config-airbnb": "^17.0.0",
